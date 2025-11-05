@@ -1,0 +1,1 @@
+export const ADMINPAGE_ROAD = "admin";
