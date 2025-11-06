@@ -18,4 +18,8 @@ export class TypeManager {
     return this.typeRepository.getTypeById(id);
   }
 
+  public postNewType(type: Type): Observable<Type> {
+    return this.typeRepository.addType(type);
+  }
+
 }

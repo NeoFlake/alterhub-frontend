@@ -19,4 +19,8 @@ export class TypeRepository {
     return this.http.get<Type>(`${BACKEND_API_TYPES.ROOT}/${id}`);
   }
 
+  public addType(type: Type): Observable<Type> {
+    return this.http.post<Type>(`${BACKEND_API_TYPES.ROOT}`, type);
+  }
+
 }
