@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { TypeRepository } from '../../../core/services/api/backend/type.repository';
 import { Observable } from 'rxjs';
-import { Type } from '../../../models/interfaces/type';
+import { Type } from '../../../models/interfaces/api/type';
 
 @Injectable({
   providedIn: 'root',

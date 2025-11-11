@@ -1,4 +1,4 @@
-import { Identifiable } from "../identifiable";
+import { Identifiable } from "../api/identifiable";
 
 export interface User extends Identifiable {
     dateOfCreation: string;

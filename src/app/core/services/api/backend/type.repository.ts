@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Type } from '../../../../models/interfaces/type';
+import { Type } from '../../../../models/interfaces/api/type';
 import { BACKEND_API_TYPES } from '../../../../constants/backend-api-road';
 
 @Injectable({
