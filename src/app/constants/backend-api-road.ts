@@ -1,6 +1,8 @@
 export const BACKEND_API_ROADS = {
     BASE_URL: "http://localhost:8080/api",
     TYPES: "/types",
+    USERS: "/users",
+    LOGIN: "/authentication",
     ALTERED: "/sync/altered"
 };
 
@@ -11,3 +13,8 @@ export const BACKEND_API_TYPES = {
 export const BACKEND_API_ALTERED = {
     ROOT: `${BACKEND_API_ROADS.BASE_URL}${BACKEND_API_ROADS.ALTERED}`
 };
+
+export const BACKEND_API_USERS = {
+    ROOT: `${BACKEND_API_ROADS.BASE_URL}${BACKEND_API_ROADS.USERS}`,
+    LOGIN: `${BACKEND_API_ROADS.BASE_URL}${BACKEND_API_ROADS.USERS}${BACKEND_API_ROADS.LOGIN}`
+}

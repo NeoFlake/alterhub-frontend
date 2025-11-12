@@ -1,1 +1,7 @@
-<p>authentification-page works!</p>
+<h1>Mawoui</h1>
+
+@if (authentificationMode === LOGIN) {
+    <login-form></login-form>
+} @else if(authentificationMode === CREATE_ACCOUNT) {
+    <create-account-form></create-account-form>
+}

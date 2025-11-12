@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-6 mb-5">
+
+        <h2 class="text-center mb-4">Créer un nouveau compte</h2>
+
+        <form [formGroup]="createAccountForm" (ngSubmit)="createAccount()" class="row justify-content-center">
+            <div class="col-6 ms-3 mt-3">
+                <label for="firstName" class="form-label">Prénom</label>
+                <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+            </div>
+            <div class="col-6 ms-3 mt-3">
+                <label for="lastName" class="form-label">Nom</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+            </div>
+            <div class="col-6 ms-3 mt-3">
+                <label for="playerName" class="form-label">Nom de Joueur</label>
+                <input type="text" class="form-control" id="playerName" formControlName="playerName" />
+            </div>
+            <div class="col-6 ms-3 mt-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email" />
+            </div>
+            <div class="col-6 ms-3 mt-3">
+                <label for="password" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control" id="password" formControlName="password" />
+            </div>
+            <div class="col-6 ms-3 mt-3">
+                <label for="confirmPassword" class="form-label">Confirmer votre mot de passe</label>
+                <input type="password" class="form-control" id="confirmPassword"
+                    formControlName="confirmPassword" />
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 mt-4 ms-4">
+                    <button type="submit" class="btn btn-primary px-4">Créer compte</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

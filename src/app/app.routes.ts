@@ -4,13 +4,16 @@ import { ADMINPAGE_ROAD, AUTHENTIFICATION_ROAD, STAR_TOKEN } from './constants/r
 import { AuthentificationPage } from './features/authentification/pages/authentification-page/authentification-page';
 
 export const routes: Routes = [
+    // Route lié à la vue administration
+    // TODO: Mettre en place la gestion du role pour permettre le filtrage
     { path: `${ADMINPAGE_ROAD}`, component: AdminPage },
-    {
-        path: `${AUTHENTIFICATION_ROAD.ROOT}`, component: AuthentificationPage,
-        children: [
-            { path: `${AUTHENTIFICATION_ROAD.LOGIN}`, component: AuthentificationPage },
-            { path: `${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`, component: AuthentificationPage },
-            { path: `${STAR_TOKEN}`, redirectTo: `${AUTHENTIFICATION_ROAD.LOGIN}`, pathMatch: "full" }
-        ]
-    }
+    // Routes liés à la vue d'authentification
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, component: AuthentificationPage },
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`, component: AuthentificationPage },
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}`, redirectTo: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, pathMatch: "full" },
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}/:anything`, redirectTo: `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}` },
+    // La racine redirige automatique vers l'authentification connexion
+    { path: "", redirectTo: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, pathMatch: "full" },
+    // Toute route invalide redirige vers l'authentification connexion
+    { path: `${STAR_TOKEN}`, redirectTo: `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}` }
 ];

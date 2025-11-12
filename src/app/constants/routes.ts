@@ -5,4 +5,4 @@ export const AUTHENTIFICATION_ROAD = {
     CREATE_ACCOUNT: "create-account"
 };
 
-export const STAR_TOKEN = "**";
+export const STAR_TOKEN = "**"

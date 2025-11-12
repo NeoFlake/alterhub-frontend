@@ -1,6 +1,11 @@
-import { User } from "./user";
-
-export interface UserRequest extends User {
+export interface UserRequest {
+    id?: string;
+    dateOfCreation: string;
+    email: string;
+    firstName: string;
+    lastModification: Date;
+    lastName: string;
+    playerName: string;
     password: string;
-    newPassword: string;
+    newPassword?: string;
 }
