@@ -6,7 +6,7 @@ import { switchMap, tap } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
+import { AUTHENTIFICATION_ROAD, HOMEPAGE_ROAD } from '../../../../constants/routes';
 
 @Component({
   selector: 'login-form',
@@ -40,12 +40,12 @@ export class LoginForm {
     this.formManager.login(credentials)
     .pipe(
       switchMap((userLogged: User) => {
-        console.log(userLogged);
+        localStorage.setItem("loggedInfo", JSON.stringify(userLogged));
         return this.formManager.accessGranted(userLogged);
       }),
       tap((accessGranted: boolean) => {
-        console.log(accessGranted);
-        this.router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.CREATE_ACCOUNT]);
+        localStorage.setItem("accessGranted", JSON.stringify(accessGranted));
+        this.router.navigate([HOMEPAGE_ROAD]);
       })
     )
     .subscribe({

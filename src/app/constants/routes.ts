@@ -4,5 +4,6 @@ export const AUTHENTIFICATION_ROAD = {
     LOGIN: "login",
     CREATE_ACCOUNT: "create-account"
 };
+export const HOMEPAGE_ROAD = "homepage";
 
 export const STAR_TOKEN = "**"
