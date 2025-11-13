@@ -35,8 +35,8 @@ export class FormManager {
     return this.userRepository.login(credentials);
   }
 
-  // public accessGranted(user: User): Observable<boolean> {
-    
-  // }
+  public accessGranted(user: User): Observable<boolean> {
+    return this.userRepository.accessGranted(user);
+  }
 
 }

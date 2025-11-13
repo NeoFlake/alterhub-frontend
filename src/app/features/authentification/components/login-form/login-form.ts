@@ -5,6 +5,8 @@ import { FormManager } from '../../services/form-manager';
 import { switchMap, tap } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
 
 @Component({
   selector: 'login-form',
@@ -16,6 +18,7 @@ export class LoginForm {
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private formManager: FormManager = inject(FormManager);
+  private router: Router = inject(Router);
 
   public loginForm: FormGroup;
 
@@ -37,9 +40,13 @@ export class LoginForm {
     this.formManager.login(credentials)
     .pipe(
       switchMap((userLogged: User) => {
-        this.formManager.
+        console.log(userLogged);
+        return this.formManager.accessGranted(userLogged);
       }),
-      tap()
+      tap((accessGranted: boolean) => {
+        console.log(accessGranted);
+        this.router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.CREATE_ACCOUNT]);
+      })
     )
     .subscribe({
       error: (httpErrorResponse: HttpErrorResponse) => console.error(httpErrorResponse.message)

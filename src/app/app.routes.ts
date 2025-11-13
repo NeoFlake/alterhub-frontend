@@ -8,8 +8,8 @@ export const routes: Routes = [
     // TODO: Mettre en place la gestion du role pour permettre le filtrage
     { path: `${ADMINPAGE_ROAD}`, component: AdminPage },
     // Routes liés à la vue d'authentification
-    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, component: AuthentificationPage },
-    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`, component: AuthentificationPage },
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, component: AuthentificationPage }, // Page de connexion
+    { path: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`, component: AuthentificationPage }, // Page de création de compte
     { path: `${AUTHENTIFICATION_ROAD.ROOT}`, redirectTo: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`, pathMatch: "full" },
     { path: `${AUTHENTIFICATION_ROAD.ROOT}/:anything`, redirectTo: `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}` },
     // La racine redirige automatique vers l'authentification connexion

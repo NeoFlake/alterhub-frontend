@@ -14,11 +14,15 @@ export class UserRepository {
   private http: HttpClient = inject(HttpClient);
 
   public createAccount(newUser: UserRequest): Observable<User> {
-    return this.http.post<User>(`${BACKEND_API_USERS.ROOT}`, newUser);
+    return this.http.post<User>(BACKEND_API_USERS.ROOT, newUser);
   }
 
   public login(credentials: UserAuthentification): Observable<User> {
-    return this.http.post<User>(`${BACKEND_API_USERS.LOGIN}`, credentials);
+    return this.http.post<User>(BACKEND_API_USERS.LOGIN, credentials);
+  }
+
+  public accessGranted(user: User): Observable<boolean> {
+    return this.http.post<boolean>(BACKEND_API_USERS.ACCESS_GRANTED, user);
   }
   
 }

@@ -1,7 +1,13 @@
-<h1>Mawoui</h1>
+<div class="row justify-content-center">
+  <div class="col-6 mt-5">
 
-@if (authentificationMode === LOGIN) {
+    <h2 class="text-center mb-4">{{ pageTitle }}</h2>
+
+    @if (authentificationMode === LOGIN) {
     <login-form></login-form>
-} @else if(authentificationMode === CREATE_ACCOUNT) {
+    } @else if(authentificationMode === CREATE_ACCOUNT) {
     <create-account-form></create-account-form>
-}
+    }
+    <switch-form-link [libelle]="redirectionLibelle" [redirectLink]="redirectLink" ></switch-form-link>
+  </div>
+</div>
