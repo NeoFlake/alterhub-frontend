@@ -1,22 +1,22 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" class="row justify-content-center">
   <div class="col-6 ms-3 mt-3">
-    <label for="email" class="form-label">Email</label>
+    <label for="email" class="form-label">{{ authentificationLibelle.INPUT.EMAIL }}</label>
     <input type="email" class="form-control" id="email" formControlName="email" 
     [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" />
     <invalid-feedback [formGroup]="loginForm" [controlName]="'email'"></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
-    <label for="password" class="form-label">Mot de passe</label>
+    <label for="password" class="form-label">{{ authentificationLibelle.INPUT.PASSWORD }}</label>
     <input type="password" class="form-control" id="password" formControlName="password" 
     [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" />
-    <span id="passwordHelpInline" class="form-text">
-      Minimum douze caractères, une majuscule, un chiffre, un caractère spécial
+    <span class="form-text">
+      {{ authentificationLibelle.PASSWORD_HELPER }}
     </span>
     <invalid-feedback [formGroup]="loginForm" [controlName]="'password'"></invalid-feedback>
   </div>
   <div class="row justify-content-center">
     <div class="col-4 mt-4 ms-4">
-      <button type="submit" class="btn btn-primary px-4" [disabled]="loginForm.invalid">Connexion</button>
+      <button type="submit" class="btn btn-primary px-4" [disabled]="loginForm.invalid">{{ authentificationLibelle.INPUT.LOGIN_BUTTON }}</button>
     </div>
   </div>
 </form>

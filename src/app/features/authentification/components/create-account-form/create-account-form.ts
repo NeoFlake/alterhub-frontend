@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
 import { Router } from '@angular/router';
 import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
+import { AUTHENTIFICATION_LIBELLE } from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'create-account-form',
@@ -28,6 +29,8 @@ export class CreateAccountForm {
   public email: FormControl<string>;
   public password: FormControl<string>;
   public confirmPassword: FormControl<string>;
+
+  public readonly authentificationLibelle = AUTHENTIFICATION_LIBELLE;
 
   constructor() {
     this.firstName = new FormControl<string>("", { nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(128)] });

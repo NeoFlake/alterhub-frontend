@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HOMEPAGE_ROAD } from '../../../../constants/routes';
 import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
+import { AUTHENTIFICATION_LIBELLE } from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'login-form',
@@ -25,6 +26,8 @@ export class LoginForm {
 
   public email: FormControl<string>;
   public password: FormControl<string>;
+
+  public readonly authentificationLibelle = AUTHENTIFICATION_LIBELLE;
 
   constructor(){
     this.email = new FormControl<string>("", {nonNullable: true, validators: [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]});
