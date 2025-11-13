@@ -1,31 +1,43 @@
 <form [formGroup]="createAccountForm" (ngSubmit)="createAccount()" class="row justify-content-center">
   <div class="col-6 ms-3 mt-3">
     <label for="firstName" class="form-label">Prénom</label>
-    <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+    <input type="text" class="form-control" id="firstName" formControlName="firstName" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'firstName'" ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="lastName" class="form-label">Nom</label>
-    <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+    <input type="text" class="form-control" id="lastName" formControlName="lastName" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'lastName'" ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="playerName" class="form-label">Nom de Joueur</label>
-    <input type="text" class="form-control" id="playerName" formControlName="playerName" />
+    <input type="text" class="form-control" id="playerName" formControlName="playerName" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'playerName'" ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="email" class="form-label">Email</label>
-    <input type="email" class="form-control" id="email" formControlName="email" />
+    <input type="email" class="form-control" id="email" formControlName="email" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'email'" ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="password" class="form-label">Mot de passe</label>
-    <input type="password" class="form-control" id="password" formControlName="password" />
+    <input type="password" class="form-control" id="password" formControlName="password" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'password'" ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="confirmPassword" class="form-label">Confirmer votre mot de passe</label>
-    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" />
+    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" 
+    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'confirmPassword'" ></invalid-feedback>
   </div>
   <div class="row justify-content-center">
     <div class="col-4 mt-4 ms-4">
-      <button type="submit" class="btn btn-primary px-4">Créer compte</button>
+      <button type="submit" class="btn btn-primary px-4" [disabled]="createAccountForm.invalid">Créer compte</button>
     </div>
   </div>
 </form>

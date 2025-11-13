@@ -6,11 +6,12 @@ import { switchMap, tap } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AUTHENTIFICATION_ROAD, HOMEPAGE_ROAD } from '../../../../constants/routes';
+import { HOMEPAGE_ROAD } from '../../../../constants/routes';
+import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
 
 @Component({
   selector: 'login-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InvalidFeedback],
   templateUrl: './login-form.html',
   styleUrl: './login-form.css',
 })

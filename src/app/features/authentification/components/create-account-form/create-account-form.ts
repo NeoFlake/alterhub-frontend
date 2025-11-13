@@ -4,10 +4,13 @@ import { FormManager } from '../../services/form-manager';
 import { tap } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { HttpErrorResponse } from '@angular/common/http';
+import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
+import { Router } from '@angular/router';
+import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
 
 @Component({
   selector: 'create-account-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InvalidFeedback],
   templateUrl: './create-account-form.html',
   styleUrl: './create-account-form.css',
 })
@@ -15,6 +18,7 @@ export class CreateAccountForm {
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private formManager: FormManager = inject(FormManager);
+  private router: Router = inject(Router);
 
   public createAccountForm: FormGroup;
 
@@ -44,22 +48,17 @@ export class CreateAccountForm {
   }
 
   public createAccount(): void {
-    if (this.createAccountForm.invalid) {
-      this.createAccountForm.markAllAsTouched(); // affiche les erreurs
-      return;
-    }
 
     let newUser: Partial<{ firstName: string, lastName: string, playerName: string, email: string, password: string, newPassword: string }> = this.createAccountForm.value;
-    console.log(newUser);
     this.formManager.createAccount(newUser)
-    .pipe(
-      tap((user: User) => {
-        console.log(user);
-      })
-    )
-    .subscribe({
-      error: (httpErrorResponse: HttpErrorResponse) => console.error(httpErrorResponse.message)
-    });
+      .pipe(
+        tap(() => {
+          this.router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.LOGIN]);
+        })
+      )
+      .subscribe({
+        error: (httpErrorResponse: HttpErrorResponse) => console.error(httpErrorResponse.message)
+      });
   }
 
 }
