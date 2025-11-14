@@ -1,0 +1,7 @@
+@if(data().statut !== ""){
+<div class="mt-3 alert" 
+[class.alert-info]="data().statut === authentificationStatut.SUCCESS"
+[class.alert-danger]="data().statut === authentificationStatut.ERROR" role="alert">
+  {{ message }}
+</div>
+}

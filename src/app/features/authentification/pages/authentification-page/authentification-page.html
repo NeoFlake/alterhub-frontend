@@ -4,10 +4,11 @@
     <h2 class="text-center mb-4">{{ pageTitle }}</h2>
 
     @if (authentificationMode === LOGIN) {
-    <login-form></login-form>
+    <login-form (feedbackPanelData)="handleFeedBackForm($event)" ></login-form>
     } @else if(authentificationMode === CREATE_ACCOUNT) {
-    <create-account-form></create-account-form>
+    <create-account-form (feedbackPanelData)="handleFeedBackForm($event)"></create-account-form>
     }
     <switch-form-link [libelle]="redirectionLibelle" [redirectLink]="redirectLink" ></switch-form-link>
+    <feedback-panel [data]="feedBackData()" ></feedback-panel>
   </div>
 </div>

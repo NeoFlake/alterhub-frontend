@@ -1,13 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output, OutputEmitterRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormManager } from '../../services/form-manager';
-import { tap } from 'rxjs';
+import { catchError, switchMap, tap, throwError, timer } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, httpResource } from '@angular/common/http';
 import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
 import { Router } from '@angular/router';
 import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
-import { AUTHENTIFICATION_LIBELLE } from '../../../../constants/authentification-page.constantes';
+import { AUTHENTIFICATION_LIBELLE, AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'create-account-form',
@@ -29,6 +29,9 @@ export class CreateAccountForm {
   public email: FormControl<string>;
   public password: FormControl<string>;
   public confirmPassword: FormControl<string>;
+
+  public feedbackPanelData: OutputEmitterRef<{ statut: string; codeRetour: number; message: string }> =
+    output<{ statut: string; codeRetour: number; message: string }>();
 
   public readonly authentificationLibelle = AUTHENTIFICATION_LIBELLE;
 
@@ -56,12 +59,24 @@ export class CreateAccountForm {
     this.formManager.createAccount(newUser)
       .pipe(
         tap(() => {
-          this.router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.LOGIN]);
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.SUCCESS, 
+            codeRetour: 200, 
+            message: FEEDBACK_PANEL_MESSAGES.CREATE_ACCOUNT_SUCCESS
+          });
+        }),
+        switchMap(() => timer(1500)),
+        tap(() => this.router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.LOGIN])),
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.ERROR, 
+            codeRetour: httpErrorResponse.error.status, 
+            message: httpErrorResponse.error.message
+          });
+          return [];
         })
       )
-      .subscribe({
-        error: (httpErrorResponse: HttpErrorResponse) => console.error(httpErrorResponse.message)
-      });
+      .subscribe();
   }
 
 }
