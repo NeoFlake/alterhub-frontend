@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../../../models/interfaces/users/user';
 import { UserAuthentification } from '../../../models/interfaces/users/userAuthentification';
 import { FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,8 @@ export class FormManager {
 
   private userRepository: UserRepository = inject(UserRepository);
 
-  public createAccount(user: Partial<{ firstName: string, lastName: string, playerName: string, email: string, password: string, newPassword: string }>): Observable<User> {
-
-    // Effectuer les controles de base avant mise en page de l'objet d'envoi ;)
-
+  public createAccount(user: Partial<{ firstName: string, lastName: string, playerName: string, email: string, password: string, confirmPassword: string }>): Observable<User> {
+    
     let now: Date = new Date();
 
     let newUser: UserRequest = {

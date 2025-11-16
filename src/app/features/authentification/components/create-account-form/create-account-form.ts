@@ -8,6 +8,7 @@ import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
 import { Router } from '@angular/router';
 import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
 import { AUTHENTIFICATION_LIBELLE, AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../../constants/authentification-page.constantes';
+import { confirmPasswordValidator } from '../../../../shared/validators/confirm-password.validator';
 
 @Component({
   selector: 'create-account-form',
@@ -30,6 +31,8 @@ export class CreateAccountForm {
   public password: FormControl<string>;
   public confirmPassword: FormControl<string>;
 
+  public revealPassword: boolean = false;
+
   public feedbackPanelData: OutputEmitterRef<{ statut: string; codeRetour: number; message: string }> =
     output<{ statut: string; codeRetour: number; message: string }>();
 
@@ -50,12 +53,15 @@ export class CreateAccountForm {
       email: this.email,
       password: this.password,
       confirmPassword: this.confirmPassword
-    });
+    },
+  {
+    validators: confirmPasswordValidator()
+  });
   }
 
   public createAccount(): void {
 
-    let newUser: Partial<{ firstName: string, lastName: string, playerName: string, email: string, password: string, newPassword: string }> = this.createAccountForm.value;
+    let newUser: Partial<{ firstName: string, lastName: string, playerName: string, email: string, password: string, confirmPassword: string }> = this.createAccountForm.value;
     this.formManager.createAccount(newUser)
       .pipe(
         tap(() => {
@@ -77,6 +83,14 @@ export class CreateAccountForm {
         })
       )
       .subscribe();
+  }
+
+  public showPassword(){
+    this.revealPassword = true;
+  }
+
+  public hidePassword(){
+    this.revealPassword = false;
   }
 
 }

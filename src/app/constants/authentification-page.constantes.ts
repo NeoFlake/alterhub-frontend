@@ -17,7 +17,11 @@ export const AUTHENTIFICATION_LIBELLE = {
     LOGIN: "Cliquez ici pour vous inscrire",
     CREATE_ACCOUNT: "Cliquez ici pour vous connecter",
     PASSWORD_HELPER: "Minimum douze caractères, une majuscule, un chiffre, un caractère spécial",
-    CONFIRM_PASSWORD_HELPER: "Doit correspondre parfaitement au mot de passe sélectionné"
+    CONFIRM_PASSWORD_HELPER: "Doit correspondre parfaitement au mot de passe sélectionné",
+    PASSWORD_MISSMATCH: "Les mots de passe doivent correspondre",
+    EYE_OPEN_PATH: "images/eye.png",
+    EYE_CLOSED_PATH: "images/eye-closed.png",
+    EYE_ALT: "image d'oeil"
 };
 
 export const AUTHENTIFICATION_STATUT = {

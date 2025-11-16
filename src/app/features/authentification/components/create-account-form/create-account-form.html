@@ -1,49 +1,120 @@
-<form [formGroup]="createAccountForm" (ngSubmit)="createAccount()" class="row justify-content-center">
+<form
+  [formGroup]="createAccountForm"
+  (ngSubmit)="createAccount()"
+  class="row justify-content-center"
+>
   <div class="col-6 ms-3 mt-3">
     <label for="firstName" class="form-label">{{ authentificationLibelle.INPUT.FIRSTNAME }}</label>
-    <input type="text" class="form-control" id="firstName" formControlName="firstName" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'firstName'" ></invalid-feedback>
+    <input
+      type="text"
+      class="form-control"
+      id="firstName"
+      formControlName="firstName"
+      [class.is-invalid]="
+        createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+      "
+    />
+    <invalid-feedback
+      [formGroup]="createAccountForm"
+      [controlName]="'firstName'"
+    ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="lastName" class="form-label">{{ authentificationLibelle.INPUT.LASTNAME }}</label>
-    <input type="text" class="form-control" id="lastName" formControlName="lastName" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'lastName'" ></invalid-feedback>
+    <input
+      type="text"
+      class="form-control"
+      id="lastName"
+      formControlName="lastName"
+      [class.is-invalid]="
+        createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+      "
+    />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'lastName'"></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
-    <label for="playerName" class="form-label">{{ authentificationLibelle.INPUT.PLAYERNAME }}</label>
-    <input type="text" class="form-control" id="playerName" formControlName="playerName" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'playerName'" ></invalid-feedback>
+    <label for="playerName" class="form-label">{{
+      authentificationLibelle.INPUT.PLAYERNAME
+    }}</label>
+    <input
+      type="text"
+      class="form-control"
+      id="playerName"
+      formControlName="playerName"
+      [class.is-invalid]="
+        createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+      "
+    />
+    <invalid-feedback
+      [formGroup]="createAccountForm"
+      [controlName]="'playerName'"
+    ></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="email" class="form-label">{{ authentificationLibelle.INPUT.EMAIL }}</label>
-    <input type="email" class="form-control" id="email" formControlName="email" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'email'" ></invalid-feedback>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+      [class.is-invalid]="
+        createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+      "
+    />
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'email'"></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
     <label for="password" class="form-label">{{ authentificationLibelle.INPUT.PASSWORD }}</label>
-    <input type="password" class="form-control" id="password" formControlName="password" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <div class="input-group">
+      <input
+        [type]="revealPassword ? 'text' : 'password'"
+        class="form-control"
+        id="password"
+        formControlName="password"
+        [class.is-invalid]="
+          createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+        "
+      />
+      <button id="eye-button" type="button" class="btn btn-outline-secondary"
+      (mousedown)="showPassword()"
+      (mouseup)="hidePassword()"
+      (mouseleave)="hidePassword()"
+      >
+        <img [src]="revealPassword ? authentificationLibelle.EYE_OPEN_PATH : authentificationLibelle.EYE_CLOSED_PATH" [alt]="authentificationLibelle.EYE_ALT" class="img-fluid" />
+      </button>
+    </div>
     <span class="form-text">
       {{ authentificationLibelle.PASSWORD_HELPER }}
     </span>
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'password'" ></invalid-feedback>
+    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'password'"></invalid-feedback>
   </div>
   <div class="col-6 ms-3 mt-3">
-    <label for="confirmPassword" class="form-label">{{ authentificationLibelle.INPUT.CONFIRM_PASSWORD }}</label>
-    <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" 
-    [class.is-invalid]="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid" />
+    <label for="confirmPassword" class="form-label">{{
+      authentificationLibelle.INPUT.CONFIRM_PASSWORD
+    }}</label>
+    <input
+      type="password"
+      class="form-control"
+      id="confirmPassword"
+      formControlName="confirmPassword"
+      [class.is-invalid]="
+        createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid
+      "
+    />
     <span class="form-text">
       {{ authentificationLibelle.CONFIRM_PASSWORD_HELPER }}
     </span>
-    <invalid-feedback [formGroup]="createAccountForm" [controlName]="'confirmPassword'" ></invalid-feedback>
+    @if (createAccountForm.errors?.['passwordMismatch']) {
+    <div class="invalid-feedback d-block">
+      {{ authentificationLibelle.PASSWORD_MISSMATCH }}
+    </div>
+    }
   </div>
   <div class="row justify-content-center">
     <div class="col-4 mt-4 ms-4">
-      <button type="submit" class="btn btn-primary px-4" [disabled]="createAccountForm.invalid">{{ authentificationLibelle.INPUT.CREATE_ACCOUNT_BUTTON }}</button>
+      <button type="submit" class="btn btn-primary px-4" [disabled]="createAccountForm.invalid">
+        {{ authentificationLibelle.INPUT.CREATE_ACCOUNT_BUTTON }}
+      </button>
     </div>
   </div>
 </form>
