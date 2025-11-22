@@ -6,4 +6,6 @@ export const AUTHENTIFICATION_ROAD = {
 };
 export const HOMEPAGE_ROAD = "homepage";
 
+export const USER_ROAD = "profile"
+
 export const STAR_TOKEN = "**"

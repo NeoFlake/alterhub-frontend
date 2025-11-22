@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs mb-3">
+  @for (tab of tabs; track tab.id) {
+    <tab-button 
+      [isActive]="tab.id === tabActive()" 
+      [tab]="tab" 
+      (selected)="switchTab($event)" />
+  }
+</ul>
+
+<div class="tab-content">
+  @for (tab of tabs; track tab.id) { 
+    @if (tab.loaded()) {
+      <tab-panel 
+        [component]="tab.component" 
+        [isActive]="tab.id === tabActive()" 
+        [isLoaded]="tab.loaded()" />
+    } 
+  }
+</div>

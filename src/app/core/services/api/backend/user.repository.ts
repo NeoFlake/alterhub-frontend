@@ -13,6 +13,10 @@ export class UserRepository {
 
   private http: HttpClient = inject(HttpClient);
 
+  public getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${BACKEND_API_USERS.ROOT}/${id}`);
+  }
+
   public createAccount(newUser: UserRequest): Observable<User> {
     return this.http.post<User>(BACKEND_API_USERS.ROOT, newUser);
   }

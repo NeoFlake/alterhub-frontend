@@ -1,0 +1,11 @@
+<li class="nav-item" role="presentation">
+  <button
+    class="nav-link"
+    [class.active]="isActive()"
+    (click)="select()"
+    role="tab"
+    [attr.aria-selected]="isActive()"
+  >
+    {{ tab().title }}
+  </button>
+</li>
