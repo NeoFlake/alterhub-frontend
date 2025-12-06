@@ -37,3 +37,5 @@ export const FEEDBACK_PANEL_MESSAGES = {
     BACK_ERROR: "Le serveur a rencontré un problème, veuillez rééssayer ",
     EXCEPTION_ERROR: "Un problème imprévu c'est produit lors de la procédure, veuillez recommencer"
 };
+
+export const KEY_ACCESS = 'app_access_token';

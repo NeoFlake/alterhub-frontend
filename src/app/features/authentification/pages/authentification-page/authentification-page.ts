@@ -32,7 +32,7 @@ export class AuthentificationPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.authentificationMode = this.route.snapshot.url.map((segment: UrlSegment) => segment.path)[1];
+    this.authentificationMode = this.route.snapshot.url.map((segment: UrlSegment) => segment.path)[0];
     if(this.authentificationMode === this.CREATE_ACCOUNT){
       this.pageTitle = TITLE_PAGE.CREATE_ACCOUNT;
       this.redirectionLibelle = AUTHENTIFICATION_LIBELLE.CREATE_ACCOUNT;

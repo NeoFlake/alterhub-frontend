@@ -1,1 +1,17 @@
-<p>user-profile works!</p>
+<div class="container">
+    <div>
+        Nom: {{ userData.lastName }}
+    </div>
+    <div>
+        Prénom: {{ userData.firstName }}
+    </div>
+    <div>
+        Mail : {{ userData.email }}
+    </div>
+    <div>
+        Inscrit depuis le {{ userData.dateOfCreation | readableDate }}
+    </div>
+    <div>
+        Dernière mise à jour du profil le {{ userData.lastModification| readableDate }}
+    </div>
+</div>

@@ -6,6 +6,8 @@ import { User } from '../../../models/interfaces/users/user';
 import { UserAuthentification } from '../../../models/interfaces/users/userAuthentification';
 import { FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthResponse } from '../../../models/interfaces/authentication/authResponse';
+import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +33,7 @@ export class FormManager {
     return this.userRepository.createAccount(newUser);
   }
 
-  public login(credentials: UserAuthentification): Observable<User> {
+  public login(credentials: UserAuthentification): Observable<AuthResponse> {
     return this.userRepository.login(credentials);
   }
 

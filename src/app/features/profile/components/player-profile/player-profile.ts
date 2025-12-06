@@ -1,8 +1,10 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, effect, inject, OnDestroy, WritableSignal } from '@angular/core';
 import { PlayerProfileFacade } from '../../services/player-profile-facade';
 import { User } from '../../../../models/interfaces/users/user';
-import { Subject, takeUntil, tap } from 'rxjs';
+import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 import { Player } from '../../../../models/interfaces/api/player';
+import { StateService } from '../../../../core/services/state/state-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'player-profile',
@@ -13,22 +15,28 @@ import { Player } from '../../../../models/interfaces/api/player';
 export class PlayerProfile implements OnDestroy {
 
   public playerProfileFacade: PlayerProfileFacade = inject(PlayerProfileFacade);
+  public stateService: StateService = inject(StateService);
 
-  public userLogged: User;
+  public userLogged: WritableSignal<User> = this.stateService.userLogged;
 
   private unsubscriber$ = new Subject<void>();
 
+  public playerData!: Player | null;
+
   constructor(){
-
-    console.log(localStorage.getItem("loggedInfo")!);
-
-    this.userLogged = JSON.parse(localStorage.getItem("loggedInfo")!);
-    this.playerProfileFacade.getPlayerByUserId(this.userLogged.id)
-    .pipe(
-      tap((player: Player) => console.log(player)),
-      takeUntil(this.unsubscriber$)
-    )
-    .subscribe();
+        this.playerProfileFacade.getPlayerByUserId(this.userLogged().id)
+          .pipe(
+            tap((player: Player) => {
+              this.playerData = player ?? null;
+            }),
+            catchError((httpErrorResponse : HttpErrorResponse) => {
+              console.log(httpErrorResponse);
+              this.playerData = null;
+              return of(null);
+            }),
+            takeUntil(this.unsubscriber$)
+          )
+          .subscribe();
   }
 
   ngOnDestroy() {

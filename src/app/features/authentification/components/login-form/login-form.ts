@@ -19,6 +19,9 @@ import {
   AUTHENTIFICATION_STATUT,
   FEEDBACK_PANEL_MESSAGES,
 } from '../../../../constants/authentification-page.constantes';
+import { StateService } from '../../../../core/services/state/state-service';
+import { AuthResponse } from '../../../../models/interfaces/authentication/authResponse';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'login-form',
@@ -30,6 +33,8 @@ export class LoginForm implements OnDestroy {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private formManager: FormManager = inject(FormManager);
   private router: Router = inject(Router);
+  private stateService: StateService = inject(StateService);
+  private authService: AuthService = inject(AuthService);
 
   public loginForm: FormGroup;
 
@@ -80,18 +85,18 @@ export class LoginForm implements OnDestroy {
     this.formManager
       .login(credentials)
       .pipe(
-        switchMap((userLogged: User) => {
-          localStorage.setItem('loggedInfo', JSON.stringify(userLogged));
-          return this.formManager.accessGranted(userLogged);
+        tap((authResponse: AuthResponse) => {
+          // On met à jour l'userLogged de l'application pour pouvoir l'utiliser dans le reste de celle-ci
+          // Important car cela préserve des appels multiple à la table pour pas grand chose à y gagner
+          this.stateService.updateUser(authResponse.user);
+          // Puis on exécute notre mise à place de la validation du login à partir du service d'authentification
+          this.authService.login(authResponse)
         }),
-        tap((accessGranted: boolean) => {
-          localStorage.setItem('accessGranted', JSON.stringify(accessGranted));
-          this.feedbackPanelData.emit({
+        tap(() => this.feedbackPanelData.emit({
             statut: AUTHENTIFICATION_STATUT.SUCCESS,
             codeRetour: 200,
             message: FEEDBACK_PANEL_MESSAGES.LOGIN_SUCCESS,
-          });
-        }),
+          })),
         switchMap(() => timer(1500)),
         tap(() => {
           this.router.navigate([HOMEPAGE_ROAD]);

@@ -1,1 +1,22 @@
-<p>player-profile works!</p>
+@if (playerData){
+<div class="container">
+  <p>{{ playerData.name }}</p>
+  <h2>Vos decks</h2>
+  @if (playerData.decks.length) {
+  <!-- Créer la zone d'apparition des decks ici -->
+  } @else {
+  <!-- Ajouter un bouton pour partir sur la vue de création des decks -->
+  <p>Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un</p>
+  }
+
+  <h2>Vos performances mémorable durant des tournois</h2>
+  @if (playerData.participants.length){
+  <!-- Créer la zone d'apparition des participations à un tournois ici -->
+  } @else {
+  <p>
+    Vous n'avez aucune performances mémorable actuellement, cliquez ici (bouton dirigeant sur BGA)
+    pour démarrer votre légende
+  </p>
+  }
+</div>
+}
