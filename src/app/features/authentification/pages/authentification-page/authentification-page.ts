@@ -5,7 +5,7 @@ import { LoginForm } from '../../components/login-form/login-form';
 import { CreateAccountForm } from '../../components/create-account-form/create-account-form';
 import { SwitchFormLink } from '../../components/switch-form-link/switch-form-link';
 import { AUTHENTIFICATION_LIBELLE, TITLE_PAGE } from '../../../../constants/authentification-page.constantes';
-import { FeedbackPanel } from '../../components/feedback-panel/feedback-panel';
+import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
 
 @Component({
   selector: 'app-authentification-page',

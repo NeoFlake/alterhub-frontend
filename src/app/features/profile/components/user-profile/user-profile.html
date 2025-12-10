@@ -1,17 +1,17 @@
 <div class="container">
     <div>
-        Nom: {{ userData.lastName }}
+        Nom: {{ userData().lastName }}
     </div>
     <div>
-        Prénom: {{ userData.firstName }}
+        Prénom: {{ userData().firstName }}
     </div>
     <div>
-        Mail : {{ userData.email }}
+        Mail : {{ userData().email }}
     </div>
     <div>
-        Inscrit depuis le {{ userData.dateOfCreation | readableDate }}
+        Inscrit depuis le {{ userData().dateOfCreation | readableDate }}
     </div>
     <div>
-        Dernière mise à jour du profil le {{ userData.lastModification| readableDate }}
+        Dernière mise à jour du profil le {{ userData().lastModification| readableDate }}
     </div>
 </div>

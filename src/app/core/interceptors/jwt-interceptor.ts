@@ -8,10 +8,9 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
   const accessToken = authService.getAccessToken();
 
-  if (req.url.includes(`${BACKEND_API_USERS.ROOT}${BACKEND_API_USERS.LOGIN}`) || req.url.includes(`${BACKEND_API_USERS.ROOT}${BACKEND_API_USERS.REFRESH_TOKEN}`)) {
+  if (req.url.includes(BACKEND_API_USERS.REGISTER) || req.url.includes(BACKEND_API_USERS.LOGIN) || req.url.includes(BACKEND_API_USERS.REFRESH_TOKEN)) {
     return next(req); 
   }
-
   if (!accessToken) return next(req);
 
   if (authService.isTokenExpiringSoon()) {

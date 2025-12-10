@@ -9,7 +9,7 @@ import {
 import { FormManager } from '../../services/form-manager';
 import { catchError, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
+import { InvalidFeedback } from '../../../../shared/components/invalid-feedback/invalid-feedback';
 import { Router } from '@angular/router';
 import { AUTHENTIFICATION_ROAD } from '../../../../constants/routes';
 import {
@@ -110,14 +110,15 @@ export class CreateAccountForm implements OnDestroy {
   }
 
   public createAccount(): void {
+
     let newUser: Partial<{
       firstName: string;
       lastName: string;
       playerName: string;
       email: string;
       password: string;
-      confirmPassword: string;
     }> = this.createAccountForm.value;
+    
     this.formManager
       .createAccount(newUser)
       .pipe(
@@ -143,11 +144,11 @@ export class CreateAccountForm implements OnDestroy {
       .subscribe();
   }
 
-  public showPassword() {
+  public showPassword(): void {
     this.revealPassword = true;
   }
 
-  public hidePassword() {
+  public hidePassword(): void {
     this.revealPassword = false;
   }
 }

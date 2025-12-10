@@ -7,5 +7,5 @@ export interface UserRequest {
     lastName: string;
     playerName: string;
     password: string;
-    newPassword?: string;
+    newPassword?: string|null;
 }

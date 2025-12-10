@@ -14,8 +14,6 @@ import { StateService } from '../state/state-service';
 export class AuthService {
   private userRepository: UserRepository = inject(UserRepository);
 
-  private stateService: StateService = inject(StateService);
-
   private accessToken: WritableSignal<string | null> = signal<string | null>(
     this.readAccessTokenFromStorage()
   );
@@ -28,7 +26,6 @@ export class AuthService {
   private refreshInProgress: boolean = false;
   private refreshPromise: Promise<boolean> | null = null;
   private refreshUser: Promise<boolean> | null = null;
-  private refreshUserInProgress: boolean = false;
 
   public async refreshToken(): Promise<boolean> {
     if (this.refreshInProgress && this.refreshPromise) {
@@ -46,6 +43,7 @@ export class AuthService {
         }),
         catchError(() => {
           this.logout();
+          this.userRepository.logout();
           return of(false);
         }),
         finalize(() => {
@@ -142,31 +140,11 @@ export class AuthService {
     return this.refreshToken();
   }
 
-  public refreshUserLogged(): Promise<boolean> {
-    if (this.refreshUserInProgress && this.refreshUser) {
-      return this.refreshUser;
-    }
-
-    this.refreshUserInProgress = true;
-
-    // Pas besoin de vérifier car si on utilise cette méthode c'est que l'user a un token frais
-    const payload: Jwt = this.decodePayload(this.accessToken())!;
-
-    this.refreshUser = firstValueFrom(
-      this.userRepository.getUserById(payload.sub).pipe(
-        map((user: User) => {
-        this.stateService.updateUser(user);
-        return true;
-      }),
-      catchError(() => of(false)),
-        finalize(() => {
-          this.refreshUserInProgress = false;
-          this.refreshUser = null;
-        })
-      )
-    );
-
-    return this.refreshUser;   
+  public async getJwtUserId(): Promise<string> {
+    await this.ensureValidToken();
+    // Le fait que ensureValidToken nous déconnecte si le refresher est périmé
+    // nous assure que nous avons rafraichit le jwt au moment où on renvoit son userId
+    return this.decodePayload(this.accessToken())!.sub!;
   }
 
 }

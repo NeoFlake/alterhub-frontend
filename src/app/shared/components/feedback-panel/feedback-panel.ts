@@ -1,5 +1,5 @@
 import { Component, effect, input, InputSignal, OnInit } from '@angular/core';
-import { AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../../constants/authentification-page.constantes';
+import { AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'feedback-panel',

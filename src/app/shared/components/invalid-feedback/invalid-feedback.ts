@@ -1,6 +1,7 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
-import { FormManager } from '../../services/form-manager';
+import { FormManager } from '../../../features/authentification/services/form-manager';
 import { FormGroup } from '@angular/forms';
+import { InvalidFeedbackManager } from '../../../core/services/form/invalid-feedback-manager';
 
 @Component({
   selector: 'invalid-feedback',
@@ -10,13 +11,13 @@ import { FormGroup } from '@angular/forms';
 })
 export class InvalidFeedback {
 
-  public formManager: FormManager = inject(FormManager);
+  public invalidFeedbackManager: InvalidFeedbackManager = inject(InvalidFeedbackManager);
 
   public formGroup: InputSignal<FormGroup> = input.required<FormGroup>();
   public controlName: InputSignal<string> = input.required<string>();
 
   getFormControlErrors(controlName: string): Array<string> {
-    return this.formManager.getFormControlErrors(this.formGroup(), controlName);
+    return this.invalidFeedbackManager.getFormControlErrors(this.formGroup(), controlName);
   }
 
 }

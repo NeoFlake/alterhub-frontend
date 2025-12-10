@@ -9,11 +9,10 @@ import {
 import { UserAuthentification } from '../../../../models/interfaces/users/userAuthentification';
 import { FormManager } from '../../services/form-manager';
 import { catchError, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
-import { User } from '../../../../models/interfaces/users/user';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { HOMEPAGE_ROAD } from '../../../../constants/routes';
-import { InvalidFeedback } from '../invalid-feedback/invalid-feedback';
+import { InvalidFeedback } from '../../../../shared/components/invalid-feedback/invalid-feedback';
 import {
   AUTHENTIFICATION_LIBELLE,
   AUTHENTIFICATION_STATUT,

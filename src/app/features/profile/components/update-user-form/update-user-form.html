@@ -1,0 +1,151 @@
+<form [formGroup]="updateUserForm" (ngSubmit)="updateUser()" class="row">
+      <div class="col-6 ms-3 mt-3">
+        <label for="firstName" class="form-label">{{
+          authentificationLibelle.INPUT.FIRSTNAME
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          formControlName="firstName"
+          [class.is-invalid]="
+            updateUserForm.get('firstName')?.touched && updateUserForm.get('firstName')?.invalid
+          "
+        />
+        <invalid-feedback
+          [formGroup]="updateUserForm"
+          [controlName]="'firstName'"
+        ></invalid-feedback>
+      </div>
+
+      <div class="col-6 ms-3 mt-3">
+        <label for="lastName" class="form-label">{{
+          authentificationLibelle.INPUT.LASTNAME
+        }}</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          formControlName="lastName"
+          [class.is-invalid]="
+            updateUserForm.get('lastName')?.touched && updateUserForm.get('lastName')?.invalid
+          "
+        />
+        <invalid-feedback
+          [formGroup]="updateUserForm"
+          [controlName]="'lastName'"
+        ></invalid-feedback>
+      </div>
+
+      <div class="col-6 ms-3 mt-3">
+        <label for="email" class="form-label">{{ authentificationLibelle.INPUT.EMAIL }}</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          [class.is-invalid]="
+            updateUserForm.get('email')?.touched && updateUserForm.get('email')?.invalid
+          "
+        />
+        <invalid-feedback [formGroup]="updateUserForm" [controlName]="'email'"></invalid-feedback>
+      </div>
+
+      <div class="col-6 ms-3 mt-3">
+        <label for="password" class="form-label">{{
+          authentificationLibelle.INPUT.PASSWORD
+        }}</label>
+        <div class="input-group">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            formControlName="password"
+            [class.is-invalid]="
+              updateUserForm.get('password')?.touched && updateUserForm.get('password')?.invalid
+            "
+          />
+        </div>
+        <span class="form-text">
+          {{ authentificationLibelle.PASSWORD_HELPER }}
+        </span>
+        <invalid-feedback
+          [formGroup]="updateUserForm"
+          [controlName]="'password'"
+        ></invalid-feedback>
+      </div>
+
+      <div class="col-6 ms-3 mt-3">
+        <label for="newPassword" class="form-label">{{
+          authentificationLibelle.INPUT.NEW_PASSWORD
+        }}</label>
+        <div class="input-group">
+          <input
+            [type]="revealPassword ? 'text' : 'password'"
+            class="form-control"
+            id="newPassword"
+            formControlName="newPassword"
+            [class.is-invalid]="
+              updateUserForm.get('newPassword')?.touched &&
+              updateUserForm.get('newPassword')?.invalid
+            "
+          />
+          <button
+            id="eye-button"
+            type="button"
+            class="btn btn-outline-secondary"
+            (mousedown)="showPassword()"
+            (mouseup)="hidePassword()"
+            (mouseleave)="hidePassword()"
+          >
+            <img
+              [src]="
+                revealPassword
+                  ? authentificationLibelle.EYE_OPEN_PATH
+                  : authentificationLibelle.EYE_CLOSED_PATH
+              "
+              [alt]="authentificationLibelle.EYE_ALT"
+              class="img-fluid"
+            />
+          </button>
+        </div>
+        <span class="form-text">
+          {{ authentificationLibelle.PASSWORD_HELPER }}
+        </span>
+        <invalid-feedback
+          [formGroup]="updateUserForm"
+          [controlName]="'newPassword'"
+        ></invalid-feedback>
+      </div>
+
+      <div class="col-6 ms-3 mt-3">
+        <label for="confirmNewPassword" class="form-label">{{
+          authentificationLibelle.INPUT.CONFIRM_NEW_PASSWORD
+        }}</label>
+        <input
+          type="password"
+          class="form-control"
+          id="confirmNewPassword"
+          formControlName="confirmNewPassword"
+          [class.is-invalid]="
+            updateUserForm.get('confirmNewPassword')?.touched &&
+            updateUserForm.get('confirmNewPassword')?.invalid
+          "
+        />
+        <span class="form-text">
+          {{ authentificationLibelle.CONFIRM_PASSWORD_HELPER }}
+        </span>
+        @if (updateUserForm.errors?.['passwordMismatch']) {
+        <div class="invalid-feedback d-block">
+          {{ authentificationLibelle.PASSWORD_MISSMATCH }}
+        </div>
+        }
+      </div>
+      <div class="row">
+        <div class="col-6 mt-4 ms-4">
+          <button type="submit" class="btn btn-primary px-4" [disabled]="updateUserForm.invalid">
+            {{ authentificationLibelle.INPUT.UPDATE_ACCOUNT }}
+          </button>
+        </div>
+      </div>
+    </form>

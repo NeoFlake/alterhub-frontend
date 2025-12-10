@@ -11,10 +11,8 @@ export const authGuard: CanActivateFn = async () => {
 
   if (authService.isAuthenticated()) {
     if(!stateService.verifyExistenceOfUserStated()){
-      const userDownload: boolean = await authService.refreshUserLogged();
-      if(userDownload){
+      await stateService.refreshUserLogged();
         return true;
-      }
     } else {
       return true;
     }
@@ -24,10 +22,8 @@ export const authGuard: CanActivateFn = async () => {
 
   if (valid) {
     if(!stateService.verifyExistenceOfUserStated()){
-      const userDownload: boolean = await authService.refreshUserLogged();
-      if(userDownload){
-        return true;
-      }
+      await stateService.refreshUserLogged();
+      return true;
     } else {
       return true;
     }

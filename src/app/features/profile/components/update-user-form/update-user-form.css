@@ -1,0 +1,12 @@
+#eye-button {
+    width: 20%;
+}
+
+img {
+    width: 60%;
+    pointer-events: none;
+}
+
+.btn-outline-secondary {
+    border-color: #DEE2E6;
+}

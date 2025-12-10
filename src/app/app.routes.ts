@@ -39,15 +39,15 @@ export const routes: Routes = [
   { path: HOMEPAGE_ROAD, component: HomePage },
   // Route lié à la page personnelle de l'utilisateur
   { path: USER_ROAD, component: UserPage, canActivate: [authGuard] },
-  // La racine redirige automatique vers l'authentification connexion
+  // La racine redirige automatiquement vers la page d'accueil (homepage)
   {
     path: '',
-    redirectTo: `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`,
+    redirectTo: `${HOMEPAGE_ROAD}`,
     pathMatch: 'full',
   },
-  // Toute route invalide redirige vers l'authentification connexion
+  // Toute route invalide redirige automatiquement vers la page d'accueil (homepage)
   {
     path: `${STAR_TOKEN}`,
-    redirectTo: `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`,
+    redirectTo: `${HOMEPAGE_ROAD}`,
   },
 ];

@@ -1,1 +1,9 @@
-<p>user-management works!</p>
+<div class="row">
+  <div class="col-6">
+    <update-user-form (feedbackPanelData)="handleFeedBackForm($event)"></update-user-form>
+    <feedback-panel [data]="feedBackData()"></feedback-panel>
+  </div>
+  <div class="col-6">
+    <button type="button" class="btn btn-danger px-4" (click)="deleteUser()">{{ userManagerLibelle.DELETE_ACCOUNT_BUTTON }}</button>
+  </div>
+</div>
