@@ -1,0 +1,7 @@
+a {
+    cursor: pointer;
+}
+
+li.active a {
+    cursor: default;
+}

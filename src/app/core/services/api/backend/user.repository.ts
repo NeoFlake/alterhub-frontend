@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UserRequest } from '../../../../models/interfaces/users/userRequest';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { BACKEND_API_USERS } from '../../../../constants/backend-api-road';
 import { UserAuthentification } from '../../../../models/interfaces/users/userAuthentification';

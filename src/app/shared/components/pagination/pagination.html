@@ -1,0 +1,69 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" [style.display]="page().first ? 'none' : 'block'">
+      <a class="page-link" (click)="onPageSelect(page().number - 2)">< précédent</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === 0" (click)="onPageSelect(0)">
+      <a class="page-link">1</a>
+    </li>
+    @if(page().number <= 3){
+    <li class="page-item" [class.active]="page().number === 1">
+      <a class="page-link" (click)="onPageSelect(1)">2</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === 2">
+      <a class="page-link" (click)="onPageSelect(2)">3</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === 3">
+      <a class="page-link" (click)="onPageSelect(3)">4</a>
+    </li>
+    <li class="page-item"><a class="page-link" (click)="onPageSelect(4)">5</a></li>
+    <li class="page-item disabled"><a class="page-link">...</a></li>
+    } @else if (page().number <= page().totalPages - 5) {
+    <li class="page-item disabled"><a class="page-link">...</a></li>
+    <li class="page-item">
+      <a class="page-link" (click)="onPageSelect(page().number - 2)">{{
+        page().number
+      }}</a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link">{{ page().number + 1 }}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="onPageSelect(page().number + 1)">{{
+        page().number + 2
+      }}</a>
+    </li>
+    <li class="page-item disabled"><a class="page-link">...</a></li>
+    } @else {
+    <li class="page-item disabled"><a class="page-link">...</a></li>
+    <li class="page-item" [class.active]="page().number === page().totalPages - 5">
+      <a class="page-link" (click)="onPageSelect(page().totalPages - 5)">{{
+        page().totalPages - 4
+      }}</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === page().totalPages - 4">
+      <a class="page-link" (click)="onPageSelect(page().totalPages - 4)">{{
+        page().totalPages - 3
+      }}</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === page().totalPages - 3">
+      <a class="page-link" (click)="onPageSelect(page().totalPages - 3)">{{
+        page().totalPages - 2
+      }}</a>
+    </li>
+    <li class="page-item" [class.active]="page().number === page().totalPages - 2">
+      <a class="page-link" (click)="onPageSelect(page().totalPages - 2)">{{
+        page().totalPages - 1
+      }}</a>
+    </li>
+    }
+    <li class="page-item" [class.active]="page().number === page().totalPages - 1">
+      <a class="page-link" (click)="onPageSelect(page().totalPages - 1)">{{
+        page().totalPages
+      }}</a>
+    </li>
+    <li class="page-item" [style.display]="page().last ? 'none' : 'block'">
+      <a class="page-link" (click)="onPageSelect(page().number + 1)">suivant ></a>
+    </li>
+  </ul>
+</nav>

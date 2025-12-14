@@ -1,2 +1,21 @@
-<button (click)="goToProfile()" class="btn btn-primary">Aller sur le profil</button>
-<button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+<div>
+  <button (click)="goToProfile()" class="btn btn-primary">Aller sur le profil</button>
+  <button (click)="logout()" class="btn btn-danger">Déconnexion</button>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    @for (card of pageCards().content; track $index) {
+    <img
+      [src]="getCardImageUrl(card.image)"
+      alt="Une bien belle image altered"
+      style="display: inline; width: calc((100% - 80px) / 4); margin: 10px; border-radius: 10px"
+    />
+    }
+  </div>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="col-6 d-flex justify-content-center">
+    <pagination [page]="pageCards()" (pageSelect)="onPageSelect($event)" ></pagination>
+  </div>
+</div>

@@ -10,9 +10,9 @@ export const roleGuard: CanActivateFn = () => {
   const router: Router = inject(Router);
 
   const token = authService.getAccessToken();
-
+  
   if(!token){
-    router.parseUrl(`${AUTHENTIFICATION_ROAD.ROOT}${AUTHENTIFICATION_ROAD.LOGIN}`);
+    router.navigate([AUTHENTIFICATION_ROAD.ROOT, AUTHENTIFICATION_ROAD.LOGIN]);
     return false;
   }
 
@@ -21,11 +21,11 @@ export const roleGuard: CanActivateFn = () => {
     authService.logout();
     return false;
   }
-
+  
   if(jwt.accessGranted){
     return true;
   }
 
-  router.parseUrl(`${HOMEPAGE_ROAD}`);
+  router.navigate([HOMEPAGE_ROAD]);
   return false;
 };
