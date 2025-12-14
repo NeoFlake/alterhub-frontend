@@ -1,12 +1,10 @@
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { catchError, finalize, firstValueFrom, map, Observable, of } from 'rxjs';
+import { catchError, finalize, firstValueFrom, map, of } from 'rxjs';
 import { UserRepository } from '../api/backend/user.repository';
 import { AuthResponse } from '../../../models/interfaces/authentication/authResponse';
 import { KEY_ACCESS } from '../../../constants/authentification-page.constantes';
 import { JwtPayload } from '../../../models/interfaces/authentication/jwt-payload';
 import { Jwt } from '../../../models/interfaces/authentication/jwt';
-import { User } from '../../../models/interfaces/users/user';
-import { StateService } from '../state/state-service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +23,6 @@ export class AuthService {
 
   private refreshInProgress: boolean = false;
   private refreshPromise: Promise<boolean> | null = null;
-  private refreshUser: Promise<boolean> | null = null;
 
   public async refreshToken(): Promise<boolean> {
     if (this.refreshInProgress && this.refreshPromise) {
@@ -145,6 +142,18 @@ export class AuthService {
     // Le fait que ensureValidToken nous déconnecte si le refresher est périmé
     // nous assure que nous avons rafraichit le jwt au moment où on renvoit son userId
     return this.decodePayload(this.accessToken())!.sub!;
+  }
+
+  public isAccessGrantedForUser(): boolean {
+    // Le fait que l'on valide la réalité du jeton à chaque appel avec l'interceptor
+    // Certifie que si quelque chose ne va pas nous sommes déconnecté depuis longtempssss
+    return this.decodePayload(this.accessToken())!.accessGranted;
+  }
+
+  public isAccessRefuseForUser(): boolean {
+    // Le fait que l'on valide la réalité du jeton à chaque appel avec l'interceptor
+    // Certifie que si quelque chose ne va pas nous sommes déconnecté depuis longtempssss
+    return this.decodePayload(this.accessToken())!.accessGranted === false;
   }
 
 }

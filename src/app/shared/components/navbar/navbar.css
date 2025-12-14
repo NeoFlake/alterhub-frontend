@@ -1,0 +1,7 @@
+.translation-centrage {
+    transform: translateX(-40px);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

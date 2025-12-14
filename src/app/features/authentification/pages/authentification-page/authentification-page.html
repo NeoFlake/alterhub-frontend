@@ -1,7 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col-6 mt-5">
-
-    <h2 class="text-center mb-4">{{ pageTitle }}</h2>
+  <div class="col-6 mt-3">
 
     @if (authentificationMode === LOGIN) {
     <login-form (feedbackPanelData)="handleFeedBackForm($event)" ></login-form>

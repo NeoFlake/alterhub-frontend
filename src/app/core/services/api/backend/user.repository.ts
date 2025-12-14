@@ -15,7 +15,7 @@ export class UserRepository {
   private http: HttpClient = inject(HttpClient);
 
   public getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${BACKEND_API_USERS.ROOT}/${id}`);
+    return this.http.get<User>(`${BACKEND_API_USERS.ROOT}/${id}`, { headers: { 'x-skip-interceptor': 'true' } });
   }
 
   public createAccount(newUser: UserRequest): Observable<User> {
@@ -43,7 +43,7 @@ export class UserRepository {
   }
 
   public refreshToken(): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(BACKEND_API_USERS.REFRESH_TOKEN, null, { withCredentials: true });
+    return this.http.post<AuthResponse>(BACKEND_API_USERS.REFRESH_TOKEN, null, { withCredentials: true, headers: { 'x-skip-interceptor': 'true' } });
   }
   
 }

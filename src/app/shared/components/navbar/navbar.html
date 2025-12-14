@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/homepage">
+      <img src="/images/alterhub_logo.png" height="100" width="85" />
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ libelles.DECK.ROOT }}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">{{ libelles.DECK.READ }}</a></li>
+            @if(authService.isAuthenticated()){
+            <li><a class="dropdown-item" href="#">{{ libelles.DECK.CREATE }}</a></li>
+            }
+          </ul>
+        </li>
+        @if(authService.isAuthenticated() && authService.isAccessGrantedForUser()){
+        <li class="nav-item">
+          <a class="nav-link" href="/admin">{{ libelles.ADMIN }}</a>
+        </li>
+        }
+      </ul>
+
+      <span class="navbar-text fw-bold fs-5 d-none d-lg-block translation-centrage">
+        {{ pageTitle }}
+      </span>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        @if(authService.isAuthenticated()){
+        <li class="nav-item dropdown ms-auto">
+          <button
+            class="btn btn-outline-primary dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ stateService.userLogged().playerName }}
+          </button>
+          <ul class="dropdown-menu">
+            <li class="nav-item"><a class="dropdown-item" href="/profile">{{ libelles.PROFILE }}</a></li>
+            <li class="nav-item"><a class="dropdown-item cursor-pointer"  (click)="logout()">{{ libelles.AUTHENTICATION.LOGOUT }}</a></li>
+          </ul>
+        </li>
+        } @else {
+        <li class="nav-item dropdown ms-auto">
+          <button type="button" class="btn btn-outline-primary" (click)="goToLogin()">
+            {{ libelles.AUTHENTICATION.LOGIN }}
+          </button>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

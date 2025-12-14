@@ -8,6 +8,8 @@ import { Page } from '../../../../models/interfaces/api/page';
 import { tap } from 'rxjs';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
+import { StateService } from '../../../../core/services/state/state-service';
+import { Navbar } from '../../../../shared/components/navbar/navbar';
 
 @Component({
   selector: 'app-home-page',
@@ -20,6 +22,7 @@ export class HomePage {
   private router: Router = inject(Router);
   private userManager: UserManager = inject(UserManager);
   private homepageFacade: HomepageFacade = inject(HomepageFacade);
+  public stateService: StateService = inject(StateService);
 
   public pageCards: WritableSignal<Page<Array<Card>>> = signal({
     content: [],
@@ -33,14 +36,11 @@ export class HomePage {
 
   ngOnInit() {
     this.loadCardPage(0, false);
+    console.log(this.stateService.userLogged().playerName);
   }
 
   public goToProfile(): void {
     this.router.navigate([USER_ROAD]);
-  }
-
-  public logout(): void {
-    this.userManager.logout();
   }
 
   public getCardImageUrl(imagePath: string): string {
