@@ -1,93 +1,21 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { TypeManager } from '../../services/type-manager';
-import { catchError, EMPTY, finalize, Subject, takeUntil, tap } from 'rxjs';
-import { Type } from '../../../../models/interfaces/api/type';
-import { HttpErrorResponse } from '@angular/common/http';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { catchError, EMPTY, finalize, tap } from 'rxjs';
 import { AlteredApiRepository } from '../../services/repository/altered-api.repository';
+import { HeroForm } from '../../components/hero-form/hero-form';
 
 @Component({
   selector: 'app-admin-page',
-  imports: [ReactiveFormsModule],
+  imports: [HeroForm],
   templateUrl: './admin-page.html',
   styleUrl: './admin-page.css',
 })
-export class AdminPage implements OnInit, OnDestroy {
-  private typeManager: TypeManager = inject(TypeManager);
+export class AdminPage {
+
+  
   private alteredApiRepository: AlteredApiRepository = inject(AlteredApiRepository);
-  private formBuilder: FormBuilder = inject(FormBuilder);
-
-  public form: FormGroup;
-
-  public typeId: FormControl<string>;
-  public name: FormControl<string>;
-  public reference: FormControl<string>;
-
-  private unsubscriber$ = new Subject<void>();
 
   public synchronisationMessages: Array<string> = [];
   public synchronisationActivee: boolean = false;
-
-  constructor() {
-    this.typeId = new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    });
-    this.name = new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    });
-    this.reference = new FormControl<string>('', {
-      nonNullable: true,
-      validators: [Validators.required],
-    });
-
-    this.form = this.formBuilder.group({
-      typeId: this.typeId,
-      name: this.name,
-      reference: this.reference,
-    });
-  }
-
-  ngOnInit(): void {
-    this.typeManager
-      .fetchAllTypes()
-      .pipe(
-        tap((types: Array<Type>) => console.log(types)),
-        catchError((httpErrorResponse: HttpErrorResponse) => {
-          console.error(`Erreur ${httpErrorResponse.error.status} : ${httpErrorResponse.message}`);
-          return [];
-        }),
-        takeUntil(this.unsubscriber$)
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.unsubscriber$.next();
-    this.unsubscriber$.complete();
-  }
-
-  public handleSubmit(): void {
-    const type: Type = this.form.value;
-    this.typeManager
-      .postNewType(type)
-      .pipe(
-        tap((type: Type) => console.log(type)),
-        catchError((httpErrorResponse: HttpErrorResponse) => {
-          console.error(`Erreur ${httpErrorResponse.error.status} : ${httpErrorResponse.message}`);
-          return [];
-        }),
-        takeUntil(this.unsubscriber$)
-      )
-      .subscribe();
-  }
 
   public handleSynchronize(): void {
     this.synchronisationMessages = [];

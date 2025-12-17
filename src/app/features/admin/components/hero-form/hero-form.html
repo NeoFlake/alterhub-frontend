@@ -1,0 +1,76 @@
+<h2>
+  {{ heroFormMode === 'add' ? heroFormLibelle.ADD_FORM_TITLE : heroFormLibelle.UPDATE_FORM_TITLE }}
+</h2>
+<form
+  [formGroup]="heroForm"
+  (ngSubmit)="heroFormMode === 'add' ? createNewHero() : updateHero()"
+  class="row d-flex justify-content-center"
+>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="name" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.NAME }}</label>
+      <input type="text" class="form-control" id="name" formControlName="name" />
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="faction" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.FACTION }}</label>
+      <select class="form-select" formControlName="faction" id="faction" aria-label="Choisissez votre faction">
+        @for (faction of factions(); track $index) {
+            <option [value]="faction.factionId">{{ faction.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="sets" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.FACTION }}</label>
+      <select class="form-select" multiple formControlName="sets" id="sets" aria-label="Choisissez vos extensions">
+        @for (set of set(); track $index) {
+            <option [value]="set.setId">{{ set.name }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="reserveSlot" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.RESERVE_SLOT }}</label>
+      <select formControlName="reserveSlot" class="form-select" id="reserveSlot" aria-label="Choisissez votre faction">
+        @for (choice of reserveSlotChoice; track $index) {
+            <option [value]="choice">{{ choice }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="landmarkSlot" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.LANDMARK_SLOT }}</label>
+      <select formControlName="landmarkSlot" class="form-select" id="landmarkSlot" aria-label="Choisissez votre faction">
+        @for (choice of landmarkSlotChoice; track $index) {
+            <option [value]="choice">{{ choice }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="effect" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.EFFECT }}</label>
+      <textarea class="form-control" id="effect" formControlName="effect" rows="3"></textarea>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <label for="image" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.IMAGE }}</label>
+      <input type="text" class="form-control" id="image" formControlName="image" />
+    </div>
+  </div>
+  <div class="row mt-4 ms-4">
+    <button type="submit" class="btn btn-primary col-2">
+      {{
+        heroFormMode === 'add'
+          ? heroFormLibelle.ADD_BUTTON_LIBELLE
+          : heroFormLibelle.UPDATE_BUTTON_LIBELLE
+      }}
+    </button>
+  </div>
+</form>
