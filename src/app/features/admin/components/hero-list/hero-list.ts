@@ -1,8 +1,9 @@
-import { Component, inject, input, InputSignal, output, OutputEmitterRef, WritableSignal } from '@angular/core';
+import { Component, inject, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { Hero } from '../../../../models/interfaces/api/hero';
 import { HeroManager } from '../../services/hero-manager';
 import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HERO_LIST_LIBELLE } from '../../../../constants/administration.constantes';
 
 @Component({
   selector: 'hero-list',
@@ -17,9 +18,13 @@ export class HeroList {
   public heroes: InputSignal<WritableSignal<Hero[]>> =
     input.required<WritableSignal<Array<Hero>>>();
 
+  public isDisabled: InputSignal<boolean> = input.required<boolean>();
+
   public onUpdateAction: OutputEmitterRef<string> = output<string>();
 
   private unsubscriber$ = new Subject<void>();
+
+  public heroListLibelle: typeof HERO_LIST_LIBELLE = HERO_LIST_LIBELLE;
 
   ngOnDestroy() {
     this.unsubscriber$.next();

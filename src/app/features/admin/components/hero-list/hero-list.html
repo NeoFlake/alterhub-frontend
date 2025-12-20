@@ -1,9 +1,15 @@
-<h2>Liste des Héros disponible</h2>
+<h2 class="mb-4">Liste des Héros disponible</h2>
 <table class="table">
   <thead>
     <tr class="row">
       @for (column of columnsToDisplay; track $index) {
-      <th scope="col" [class]="column.class" class="d-flex justify-content-center align-items-center">{{ column.name }}</th>
+      <th
+        scope="col"
+        [class]="column.class"
+        class="d-flex justify-content-center align-items-center"
+      >
+        {{ column.name }}
+      </th>
       }
     </tr>
   </thead>
@@ -11,8 +17,18 @@
     @for (hero of heroes()(); track $index) {
     <tr scope="row" class="row">
       <td class="col-2 d-flex justify-content-center align-items-center">
-        <i class="bi bi-pencil-fill update-button" (click)="handleUpdateAction(hero.id!)"></i>
-        <i class="bi bi-trash ms-3 me-3 delete-button" (click)="handleDeleteAction(hero.id!)"></i>
+        <i
+          class="bi bi-pencil-fill update-button disabled"
+          [class.disabled]="isDisabled()"
+          [attr.title]="isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.UPDATE"
+          (click)="isDisabled() ? null : handleUpdateAction(hero.id!)"
+        ></i>
+        <i
+          class="bi bi-trash ms-3 me-3 delete-button"
+          [class.disabled]="isDisabled()"
+          [attr.title]="isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.DELETE"
+          (click)="isDisabled() ? null : handleDeleteAction(hero.id!)"
+        ></i>
       </td>
       <td class="col-2 d-flex justify-content-center align-items-center">{{ hero.name }}</td>
       <td class="col-2 d-flex justify-content-center align-items-center">

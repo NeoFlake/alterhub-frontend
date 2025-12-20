@@ -7,6 +7,8 @@ import {
   InputSignal,
   model,
   ModelSignal,
+  output,
+  OutputEmitterRef,
   signal,
   untracked,
   WritableSignal,
@@ -52,7 +54,10 @@ export class HeroForm {
   public heroes: InputSignal<WritableSignal<Hero[]>> =
     input.required<WritableSignal<Array<Hero>>>();
 
-  public updateHeroId: InputSignal<WritableSignal<string>> = input.required<WritableSignal<string>>();
+  public updateHeroId: InputSignal<WritableSignal<string>> =
+    input.required<WritableSignal<string>>();
+
+  public updateDone: OutputEmitterRef<void> = output<void>();
 
   public reserveSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
   public landmarkSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
@@ -195,10 +200,10 @@ export class HeroForm {
       .updateHeroById(this.updateHeroId()(), formValues)
       .pipe(
         tap((hero: Hero) => {
-          this.heroes().update((heroes: Array<Hero>) => heroes.map((dataHero: Hero) => dataHero.id === hero.id ? hero : dataHero));
-          this.updateHeroId().set("");
-          this.heroFormMode = "add";
-          this.resetFormValues();
+          this.heroes().update((heroes: Array<Hero>) =>
+            heroes.map((dataHero: Hero) => (dataHero.id === hero.id ? hero : dataHero))
+          );
+          this.backToAddForm();
         }),
         catchError((error: HttpErrorResponse) => {
           return of(null);
@@ -208,7 +213,7 @@ export class HeroForm {
       .subscribe();
   }
 
-  private resetFormValues(): void {
+  public resetFormValues(): void {
     this.name.setValue('');
     this.faction.setValue('01GE7AC9XBG707G19F03A95TH1');
     this.sets.setValue(['01HKAFJN3HG3TWKYV0E014K01G']);
@@ -216,5 +221,12 @@ export class HeroForm {
     this.landmarkSlot.setValue(2);
     this.effect.setValue('');
     this.image.setValue('');
+  }
+
+  public backToAddForm(): void {
+    this.updateHeroId().set('');
+    this.heroFormMode = 'add';
+    this.resetFormValues();
+    this.updateDone.emit();
   }
 }

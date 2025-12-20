@@ -1,9 +1,9 @@
-<div class="row">
-  <div class="col-4 mb-5">
-    <hero-form [heroes]="heroes" [updateHeroId]="updateHeroId"></hero-form>
+<div class="row mt-3">
+  <div class="col-4">
+    <hero-form [heroes]="heroes" [updateHeroId]="updateHeroId" (updateDone)="onUpdateDone()"></hero-form>
     <altered-api-synchronisation></altered-api-synchronisation>
   </div>
-  <div class="col-8 mt-5">
-    <hero-list [heroes]="heroes" (onUpdateAction)="onUpdateAction($event)"></hero-list>
+  <div class="col-8">
+    <hero-list [heroes]="heroes" [isDisabled]="disableIcon()" (onUpdateAction)="onUpdateAction($event)"></hero-list>
   </div>
 </div>

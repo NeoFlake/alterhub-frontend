@@ -93,12 +93,19 @@
       <input type="text" class="form-control" id="image" formControlName="image" />
     </div>
   </div>
-  <div class="mt-4 ms-4">
-    <button type="submit" class="btn btn-primary col-6">
+  <div class="mt-4 ms-4 mb-4">
+    <button type="submit" class="btn btn-primary col-5">
       {{
         heroFormMode === 'add'
           ? heroFormLibelle.ADD_BUTTON_LIBELLE
           : heroFormLibelle.UPDATE_BUTTON_LIBELLE
+      }}
+    </button>
+    <button class="btn btn-danger col-5 offset-1" (click)=" heroFormMode === 'add' ? resetFormValues() : backToAddForm()">
+      {{
+        heroFormMode === 'add'
+          ? heroFormLibelle.CANCEL_ADD_BUTTON_LIBELLE
+          : heroFormLibelle.CANCEL_UPDATE_BUTTON_LIBELLE
       }}
     </button>
   </div>

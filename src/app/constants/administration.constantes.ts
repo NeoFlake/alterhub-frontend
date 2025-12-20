@@ -3,6 +3,8 @@ export const HERO_FORM_LIBELLE = {
     UPDATE_FORM_TITLE: "Modifier un Héro",
     ADD_BUTTON_LIBELLE: "Ajouter",
     UPDATE_BUTTON_LIBELLE: "Mettre à jour",
+    CANCEL_ADD_BUTTON_LIBELLE: "Réinitialiser",
+    CANCEL_UPDATE_BUTTON_LIBELLE: "Annuler",
     FORM_LIBELLE: {
         NAME: "Nom",
         FACTION: "Faction",
@@ -20,4 +22,12 @@ export const ADMINISTRATION_LIBELLE = {
         ACTION_BUTTON: "Synchroniser",
         LOGBACK_TITLE: "Logback de la synchronisation"
     }
-}
+};
+
+export const HERO_LIST_LIBELLE = {
+    TOOLTIP: {
+        UPDATE: "Modifier ce héros",
+        DELETE: "Supprimer ce héros",
+        FORBIDDEN_ACTION: "Action impossible pour le moment"
+    },
+};

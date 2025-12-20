@@ -13,23 +13,28 @@ import { HeroList } from '../../components/hero-list/hero-list';
   styleUrl: './admin-page.css',
 })
 export class AdminPage {
-
   public heroManager: HeroManager = inject(HeroManager);
 
   public heroes: WritableSignal<Array<Hero>> = signal<Array<Hero>>([]);
 
-  public updateHeroId: WritableSignal<string> = signal<string>("");
+  public updateHeroId: WritableSignal<string> = signal<string>('');
 
-  ngOnInit(){
-    this.heroManager.getAllHeroes()
-    .pipe(
-      map((heroes: Array<Hero>) => this.heroes.set(heroes))
-    )
-    .subscribe();
+  public disableIcon: WritableSignal<boolean> = signal<boolean>(false);
+
+  ngOnInit() {
+    this.heroManager
+      .getAllHeroes()
+      .pipe(map((heroes: Array<Hero>) => this.heroes.set(heroes)))
+      .subscribe();
   }
 
   public onUpdateAction(heroId: string): void {
     this.updateHeroId.set(heroId);
+    this.disableIcon.set(true);
   }
-  
+
+  public onUpdateDone(): void {
+    console.log("Coucou j'arrive ici donc je fais forcément une modification d'information");
+    this.disableIcon.set(false);
+  }
 }

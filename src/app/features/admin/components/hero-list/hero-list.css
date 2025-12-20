@@ -13,3 +13,16 @@
 .update-button:active{
     font-size: 16px;
 }
+
+.delete-button.disabled,
+.update-button.disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.delete-button:hover.disabled,
+.update-button:hover.disabled,
+.delete-button:active.disabled,
+.update-button:active.disabled{
+    font-size: 20px;
+}
