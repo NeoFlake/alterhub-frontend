@@ -21,7 +21,7 @@ import { Subject, tap, catchError, takeUntil, finalize } from 'rxjs';
 import { User } from '../../../../models/interfaces/users/user';
 import { UserManager } from '../../../../core/services/user-manager';
 import { Router } from '@angular/router';
-import { HOMEPAGE_ROAD, USER_ROAD } from '../../../../constants/routes';
+import { USER_ROAD } from '../../../../constants/routes';
 
 @Component({
   selector: 'update-user-form',

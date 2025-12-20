@@ -35,10 +35,11 @@ import {
   AUTHENTIFICATION_STATUT,
   FEEDBACK_PANEL_MESSAGES,
 } from '../../../../constants/authentification-page.constantes';
+import { InvalidFeedback } from '../../../../shared/components/invalid-feedback/invalid-feedback';
 
 @Component({
   selector: 'hero-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InvalidFeedback],
   templateUrl: './hero-form.html',
   styleUrl: './hero-form.css',
 })
@@ -91,7 +92,7 @@ export class HeroForm {
     // Obligatoirement 36 caractères car cela correspond à l'UUID de la Faction
     this.faction = this.formBuilder.control<string>(this.heroFormLibelle.AXIOM_FACTION_IDENTIFIANT, {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(36), Validators.maxLength(36)],
+      validators: [Validators.required],
     });
 
     this.sets = this.formBuilder.control<Array<string>>([this.heroFormLibelle.BEYOND_THE_GATE_IDENTIFIANT], {

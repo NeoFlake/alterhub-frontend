@@ -14,6 +14,7 @@
     <div class="col-9">
       <label for="name" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.NAME }}</label>
       <input type="text" class="form-control" id="name" formControlName="name" />
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'name'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
@@ -29,6 +30,7 @@
         <option [value]="faction.factionId">{{ faction.name }}</option>
         }
       </select>
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'faction'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
@@ -45,6 +47,7 @@
         <option [value]="set.setId">{{ set.name }}</option>
         }
       </select>
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'sets'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
@@ -62,6 +65,7 @@
         <option [value]="choice">{{ choice }}</option>
         }
       </select>
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'reserveSlot'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
@@ -79,29 +83,36 @@
         <option [value]="choice">{{ choice }}</option>
         }
       </select>
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'landmarkSlot'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
     <div class="col-9">
       <label for="effect" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.EFFECT }}</label>
       <textarea class="form-control" id="effect" formControlName="effect" rows="3"></textarea>
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'effect'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-3 ms-3">
     <div class="col-9">
       <label for="image" class="form-label">{{ heroFormLibelle.FORM_LIBELLE.IMAGE }}</label>
       <input type="text" class="form-control" id="image" formControlName="image" />
+      <invalid-feedback [formGroup]="heroForm" [controlName]="'image'"></invalid-feedback>
     </div>
   </div>
   <div class="mt-4 ms-4 mb-4">
-    <button type="submit" class="btn btn-primary col-5">
+    <button type="submit" class="btn btn-primary col-5" [disabled]="heroForm.invalid">
       {{
         heroFormMode === 'add'
           ? heroFormLibelle.ADD_BUTTON_LIBELLE
           : heroFormLibelle.UPDATE_BUTTON_LIBELLE
       }}
     </button>
-    <button type="button" class="btn btn-danger col-5 offset-1" (click)=" heroFormMode === 'add' ? resetFormValues() : backToAddForm()">
+    <button
+      type="button"
+      class="btn btn-danger col-5 offset-1"
+      (click)="heroFormMode === 'add' ? resetFormValues() : backToAddForm()"
+    >
       {{
         heroFormMode === 'add'
           ? heroFormLibelle.CANCEL_ADD_BUTTON_LIBELLE
