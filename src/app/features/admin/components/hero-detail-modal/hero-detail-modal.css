@@ -1,0 +1,12 @@
+img {
+    border-radius: 10px;
+    padding: 0;
+}
+
+.text-format {
+    font-size: 18px;
+}
+
+.bold-text {
+    font-weight: bolder;
+}

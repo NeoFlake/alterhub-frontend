@@ -24,7 +24,17 @@ export class AdminPage {
   ngOnInit() {
     this.heroManager
       .getAllHeroes()
-      .pipe(map((heroes: Array<Hero>) => this.heroes.set(heroes)))
+      .pipe(
+        map((heroes: Array<Hero>) =>
+          this.heroes.set(
+            heroes.sort((a: Hero, b: Hero) => {
+              const factionCompare = a.faction.name.localeCompare(b.faction.name);
+              if (factionCompare !== 0) return factionCompare;
+              return a.name.localeCompare(b.name);
+            })
+          )
+        )
+      )
       .subscribe();
   }
 
@@ -34,7 +44,6 @@ export class AdminPage {
   }
 
   public onUpdateDone(): void {
-    console.log("Coucou j'arrive ici donc je fais forcément une modification d'information");
     this.disableIcon.set(false);
   }
 }

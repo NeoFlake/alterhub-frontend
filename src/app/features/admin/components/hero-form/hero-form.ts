@@ -174,7 +174,13 @@ export class HeroForm {
       .createHero(formValues)
       .pipe(
         tap((hero: Hero) => {
-          this.heroes().update((heroes: Array<Hero>) => [...heroes, hero]);
+          this.heroes().update((heroes: Array<Hero>) =>
+            [...heroes, hero].sort((a: Hero, b: Hero) => {
+              const factionCompare = a.faction.name.localeCompare(b.faction.name);
+              if (factionCompare !== 0) return factionCompare;
+              return a.name.localeCompare(b.name);
+            })
+          );
           this.resetFormValues();
         }),
         catchError((error: HttpErrorResponse) => {
@@ -201,7 +207,13 @@ export class HeroForm {
       .pipe(
         tap((hero: Hero) => {
           this.heroes().update((heroes: Array<Hero>) =>
-            heroes.map((dataHero: Hero) => (dataHero.id === hero.id ? hero : dataHero))
+            heroes
+              .map((dataHero: Hero) => (dataHero.id === hero.id ? hero : dataHero))
+              .sort((a: Hero, b: Hero) => {
+                const factionCompare = a.faction.name.localeCompare(b.faction.name);
+                if (factionCompare !== 0) return factionCompare;
+                return a.name.localeCompare(b.name);
+              })
           );
           this.backToAddForm();
         }),

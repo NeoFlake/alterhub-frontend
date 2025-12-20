@@ -8,7 +8,7 @@ export const HERO_FORM_LIBELLE = {
     FORM_LIBELLE: {
         NAME: "Nom",
         FACTION: "Faction",
-        SET: "Extentions",
+        SET: "Extensions",
         RESERVE_SLOT: "Emplacement de réserve",
         LANDMARK_SLOT: "Emplacement de repère",
         EFFECT: "Effet",
@@ -30,4 +30,27 @@ export const HERO_LIST_LIBELLE = {
         DELETE: "Supprimer ce héros",
         FORBIDDEN_ACTION: "Action impossible pour le moment"
     },
+    BUTTON_COLORISATION: {
+        ACTIVATE: "Coloriser",
+        DEACTIVATE: "Décoloriser"
+    },
+    COLUMNS: {
+        COLORIZE: "Coloriser",
+        NAME: "Nom",
+        FACTION: "Faction",
+        RESERVE_SLOT: "Emplacements réserve",
+        LANDMARK_SLOT: "Emplacements repère",
+    },
+    DETAILS_BUTTON: "Détails",
+    PLACEHOLDER_WHEN_NO_RESULT: "Aucun héro à afficher pour le moment..."
+};
+
+export const MODAL_LIBELLE = {
+    NAME: "Nom : ",
+    FACTION: "Faction : ",
+    RESERVE_SLOT: "Emplacements de réserve : ",
+    LANDMARK_SLOT: "Emplacements de repère : ",
+    EFFECT: "Effet : ",
+    SETS: "Extensions de parution : ",
+    CLOSE_BUTTON: "Fermer"
 };

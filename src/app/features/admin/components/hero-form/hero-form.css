@@ -1,0 +1,4 @@
+button:active {
+    opacity: .8;
+    transform: scale(.95);
+}

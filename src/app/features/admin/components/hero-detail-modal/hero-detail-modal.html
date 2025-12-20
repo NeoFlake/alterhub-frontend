@@ -1,0 +1,66 @@
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div
+        class="modal-header justify-content-center position-relative"
+        [style.background-color]="isColored ? hero()!.faction.color : ''"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          (click)="switchColorisationMode()"
+        >
+          {{
+            isColored
+              ? heroListLibelle.BUTTON_COLORISATION.DEACTIVATE
+              : heroListLibelle.BUTTON_COLORISATION.ACTIVATE
+          }}
+        </button>
+        <h5 class="modal-title position-absolute start-50 translate-middle-x">
+          {{ `${hero()!.name}` }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-md-4 row">
+            <img
+              src="{{`${backApiRoads.ROOT_URL}/images/cards/${hero()!.image}.jpg`}}"
+              alt=""
+            />
+          </div>
+          <div class="col-12 col-md-8 mt-3">
+            <div class="text-format mt-3">
+                <span class="bold-text">{{modalLibelle.NAME}}</span> <span>{{ hero()!.name }}</span>
+            </div>
+            <div class="text-format mt-3">
+                <span class="bold-text">{{modalLibelle.FACTION}}</span> <span>{{ hero()!.faction.name }}</span>
+            </div>
+            <div class="text-format mt-3">
+                <span class="bold-text">{{modalLibelle.RESERVE_SLOT}}</span> <span>{{ hero()!.reserveSlot }}</span>
+            </div>
+            <div class="text-format mt-3">
+                <span class="bold-text">{{modalLibelle.LANDMARK_SLOT}}</span> <span>{{ hero()!.landmarkSlot }}</span>
+            </div>
+            <div class="text-format mt-3 ">
+                <span class="bold-text">{{modalLibelle.EFFECT}}</span> <span>{{ hero()!.effect }}</span>
+            </div>
+            <div class="text-format mt-3 ">
+                <div class="bold-text">{{modalLibelle.SETS}}</div>
+                <ul>
+                    @for (set of hero()!.sets; track $index) {
+                        <li>{{ set.name }}</li>
+                    }
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" [style.background-color]="isColored ? hero()!.faction.color : ''">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          {{ modalLibelle.CLOSE_BUTTON }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

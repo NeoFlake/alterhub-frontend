@@ -1,5 +1,6 @@
 <h2 class="mb-4">Liste des Héros disponible</h2>
-<table class="table">
+@if (heroes()()){
+  <table class="table">
   <thead>
     <tr class="row">
       @for (column of columnsToDisplay; track $index) {
@@ -8,7 +9,21 @@
         [class]="column.class"
         class="d-flex justify-content-center align-items-center"
       >
-        {{ column.name }}
+        @if(column.name !== heroListLibelle.COLUMNS.COLORIZE){
+        <span class="d-block text-center">{{ column.name }}</span>
+        } @else {
+        <button
+          type="button"
+          class="btn btn-outline-secondary btn-sm"
+          (click)="switchColorisationMode()"
+        >
+          {{
+            isColored
+              ? heroListLibelle.BUTTON_COLORISATION.DEACTIVATE
+              : heroListLibelle.BUTTON_COLORISATION.ACTIVATE
+          }}
+        </button>
+        }
       </th>
       }
     </tr>
@@ -16,32 +31,65 @@
   <tbody class="table-group-divider">
     @for (hero of heroes()(); track $index) {
     <tr scope="row" class="row">
-      <td class="col-2 d-flex justify-content-center align-items-center">
+      <td
+        class="col-3 col-md-2 d-flex justify-content-center align-items-center"
+        [style.background-color]="isColored ? hero.faction.color : ''"
+      >
         <i
           class="bi bi-pencil-fill update-button disabled"
           [class.disabled]="isDisabled()"
-          [attr.title]="isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.UPDATE"
+          [attr.title]="
+            isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.UPDATE
+          "
           (click)="isDisabled() ? null : handleUpdateAction(hero.id!)"
         ></i>
         <i
           class="bi bi-trash ms-3 me-3 delete-button"
           [class.disabled]="isDisabled()"
-          [attr.title]="isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.DELETE"
+          [attr.title]="
+            isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.DELETE
+          "
           (click)="isDisabled() ? null : handleDeleteAction(hero.id!)"
         ></i>
       </td>
-      <td class="col-2 d-flex justify-content-center align-items-center">{{ hero.name }}</td>
-      <td class="col-2 d-flex justify-content-center align-items-center">
-        {{ hero.faction.name }}
+      <td
+        class="col-3 d-flex justify-content-center align-items-center"
+        [style.background-color]="isColored ? hero.faction.color : ''"
+      >
+        <span style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ hero.name }}</span>
       </td>
-      <td class="col-2 d-flex justify-content-center align-items-center">
-        <div>
-          <div>Réserve : {{ hero.reserveSlot }}</div>
-          <div>Repère : {{ hero.landmarkSlot }}</div>
-        </div>
+      <td
+        class="col-3 col-md-2 d-flex justify-content-center align-items-center"
+        [style.background-color]="isColored ? hero.faction.color : ''"
+      >
+        <span>{{ hero.faction.name }}</span>
       </td>
-      <td class="col-4">{{ hero.effect }}</td>
+      <td
+        class="d-none d-md-block col-md-2 d-flex justify-content-center align-items-center"
+        [style.background-color]="isColored ? hero.faction.color : ''"
+      >
+        <span class="d-block text-center">{{ hero.reserveSlot }} </span>
+      </td>
+      <td
+        class="d-none d-md-block col-md-2 d-flex justify-content-center align-items-center"
+        [style.background-color]="isColored ? hero.faction.color : ''"
+      >
+        <span class="d-block text-center">{{ hero.landmarkSlot }}</span>
+      </td>
+      <td class="col-3 col-md-1 d-flex justify-content-center" [style.background-color]="isColored ? hero.faction.color : ''">
+        <button class="btn btn-outline-secondary btn-sm" (click)="showHeroDetails(hero)">{{ heroListLibelle.DETAILS_BUTTON }}</button>
+      </td>
     </tr>
     }
   </tbody>
 </table>
+} @else {
+  <div>{{ heroListLibelle.PLACEHOLDER_WHEN_NO_RESULT }}</div>
+}
+
+@if (detailedHero()) {
+  <hero-detail-modal 
+    [hero]="detailedHero()" 
+    (closeModal)="onModalClose()">
+  </hero-detail-modal>
+}

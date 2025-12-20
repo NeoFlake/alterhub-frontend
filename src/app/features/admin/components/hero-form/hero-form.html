@@ -101,7 +101,7 @@
           : heroFormLibelle.UPDATE_BUTTON_LIBELLE
       }}
     </button>
-    <button class="btn btn-danger col-5 offset-1" (click)=" heroFormMode === 'add' ? resetFormValues() : backToAddForm()">
+    <button type="button" class="btn btn-danger col-5 offset-1" (click)=" heroFormMode === 'add' ? resetFormValues() : backToAddForm()">
       {{
         heroFormMode === 'add'
           ? heroFormLibelle.CANCEL_ADD_BUTTON_LIBELLE
