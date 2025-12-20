@@ -38,9 +38,7 @@ export class HeroList {
     this.heroManager.deleteHeroById(heroId)
     .pipe(
       tap(() => {
-        this.heroes().update((heroes: Array<Hero>) => {
-          return heroes.filter((hero: Hero) => hero.id !== heroId);
-        });
+        this.heroes().update((heroes: Array<Hero>) => [...heroes.filter((hero: Hero) => hero.id !== heroId)]);
       }),
       catchError((error: HttpErrorResponse) => {
         return of(null);

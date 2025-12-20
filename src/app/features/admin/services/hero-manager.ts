@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HeroRepository } from '../../../core/services/api/backend/hero.repository';
 import { FactionRepository } from '../../../core/services/api/backend/faction.repository';
 import { SetRepository } from '../../../core/services/api/backend/set.repository';
-import { Observable } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { Faction } from '../../../models/interfaces/api/faction';
 import { Set } from '../../../models/interfaces/api/set';
 import { Hero } from '../../../models/interfaces/api/hero';
@@ -15,12 +15,27 @@ export class HeroManager {
   private factionRepository: FactionRepository = inject(FactionRepository);
   private setRepository: SetRepository = inject(SetRepository);
 
+  private factions: Array<Faction> = [];
+  private sets: Array<Set> = [];
+
   public getAllFactions(): Observable<Array<Faction>> {
-    return this.factionRepository.getAllFactions();
+    return this.factionRepository.getAllFactions()
+    .pipe(
+      tap((factions: Array<Faction>) =>{ 
+        this.factions = factions;
+        return factions;
+      })
+    );
   }
 
   public getAllSets(): Observable<Array<Set>> {
-    return this.setRepository.getAllSets();
+    return this.setRepository.getAllSets()
+    .pipe(
+      tap((sets: Array<Set>) =>{ 
+        this.sets = sets;
+        return sets;
+      })
+    );
   }
 
   public createHero(
@@ -32,14 +47,13 @@ export class HeroManager {
       landmarkSlot: number;
       effect: string;
       image: string;
-    }>,
-    factions: Array<Faction>,
-    sets: Array<Set>
+    }>
   ): Observable<Hero> {
+    
     let newHero: Hero = {
       name: formValues.name ?? "Héro Fantome",
-      faction: factions.find((faction: Faction) => (faction.factionId = formValues.faction!))!,
-      sets: sets.filter((set: Set) => formValues.sets?.includes(set.setId)) ?? [
+      faction: this.factions.find((faction: Faction) => (faction.factionId === formValues.faction!))!,
+      sets: this.sets.filter((set: Set) => formValues.sets?.includes(set.setId)) ?? [
         '01HKAFJN3HG3TWKYV0E014K01G',
       ],
       reserveSlot: formValues.reserveSlot!,
@@ -65,15 +79,13 @@ export class HeroManager {
       landmarkSlot: number;
       effect: string;
       image: string;
-    }>,
-    factions: Array<Faction>,
-    sets: Array<Set>
+    }>
   ): Observable<Hero> {
     let updatedHero: Hero = {
       id: id,
       name: formValues.name ?? "Héro Fantome",
-      faction: factions.find((faction: Faction) => (faction.factionId = formValues.faction!))!,
-      sets: sets.filter((set: Set) => formValues.sets?.includes(set.setId)) ?? [
+      faction: this.factions.find((faction: Faction) => (faction.factionId === formValues.faction!))!,
+      sets: this.sets.filter((set: Set) => formValues.sets?.includes(set.setId)) ?? [
         '01HKAFJN3HG3TWKYV0E014K01G',
       ],
       reserveSlot: formValues.reserveSlot!,

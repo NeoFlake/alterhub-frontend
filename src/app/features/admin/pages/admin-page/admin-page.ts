@@ -18,7 +18,7 @@ export class AdminPage {
 
   public heroes: WritableSignal<Array<Hero>> = signal<Array<Hero>>([]);
 
-  public updateHeroId: string = "";
+  public updateHeroId: WritableSignal<string> = signal<string>("");
 
   ngOnInit(){
     this.heroManager.getAllHeroes()
@@ -29,7 +29,7 @@ export class AdminPage {
   }
 
   public onUpdateAction(heroId: string): void {
-    this.updateHeroId = heroId;
+    this.updateHeroId.set(heroId);
   }
   
 }

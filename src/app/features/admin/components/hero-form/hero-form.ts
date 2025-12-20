@@ -52,7 +52,7 @@ export class HeroForm {
   public heroes: InputSignal<WritableSignal<Hero[]>> =
     input.required<WritableSignal<Array<Hero>>>();
 
-  public updateHeroId: InputSignal<string> = input.required<string>();
+  public updateHeroId: InputSignal<WritableSignal<string>> = input.required<WritableSignal<string>>();
 
   public reserveSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
   public landmarkSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
@@ -111,15 +111,16 @@ export class HeroForm {
     });
 
     effect(() => {
+      const heroIdToUpdate: string = this.updateHeroId()();
 
-      const heroIdToUpdate: string = this.updateHeroId();
-      
-      if(heroIdToUpdate !== ""){
+      if (heroIdToUpdate !== '') {
         // Le héro qui a été cliqué depuis la liste des héros existe forcément dans la liste des héros
         // D'où le point d'exclamation pour rassurer Angular sur son existance
-        const heroToUpdate: Hero = this.heroes()().find((hero: Hero) => hero.id! === heroIdToUpdate)!;
+        const heroToUpdate: Hero = this.heroes()().find(
+          (hero: Hero) => hero.id! === heroIdToUpdate
+        )!;
 
-        this.heroFormMode = "update";
+        this.heroFormMode = 'update';
 
         this.name.setValue(heroToUpdate.name);
         this.faction.setValue(heroToUpdate.faction.factionId);
@@ -128,11 +129,8 @@ export class HeroForm {
         this.landmarkSlot.setValue(heroToUpdate.landmarkSlot);
         this.effect.setValue(heroToUpdate.effect);
         this.image.setValue(heroToUpdate.image);
-
       }
-
     });
-
   }
 
   ngOnInit(): void {
@@ -168,12 +166,10 @@ export class HeroForm {
     }> = this.heroForm.value;
 
     this.heroManager
-      .createHero(formValues, this.factions(), this.set())
+      .createHero(formValues)
       .pipe(
         tap((hero: Hero) => {
-          this.heroes().update((heroes: Array<Hero>) => {
-            return [...heroes, hero];
-          });
+          this.heroes().update((heroes: Array<Hero>) => [...heroes, hero]);
           this.resetFormValues();
         }),
         catchError((error: HttpErrorResponse) => {
@@ -195,18 +191,30 @@ export class HeroForm {
       image: string;
     }> = this.heroForm.value;
 
-    this.heroManager.updateHeroById(this.updateHeroId(), formValues, this.factions(), this.set())
-    .pipe()
-    .subscribe();
+    this.heroManager
+      .updateHeroById(this.updateHeroId()(), formValues)
+      .pipe(
+        tap((hero: Hero) => {
+          this.heroes().update((heroes: Array<Hero>) => heroes.map((dataHero: Hero) => dataHero.id === hero.id ? hero : dataHero));
+          this.updateHeroId().set("");
+          this.heroFormMode = "add";
+          this.resetFormValues();
+        }),
+        catchError((error: HttpErrorResponse) => {
+          return of(null);
+        }),
+        takeUntil(this.unsubscriber$)
+      )
+      .subscribe();
   }
 
   private resetFormValues(): void {
     this.name.setValue('');
     this.faction.setValue('01GE7AC9XBG707G19F03A95TH1');
-    this.sets.setValue(["01HKAFJN3HG3TWKYV0E014K01G"]);
+    this.sets.setValue(['01HKAFJN3HG3TWKYV0E014K01G']);
     this.reserveSlot.setValue(2);
     this.landmarkSlot.setValue(2);
-    this.effect.setValue("");
+    this.effect.setValue('');
     this.image.setValue('');
   }
 }
