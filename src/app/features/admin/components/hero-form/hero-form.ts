@@ -158,7 +158,7 @@ export class HeroForm {
       .pipe(
         tap(([factions, sets]) => {
           this.factions.set(factions.sort((a: Faction, b: Faction) => (a.name > b.name ? 1 : -1)));
-          this.set.set(sets);
+          this.set.set(sets.sort((a: Set, b: Set) => (a.name > b.name ? 1 : -1)));
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           this.feedbackPanelData.emit({

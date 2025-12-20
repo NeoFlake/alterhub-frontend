@@ -77,7 +77,7 @@
         <span class="d-block text-center">{{ hero.landmarkSlot }}</span>
       </td>
       <td class="col-3 col-md-1 d-flex justify-content-center" [style.background-color]="isColored ? hero.faction.color : ''">
-        <button class="btn btn-outline-secondary btn-sm" (click)="showHeroDetails(hero)">{{ heroListLibelle.DETAILS_BUTTON }}</button>
+        <button class="btn btn-sm" [class]="isColored ? 'btn-outline-light' : 'btn-outline-secondary' " (click)="showHeroDetails(hero)">{{ heroListLibelle.DETAILS_BUTTON }}</button>
       </td>
     </tr>
     }
