@@ -8,7 +8,7 @@ import { StateService } from '../services/state/state-service';
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
   const stateService: StateService = inject(StateService);
-  const accessToken = authService.getAccessToken();
+  const accessToken: string|null = authService.getAccessToken();
 
   if (
     req.url.includes(BACKEND_API_USERS.REGISTER) ||
@@ -17,7 +17,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   ) {
     return next(req);
   }
-  if (!accessToken || req.headers.get('x-skip-interceptor')) return next(req);
+  if (req.headers.get('x-skip-interceptor')) return next(req);
 
   if (!stateService.verifyExistenceOfUserStated()) {
     return from(stateService.refreshUserLogged()).pipe(

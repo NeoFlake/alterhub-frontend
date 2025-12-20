@@ -1,0 +1,31 @@
+<h2>Liste des Héros disponible</h2>
+<table class="table">
+  <thead>
+    <tr class="row">
+      @for (column of columnsToDisplay; track $index) {
+      <th scope="col" [class]="column.class" class="d-flex justify-content-center align-items-center">{{ column.name }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    @for (hero of heroes()(); track $index) {
+    <tr scope="row" class="row">
+      <td class="col-2 d-flex justify-content-center align-items-center">
+        <i class="bi bi-pencil-fill update-button" (click)="handleUpdateAction(hero.id!)"></i>
+        <i class="bi bi-trash ms-3 me-3 delete-button" (click)="handleDeleteAction(hero.id!)"></i>
+      </td>
+      <td class="col-2 d-flex justify-content-center align-items-center">{{ hero.name }}</td>
+      <td class="col-2 d-flex justify-content-center align-items-center">
+        {{ hero.faction.name }}
+      </td>
+      <td class="col-2 d-flex justify-content-center align-items-center">
+        <div>
+          <div>Réserve : {{ hero.reserveSlot }}</div>
+          <div>Repère : {{ hero.landmarkSlot }}</div>
+        </div>
+      </td>
+      <td class="col-4">{{ hero.effect }}</td>
+    </tr>
+    }
+  </tbody>
+</table>

@@ -34,6 +34,7 @@ export class StateService {
   public updateUser = (updated: User): void => this.userLogged.set(updated);
 
   public verifyExistenceOfUserStated(): boolean {
+    console.log("Je passe dans stateService.verifyExistanceOfUserStated()");
     return this.userLogged().id !== "";
   }
 

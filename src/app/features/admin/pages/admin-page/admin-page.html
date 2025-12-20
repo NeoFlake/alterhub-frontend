@@ -1,17 +1,9 @@
-<div class="row d-flex justify-content-center">
-    <div class="col-12 mb-5">
-        <hero-form></hero-form>
-    </div>
-    <div class="col-12 mt-5">
-        <h2 class="mb-5">Synchroniser la base des cartes avec l'API Altered</h2>
-        <button (click)="handleSynchronize()" class="btn btn-primary col-2">Synchroniser</button>
-        @if (synchronisationActivee) {
-        <h5>Logback de la synchronisation</h5>
-        <ul>
-            @for (message of synchronisationMessages; track $index) {
-                <li>{{ message }}</li>
-            }
-        </ul>
-        }
-    </div>
+<div class="row">
+  <div class="col-4 mb-5">
+    <hero-form [heroes]="heroes" [updateHeroId]="updateHeroId"></hero-form>
+    <altered-api-synchronisation></altered-api-synchronisation>
+  </div>
+  <div class="col-8 mt-5">
+    <hero-list [heroes]="heroes" (onUpdateAction)="onUpdateAction($event)"></hero-list>
+  </div>
 </div>

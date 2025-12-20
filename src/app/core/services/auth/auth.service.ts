@@ -33,8 +33,8 @@ export class AuthService {
 
     this.refreshPromise = firstValueFrom(
       this.userRepository.refreshToken().pipe(
-        map((authResponse: AuthResponse|null|undefined) => {
-          if(!authResponse?.accessToken) throw new Error("Erreur provenant du serveur");
+        map((authResponse: AuthResponse | null | undefined) => {
+          if (!authResponse?.accessToken) throw new Error('Erreur provenant du serveur');
           this.setAccessToken(authResponse.accessToken);
           return true;
         }),
@@ -155,5 +155,4 @@ export class AuthService {
     // Certifie que si quelque chose ne va pas nous sommes déconnecté depuis longtempssss
     return this.decodePayload(this.accessToken())!.accessGranted === false;
   }
-
 }

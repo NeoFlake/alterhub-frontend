@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HeroFormManager } from './hero-form-manager';
+import { HeroManager } from './hero-manager';
 
-describe('HeroFormManager', () => {
-  let service: HeroFormManager;
+describe('HeroManager', () => {
+  let service: HeroManager;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HeroFormManager);
+    service = TestBed.inject(HeroManager);
   });
 
   it('should be created', () => {

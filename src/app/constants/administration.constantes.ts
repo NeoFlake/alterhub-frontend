@@ -13,3 +13,11 @@ export const HERO_FORM_LIBELLE = {
         IMAGE: "Identifiant de l'illustration"
     }
 };
+
+export const ADMINISTRATION_LIBELLE = {
+    ALTERED_API_SYNCHRONISATION_LIBELLE: {
+        MAIN_TITLE: "Synchroniser la base des cartes avec l'API Altered",
+        ACTION_BUTTON: "Synchroniser",
+        LOGBACK_TITLE: "Logback de la synchronisation"
+    }
+}

@@ -1,0 +1,12 @@
+<h2 class="mb-5">{{ adminLibelle.ALTERED_API_SYNCHRONISATION_LIBELLE.MAIN_TITLE }}</h2>
+<button (click)="handleSynchronize()" class="btn btn-primary col-8">
+  {{ adminLibelle.ALTERED_API_SYNCHRONISATION_LIBELLE.ACTION_BUTTON }}
+</button>
+@if (synchronisationActivee) {
+<h5>{{ adminLibelle.ALTERED_API_SYNCHRONISATION_LIBELLE.LOGBACK_TITLE }}</h5>
+<ul>
+  @for (message of synchronisationMessages; track $index) {
+  <li>{{ message }}</li>
+  }
+</ul>
+}

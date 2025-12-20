@@ -1,40 +1,35 @@
-import { Component, inject } from '@angular/core';
-import { catchError, EMPTY, finalize, tap } from 'rxjs';
-import { AlteredApiRepository } from '../../services/repository/altered-api.repository';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { HeroForm } from '../../components/hero-form/hero-form';
+import { AlteredApiSynchronisation } from '../../components/altered-api-synchronisation/altered-api-synchronisation';
+import { Hero } from '../../../../models/interfaces/api/hero';
+import { HeroManager } from '../../services/hero-manager';
+import { map } from 'rxjs';
+import { HeroList } from '../../components/hero-list/hero-list';
 
 @Component({
   selector: 'app-admin-page',
-  imports: [HeroForm],
+  imports: [HeroForm, AlteredApiSynchronisation, HeroList],
   templateUrl: './admin-page.html',
   styleUrl: './admin-page.css',
 })
 export class AdminPage {
 
-  
-  private alteredApiRepository: AlteredApiRepository = inject(AlteredApiRepository);
+  public heroManager: HeroManager = inject(HeroManager);
 
-  public synchronisationMessages: Array<string> = [];
-  public synchronisationActivee: boolean = false;
+  public heroes: WritableSignal<Array<Hero>> = signal<Array<Hero>>([]);
 
-  public handleSynchronize(): void {
-    this.synchronisationMessages = [];
-    this.synchronisationActivee = true;
-    this.alteredApiRepository
-      .refreshCardDatabase()
-      .pipe(
-        tap((msg) => this.synchronisationMessages.push(msg)),
-        catchError((error: any) => {
-          // Merci Angular de ce any <3
-          this.synchronisationMessages.push(
-            'Erreur : ' + (error instanceof Error ? error.message : 'Unknown error')
-          );
-          // Retour d’un flux vide pour finir sans bloquer
-          return EMPTY;
-        }),
-        finalize(() => this.synchronisationMessages.push('Terminé !')),
-        
-      )
-      .subscribe();
+  public updateHeroId: string = "";
+
+  ngOnInit(){
+    this.heroManager.getAllHeroes()
+    .pipe(
+      map((heroes: Array<Hero>) => this.heroes.set(heroes))
+    )
+    .subscribe();
   }
+
+  public onUpdateAction(heroId: string): void {
+    this.updateHeroId = heroId;
+  }
+  
 }

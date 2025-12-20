@@ -36,7 +36,6 @@ export class HomePage {
 
   ngOnInit() {
     this.loadCardPage(0, false);
-    console.log(this.stateService.userLogged().playerName);
   }
 
   public goToProfile(): void {
