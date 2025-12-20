@@ -39,7 +39,10 @@ export const FEEDBACK_PANEL_MESSAGES = {
     USER_REQUEST_ERROR: "Une erreur a été détecté dans votre formulaire; veuillez recommencer",
     DATA_ERROR: "Votre nom de joueur ou e-mail est incorrect, veuillez en changer",
     BACK_ERROR: "Le serveur a rencontré un problème, veuillez rééssayer ",
-    EXCEPTION_ERROR: "Un problème imprévu c'est produit lors de la procédure, veuillez recommencer"
+    EXCEPTION_ERROR: "Un problème imprévu c'est produit lors de la procédure, veuillez recommencer",
+    ADD_HERO_SUCCESS: "Héros ajouté avec succès",
+    UPDATE_HERO_SUCCESS: "Héros mis à jour avec succès",
+    DELETE_HERO_SUCCESS: "Héros supprimé avec succès"
 };
 
 export const KEY_ACCESS = 'app_access_token';

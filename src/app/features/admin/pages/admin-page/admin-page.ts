@@ -1,14 +1,15 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, inject, model, signal, WritableSignal } from '@angular/core';
 import { HeroForm } from '../../components/hero-form/hero-form';
 import { AlteredApiSynchronisation } from '../../components/altered-api-synchronisation/altered-api-synchronisation';
 import { Hero } from '../../../../models/interfaces/api/hero';
 import { HeroManager } from '../../services/hero-manager';
 import { map } from 'rxjs';
 import { HeroList } from '../../components/hero-list/hero-list';
+import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
 
 @Component({
   selector: 'app-admin-page',
-  imports: [HeroForm, AlteredApiSynchronisation, HeroList],
+  imports: [HeroForm, AlteredApiSynchronisation, HeroList, FeedbackPanel],
   templateUrl: './admin-page.html',
   styleUrl: './admin-page.css',
 })
@@ -20,6 +21,12 @@ export class AdminPage {
   public updateHeroId: WritableSignal<string> = signal<string>('');
 
   public disableIcon: WritableSignal<boolean> = signal<boolean>(false);
+
+  public feedBackData = model<{ statut: string; codeRetour: number; message: string }>({
+    statut: "",
+    codeRetour: 0,
+    message: ""
+  });
 
   ngOnInit() {
     this.heroManager
@@ -46,4 +53,9 @@ export class AdminPage {
   public onUpdateDone(): void {
     this.disableIcon.set(false);
   }
+
+   public handleFeedBackForm(feedBackData: { statut: string; codeRetour: number; message: string }){
+    this.feedBackData.set(feedBackData);
+  }
+
 }

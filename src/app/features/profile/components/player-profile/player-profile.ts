@@ -30,7 +30,6 @@ export class PlayerProfile implements OnDestroy {
               this.playerData = player ?? null;
             }),
             catchError((httpErrorResponse : HttpErrorResponse) => {
-              console.log(httpErrorResponse);
               this.playerData = null;
               return of(null);
             }),

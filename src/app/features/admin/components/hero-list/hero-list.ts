@@ -10,10 +10,14 @@ import {
 } from '@angular/core';
 import { Hero } from '../../../../models/interfaces/api/hero';
 import { HeroManager } from '../../services/hero-manager';
-import { catchError, of, Subject, takeUntil, tap } from 'rxjs';
+import { catchError, finalize, of, Subject, takeUntil, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HERO_LIST_LIBELLE } from '../../../../constants/administration.constantes';
 import { HeroDetailModal } from '../hero-detail-modal/hero-detail-modal';
+import {
+  AUTHENTIFICATION_STATUT,
+  FEEDBACK_PANEL_MESSAGES,
+} from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'hero-list',
@@ -31,7 +35,13 @@ export class HeroList {
 
   public onUpdateAction: OutputEmitterRef<string> = output<string>();
 
-  public detailedHero: WritableSignal<Hero | null> = signal<Hero|null>(null);
+  public feedbackPanelData: OutputEmitterRef<{
+    statut: string;
+    codeRetour: number;
+    message: string;
+  }> = output<{ statut: string; codeRetour: number; message: string }>();
+
+  public detailedHero: WritableSignal<Hero | null> = signal<Hero | null>(null);
 
   private unsubscriber$ = new Subject<void>();
 
@@ -50,7 +60,7 @@ export class HeroList {
     { name: this.heroListLibelle.COLUMNS.FACTION, class: 'col-3 col-md-2' },
     { name: this.heroListLibelle.COLUMNS.RESERVE_SLOT, class: 'd-none d-md-block col-md-2' },
     { name: this.heroListLibelle.COLUMNS.LANDMARK_SLOT, class: 'd-none d-md-block col-md-2' },
-    { name: '', class: 'col-3 col-md-1' }
+    { name: '', class: 'col-3 col-md-1' },
   ];
 
   public handleDeleteAction(heroId: string): void {
@@ -61,9 +71,28 @@ export class HeroList {
           this.heroes().update((heroes: Array<Hero>) => [
             ...heroes.filter((hero: Hero) => hero.id !== heroId),
           ]);
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.SUCCESS,
+            codeRetour: 200,
+            message: FEEDBACK_PANEL_MESSAGES.DELETE_HERO_SUCCESS,
+          });
         }),
-        catchError((error: HttpErrorResponse) => {
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.ERROR,
+            codeRetour: httpErrorResponse.error.status,
+            message: httpErrorResponse.error.message,
+          });
           return of(null);
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.feedbackPanelData.emit({
+              statut: '',
+              codeRetour: 0,
+              message: '',
+            });
+          }, 2500);
         }),
         takeUntil(this.unsubscriber$)
       )
@@ -85,5 +114,4 @@ export class HeroList {
   public onModalClose(): void {
     this.detailedHero.set(null);
   }
-
 }

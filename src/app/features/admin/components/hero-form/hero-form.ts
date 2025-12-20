@@ -5,12 +5,9 @@ import {
   inject,
   input,
   InputSignal,
-  model,
-  ModelSignal,
   output,
   OutputEmitterRef,
   signal,
-  untracked,
   WritableSignal,
 } from '@angular/core';
 import {
@@ -20,13 +17,24 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subject, tap, catchError, takeUntil, of, forkJoin } from 'rxjs';
+import {
+  Subject,
+  tap,
+  catchError,
+  takeUntil,
+  of,
+  forkJoin,
+  finalize,
+} from 'rxjs';
 import { HeroManager } from '../../services/hero-manager';
 import { Faction } from '../../../../models/interfaces/api/faction';
 import { Set } from '../../../../models/interfaces/api/set';
 import { Hero } from '../../../../models/interfaces/api/hero';
 import { HERO_FORM_LIBELLE } from '../../../../constants/administration.constantes';
-import { CombinedRecursiveAstVisitor } from '@angular/compiler';
+import {
+  AUTHENTIFICATION_STATUT,
+  FEEDBACK_PANEL_MESSAGES,
+} from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'hero-form',
@@ -59,6 +67,12 @@ export class HeroForm {
 
   public updateDone: OutputEmitterRef<void> = output<void>();
 
+  public feedbackPanelData: OutputEmitterRef<{
+    statut: string;
+    codeRetour: number;
+    message: string;
+  }> = output<{ statut: string; codeRetour: number; message: string }>();
+
   public reserveSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
   public landmarkSlotChoice: Array<number> = [0, 1, 2, 3, 4, 5];
 
@@ -75,12 +89,12 @@ export class HeroForm {
     });
 
     // Obligatoirement 36 caractères car cela correspond à l'UUID de la Faction
-    this.faction = this.formBuilder.control<string>('01GE7AC9XBG707G19F03A95TH1', {
+    this.faction = this.formBuilder.control<string>(this.heroFormLibelle.AXIOM_FACTION_IDENTIFIANT, {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(36), Validators.maxLength(36)],
     });
 
-    this.sets = this.formBuilder.control<Array<string>>(['01HKAFJN3HG3TWKYV0E014K01G'], {
+    this.sets = this.formBuilder.control<Array<string>>([this.heroFormLibelle.BEYOND_THE_GATE_IDENTIFIANT], {
       nonNullable: true,
       validators: [Validators.required],
     });
@@ -145,8 +159,12 @@ export class HeroForm {
           this.factions.set(factions.sort((a: Faction, b: Faction) => (a.name > b.name ? 1 : -1)));
           this.set.set(sets);
         }),
-        catchError((error: HttpErrorResponse) => {
-          console.log(error.message);
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.ERROR,
+            codeRetour: httpErrorResponse.error.status,
+            message: httpErrorResponse.error.message,
+          });
           return of(null);
         }),
         takeUntil(this.unsubscriber$)
@@ -182,9 +200,28 @@ export class HeroForm {
             })
           );
           this.resetFormValues();
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.SUCCESS,
+            codeRetour: 200,
+            message: FEEDBACK_PANEL_MESSAGES.ADD_HERO_SUCCESS,
+          });
         }),
-        catchError((error: HttpErrorResponse) => {
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.ERROR,
+            codeRetour: httpErrorResponse.error.status,
+            message: httpErrorResponse.error.message,
+          });
           return of(null);
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.feedbackPanelData.emit({
+              statut: '',
+              codeRetour: 0,
+              message: '',
+            });
+          }, 2500);
         }),
         takeUntil(this.unsubscriber$)
       )
@@ -215,10 +252,29 @@ export class HeroForm {
                 return a.name.localeCompare(b.name);
               })
           );
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.SUCCESS,
+            codeRetour: 200,
+            message: FEEDBACK_PANEL_MESSAGES.UPDATE_HERO_SUCCESS,
+          });
           this.backToAddForm();
         }),
-        catchError((error: HttpErrorResponse) => {
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedbackPanelData.emit({
+            statut: AUTHENTIFICATION_STATUT.ERROR,
+            codeRetour: httpErrorResponse.error.status,
+            message: httpErrorResponse.error.message,
+          });
           return of(null);
+        }),
+        finalize(() => {
+          setTimeout(() => {
+            this.feedbackPanelData.emit({
+              statut: '',
+              codeRetour: 0,
+              message: '',
+            });
+          }, 2000);
         }),
         takeUntil(this.unsubscriber$)
       )
@@ -227,8 +283,8 @@ export class HeroForm {
 
   public resetFormValues(): void {
     this.name.setValue('');
-    this.faction.setValue('01GE7AC9XBG707G19F03A95TH1');
-    this.sets.setValue(['01HKAFJN3HG3TWKYV0E014K01G']);
+    this.faction.setValue(this.heroFormLibelle.AXIOM_FACTION_IDENTIFIANT);
+    this.sets.setValue([this.heroFormLibelle.BEYOND_THE_GATE_IDENTIFIANT]);
     this.reserveSlot.setValue(2);
     this.landmarkSlot.setValue(2);
     this.effect.setValue('');

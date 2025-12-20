@@ -2,7 +2,7 @@
   <div class="col-6 mt-3">
 
     @if (authentificationMode === LOGIN) {
-    <login-form (feedbackPanelData)="handleFeedBackForm($event)" ></login-form>
+    <login-form (feedbackPanelData)="handleFeedBackForm($event)" (feedbackPanelData)="handleFeedBackForm($event)"></login-form>
     } @else if(authentificationMode === CREATE_ACCOUNT) {
     <create-account-form (feedbackPanelData)="handleFeedBackForm($event)"></create-account-form>
     }

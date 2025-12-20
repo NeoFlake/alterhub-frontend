@@ -27,7 +27,6 @@ export class Navbar {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        console.log();
         switch (event.url) {
           case `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`:
             this.pageTitle = this.libelles.AUTHENTICATION.LOGIN;
