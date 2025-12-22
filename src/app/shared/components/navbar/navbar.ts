@@ -1,15 +1,21 @@
 import { Component, inject } from '@angular/core';
 import { StateService } from '../../../core/services/state/state-service';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { ADMINPAGE_ROAD, AUTHENTIFICATION_ROAD, HOMEPAGE_ROAD, USER_ROAD } from '../../../constants/routes';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import {
+  ADMINPAGE_ROAD,
+  AUTHENTIFICATION_ROAD,
+  DECK_ROAD,
+  HOMEPAGE_ROAD,
+  USER_ROAD,
+} from '../../../constants/routes';
 import { PAGE_LIBELLE } from '../../../constants/navbar.constantes';
 import { filter } from 'rxjs';
 import { UserManager } from '../../../core/services/user-manager';
 
 @Component({
   selector: 'navbar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -34,6 +40,15 @@ export class Navbar {
           case `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`:
             this.pageTitle = this.libelles.AUTHENTICATION.CREATE_ACCOUNT;
             break;
+          case `${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.ALL}`:
+            this.pageTitle = this.libelles.DECK.READ_ALL_DECK_TITLE;
+            break;
+          case `${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.MINE}`:
+            this.pageTitle = this.libelles.DECK.READ_ALL_MY_DECKS;
+            break;
+          case `${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.CREATE}`:
+            this.pageTitle = this.libelles.DECK.CREATE;
+            break;
           case `/${USER_ROAD}`:
             this.pageTitle = this.libelles.USER;
             break;
@@ -54,5 +69,4 @@ export class Navbar {
   public logout(): void {
     this.userManager.logout();
   }
-
 }

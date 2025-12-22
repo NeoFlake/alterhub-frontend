@@ -15,15 +15,34 @@
             {{ libelles.DECK.ROOT }}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">{{ libelles.DECK.READ }}</a></li>
+            <li>
+              <a
+                class="dropdown-item nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                (click)="$event.stopPropagation()"
+                >{{ libelles.DECK.READ }}</a
+              >
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" routerLink="/deck/display/all">{{ libelles.DECK.ALL }}</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="/deck/display/mine">{{ libelles.DECK.MINE }}</a>
+                </li>
+              </ul>
+            </li>
             @if(authService.isAuthenticated()){
-            <li><a class="dropdown-item" href="#">{{ libelles.DECK.CREATE }}</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="/deck/create">{{ libelles.DECK.CREATE }}</a>
+            </li>
             }
           </ul>
         </li>
         @if(authService.isAuthenticated() && authService.isAccessGrantedForUser()){
         <li class="nav-item">
-          <a class="nav-link" href="/admin">{{ libelles.ADMIN }}</a>
+          <a class="nav-link" routerLink="/admin">{{ libelles.ADMIN }}</a>
         </li>
         }
       </ul>
@@ -44,8 +63,14 @@
             {{ stateService.userLogged().playerName }}
           </button>
           <ul class="dropdown-menu">
-            <li class="nav-item"><a class="dropdown-item" href="/profile">{{ libelles.PROFILE }}</a></li>
-            <li class="nav-item"><a class="dropdown-item cursor-pointer"  (click)="logout()">{{ libelles.AUTHENTICATION.LOGOUT }}</a></li>
+            <li class="nav-item">
+              <a class="dropdown-item" routerLink="/profile">{{ libelles.PROFILE }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="dropdown-item cursor-pointer" (click)="logout()">{{
+                libelles.AUTHENTICATION.LOGOUT
+              }}</a>
+            </li>
           </ul>
         </li>
         } @else {

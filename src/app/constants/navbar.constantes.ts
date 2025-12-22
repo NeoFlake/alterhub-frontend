@@ -3,6 +3,11 @@ export const PAGE_LIBELLE = {
     ROOT: 'Decks',
     READ: 'Consulter',
     CREATE: 'Créer',
+    ALL: 'Tous',
+    MINE: 'Mes decks',
+    READ_ALL_DECK_TITLE: "Consulter tous les decks",
+    READ_ALL_MY_DECKS: "Consulter tous mes decks",
+    CREATE_DECK: "Créer un deck"
   },
   ADMIN: 'Administration',
   PROFILE: 'Profil',

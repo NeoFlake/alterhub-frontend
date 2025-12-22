@@ -4,6 +4,15 @@ export const AUTHENTIFICATION_ROAD = {
     LOGIN: "login",
     CREATE_ACCOUNT: "create-account"
 };
+
+export const DECK_ROAD = {
+    ROOT: "deck",
+    READ: "display",
+    ALL: "all",
+    MINE: "mine",
+    CREATE: "create"
+};
+
 export const HOMEPAGE_ROAD = "homepage";
 
 export const USER_ROAD = "profile"
