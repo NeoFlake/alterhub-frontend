@@ -14,7 +14,7 @@
           >
             {{ libelles.DECK.ROOT }}
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu dropend">
             <li>
               <a
                 class="dropdown-item nav-link dropdown-toggle"
@@ -26,11 +26,17 @@
               >
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" routerLink="/deck/display/all">{{ libelles.DECK.ALL }}</a>
+                  <a class="dropdown-item" routerLink="/deck/display/all">{{
+                    libelles.DECK.ALL
+                  }}</a>
                 </li>
+                @if(authService.isAuthenticated()){
                 <li>
-                  <a class="dropdown-item" routerLink="/deck/display/mine">{{ libelles.DECK.MINE }}</a>
+                  <a class="dropdown-item" routerLink="/deck/display/mine">{{
+                    libelles.DECK.MINE
+                  }}</a>
                 </li>
+                }
               </ul>
             </li>
             @if(authService.isAuthenticated()){
