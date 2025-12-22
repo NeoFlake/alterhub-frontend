@@ -49,7 +49,7 @@ export class HomePage {
 
   public loadCardPage(pageNumber: number, anchorToTopPage: boolean): void {
     this.homepageFacade
-      .getPageCards(pageNumber)
+      .getCardsByFactionId("7a0c3410-b39f-449b-90d0-ea7f99d71899", pageNumber)
       .pipe(
         tap((cardPage: Page<Array<Card>>) => {
           this.pageCards.set(cardPage);

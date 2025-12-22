@@ -10,6 +10,7 @@ export interface Card extends Reference {
     element: Element;
     faction: Faction;
     image: string;
+    reference: string;
     isBanned: boolean;
     isErrated: boolean;
     isSuspended: boolean;

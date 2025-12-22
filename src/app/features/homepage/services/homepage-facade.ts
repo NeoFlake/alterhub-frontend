@@ -12,7 +12,11 @@ export class HomepageFacade {
   private cardsRepository: CardsRepository = inject(CardsRepository);
 
   public getPageCards(pageNumber: number): Observable<Page<Array<Card>>> {
-    return this.cardsRepository.getCards(pageNumber, 40);
+    return this.cardsRepository.getCards(pageNumber, 200);
+  }
+
+  public getCardsByFactionId(factionId: string, pageNumber: number): Observable<Page<Array<Card>>> {
+    return this.cardsRepository.getCardsByFactionId(factionId , pageNumber, 200);
   }
   
 }

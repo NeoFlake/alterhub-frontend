@@ -15,5 +15,9 @@ export class CardsRepository {
   public getCards(page: number, size: number): Observable<Page<Array<Card>>> {
     return this.http.get<Page<Array<Card>>>(`${BACKEND_API_CARDS.ROOT}?page=${page}&size=${size}`);
   }
+
+  public getCardsByFactionId(factionId: string, page: number, size: number): Observable<Page<Array<Card>>> {
+    return this.http.get<Page<Array<Card>>>(`${BACKEND_API_CARDS.BY_FACTION_ID}/${factionId}?page=${page}&size=${size}`);
+  }
   
 }
