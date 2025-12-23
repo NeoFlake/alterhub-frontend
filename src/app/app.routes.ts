@@ -14,7 +14,7 @@ import { UserPage } from './features/profile/pages/user-page/user-page';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 import { CreationDeck } from './features/creation-deck/pages/creation-deck/creation-deck';
-import { ReadDeck } from './features/read-deck/read-deck/read-deck';
+import { ReadDeck } from './features/read-deck/pages/read-deck/read-deck';
 
 export const routes: Routes = [
   // Route lié à la vue administration

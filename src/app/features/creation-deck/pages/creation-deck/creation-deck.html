@@ -1,1 +1,8 @@
-<p>creation-deck works!</p>
+<div class="mt-3 ms-1 me-1">
+  @if(deckCreationPart === 1){
+  <main-deck-info-form [heroes]="heroes" [factions]="factions" (activateSecondStep)="onActivateSecondStep($event)"></main-deck-info-form>
+  } @else if(deckCreationPart === 2){
+  <p>Je passe à la deuxième étape désormais</p>
+  }
+  <feedback-panel [data]="feedBackPanel()"></feedback-panel>
+</div>

@@ -1,0 +1,109 @@
+.label {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid #1e293b;
+    border-radius: 1rem;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.label:hover {
+    transform: translateY(-5px);
+    border-color: #475569;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.btn-check:checked+.label {
+    border-color: var(--theme-color);
+    box-shadow: 0 0 20px var(--theme-color-glow);
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.label::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-check:checked+.label::before {
+    opacity: 1;
+}
+
+.faction-img {
+    max-width: 60%;
+}
+
+.hero-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: flex-start;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.hero-card {
+    flex: 0 0 auto;
+    width: 260px;
+    scroll-snap-align: center;
+}
+
+.hero-label {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid #1e293b;
+    border-radius: 1rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.17, 0.88, 0.32, 1.27);
+    aspect-ratio: 2.5 / 3.5;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-label:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: opacity 0.3s;
+    opacity: 0.7;
+}
+
+.hero-label:hover .hero-img,
+.btn-check:checked + .hero-label .hero-img {
+    opacity: 1;
+}
+
+.btn-check:checked + .hero-label {
+    border-color: var(--theme-color);
+    box-shadow: 0 0 25px var(--theme-color-glow);
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-section {
+    animation: slideUpFade 0.6s ease-out forwards;
+}

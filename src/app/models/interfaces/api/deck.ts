@@ -7,7 +7,6 @@ import { Tag } from "./tag";
 export interface Deck extends Identifiable {
     cards: Array<Card>;
     dateOfCreation: string;
-    description: string;
     faction: Faction;
     hero: Hero;
     lastModification: Date;
