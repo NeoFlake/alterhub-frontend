@@ -16,7 +16,7 @@ export class HomepageFacade {
   }
 
   public getCardsByFactionId(factionId: string, pageNumber: number): Observable<Page<Array<Card>>> {
-    return this.cardsRepository.getCardsByFactionId(factionId , pageNumber, 200);
+    return this.cardsRepository.getCardsByFactionId(factionId , pageNumber, 16);
   }
   
 }

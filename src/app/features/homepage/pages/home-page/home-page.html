@@ -1,16 +1,26 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-9 row m-0 p-1">
     @for (card of pageCards().content; track $index) {
-    <img
-      [src]="getCardImageUrl(card.image)"
-      alt="Une bien belle image altered"
-      style="display: inline; width: calc((100% - 80px) / 4); margin: 10px; border-radius: 10px"
-    />
+    <card-container
+      [card]="card"
+      class="col-3 m-0 p-0"
+      [withCounterFunction]="true"
+      [count]="getCardCount(card.id)"
+      [exampleCount]="getExampleCount(card.name)"
+      [raresSizeLimitReach]="getRaresSizeLimitReach()"
+      [deckSizeLimitReach]="getDeckSizeLimitReach()"
+      (add)="addCardToDeck($event)"
+      (remove)="removeCardFromDeck($event)"
+    >
+    </card-container>
     }
+  </div>
+  <div class="col-3 m-0 p-0" style="height: 1000px; background-color: grey">
+    <decklist-totem></decklist-totem>
   </div>
 </div>
 <div class="row d-flex justify-content-center">
   <div class="col-6 d-flex justify-content-center">
-    <pagination [page]="pageCards()" (pageSelect)="onPageSelect($event)" ></pagination>
+    <pagination [page]="pageCards()" (pageSelect)="onPageSelect($event)"></pagination>
   </div>
 </div>

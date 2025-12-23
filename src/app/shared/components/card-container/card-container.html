@@ -1,0 +1,43 @@
+<div class="row card-container m-0 p-0 justify-content-center" [class.pb-3]="withCounterFunction()">
+  <div class="m-0 p-0 text-center d-flex justify-content-center align-items-center" style="height: 3.5em;">
+    <h5 [title]="card().name">{{ card().name }}</h5>
+  </div>
+  <div class="p-2 pt-0">
+    <img
+      [src]="getCardImageUrl(card().image)"
+      alt="Une bien belle image altered"
+      class="w-100 image-corner"
+    />
+  </div>
+  @if (withCounterFunction()) {
+  <div class="row justify-content-center">
+    <div class="col-9 row p-0 m-0">
+      <div class="btn-group" role="group">
+        <button
+          type="button"
+          class="btn btn-primary d-flex align-items-center justify-content-center px-3 text-white border-secondary"
+          [disabled]="count() === 0"
+          (click)="removeCard(card())"
+        >
+          -
+        </button>
+
+        <div
+          class="btn btn-light disabled fw-bold border-secondary d-flex align-items-center justify-content-center center-button"
+        >
+          {{ count() }}
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-success d-flex align-items-center justify-content-center px-3 text-white border-secondary"
+          [disabled]="needToBeDisabled(card().rarity.reference)"
+          (click)="addCard(card())"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
