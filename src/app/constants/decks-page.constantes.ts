@@ -6,3 +6,22 @@ export const DECK_LIBELLES = {
         ACTION_BUTTON: "Sélectionner ce héro"
     }
 }
+
+export const DECKLIST_TOTEM_LIBELLES = {
+    CARD_RARITY: {
+        COMMON: "COMMON",
+        RARE: "RARE",
+        UNIQUE: "UNIQUE"
+    },
+    CARD_TYPE: {
+        CHARACTER: "CHARACTER",
+        SPELL: "SPELL"
+    },
+    VIEW_LIBELLE: {
+        CHARACTER: "Personnages",
+        SPELL: "Sorts",
+        PERMANENT: "Permanents"
+    },
+    ACTION_BUTTON: "Sauvegarder",
+    HERO_TITLE: "Héro : "
+}

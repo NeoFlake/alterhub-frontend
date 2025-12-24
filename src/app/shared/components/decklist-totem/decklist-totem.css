@@ -1,0 +1,30 @@
+.info-zone {
+    background-color: #EADDD4;
+    border-radius: 15px;
+    border: 1px solid #c7bdb6;
+}
+
+.parchemine-custom {
+    background-color: #d4cdc4;
+}
+
+.blue-custom {
+    background-color: #0068ad;
+}
+
+.area-display {
+    width: 14px;
+    height: 14px;
+}
+
+.font-color-blue {
+     color: #0068ad;
+}
+
+.under-font-size {
+    font-size: 0.75rem;
+}
+
+.auto-max-height {
+    max-height: auto;
+}

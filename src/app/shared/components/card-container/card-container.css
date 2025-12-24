@@ -6,3 +6,7 @@
     min-width: 40px;
     opacity: 1;
 }
+
+.fixed-height {
+    height: 3.5em;
+}

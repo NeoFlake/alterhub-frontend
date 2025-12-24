@@ -1,0 +1,31 @@
+<div
+  class="border border-secondary rounded text-light d-flex align-items-center p-2 gap-2"
+  [style.background-color]="element().card.rarity.reference === 'COMMON' ? '#a39787' : '#0068ad'"
+>
+  <div class="d-flex align-items-center gap-1">
+    <div class="position-relative bubble-area">
+      <div
+        class="rounded-circle bg-info text-dark fw-bold d-flex align-items-center justify-content-center border border-info position-absolute top-0 start-0 z-2 shadow-sm bubble-size"
+      >
+        {{ truncateSharpElement(element().card.element.mainCost) }}
+      </div>
+      <div
+        class="rounded-circle bg-secondary text-white fw-bold d-flex align-items-center justify-content-center border border-dark position-absolute bottom-0 end-0 z-1 bubble-size"
+      >
+        {{ truncateSharpElement(element().card.element.recallCost) }}
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-grow-1 text-truncate floor-width">
+    <div class="fw-bold small text-truncate">{{ element().card.name }}</div>
+  </div>
+
+  <div
+    class="badge rounded-pill bg-black border border-secondary d-flex align-items-center custo-padding"
+  >
+    <span class="text-white small fw-bold mx-1 ajust-font-size">
+      {{ element().quantity }} <span class="text-white opacity-75">/ 3</span>
+    </span>
+  </div>
+</div>
