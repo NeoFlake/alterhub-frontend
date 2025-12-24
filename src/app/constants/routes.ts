@@ -6,10 +6,9 @@ export const AUTHENTIFICATION_ROAD = {
 };
 
 export const DECK_ROAD = {
-    ROOT: "deck",
-    READ: "display",
-    ALL: "all",
-    MINE: "mine",
+    ROOT: "decks",
+    ALL: "explore",
+    MINE: "collection",
     CREATE: "create"
 };
 

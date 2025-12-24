@@ -26,13 +26,13 @@
               >
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" routerLink="/deck/display/all">{{
+                  <a class="dropdown-item" routerLink="/decks/explore">{{
                     libelles.DECK.ALL
                   }}</a>
                 </li>
                 @if(authService.isAuthenticated()){
                 <li>
-                  <a class="dropdown-item" routerLink="/deck/display/mine">{{
+                  <a class="dropdown-item" routerLink="/decks/collection">{{
                     libelles.DECK.MINE
                   }}</a>
                 </li>
@@ -41,7 +41,7 @@
             </li>
             @if(authService.isAuthenticated()){
             <li>
-              <a class="dropdown-item" routerLink="/deck/create">{{ libelles.DECK.CREATE }}</a>
+              <a class="dropdown-item" routerLink="/decks/create">{{ libelles.DECK.CREATE }}</a>
             </li>
             }
           </ul>

@@ -40,10 +40,10 @@ export class Navbar {
           case `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`:
             this.pageTitle = this.libelles.AUTHENTICATION.CREATE_ACCOUNT;
             break;
-          case `/${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.ALL}`:
+          case `/${DECK_ROAD.ROOT}/${DECK_ROAD.ALL}`:
             this.pageTitle = this.libelles.DECK.READ_ALL_DECK_TITLE;
             break;
-          case `/${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.MINE}`:
+          case `/${DECK_ROAD.ROOT}/${DECK_ROAD.MINE}`:
             this.pageTitle = this.libelles.DECK.READ_ALL_MY_DECKS;
             break;
           case `/${DECK_ROAD.ROOT}/${DECK_ROAD.CREATE}`:

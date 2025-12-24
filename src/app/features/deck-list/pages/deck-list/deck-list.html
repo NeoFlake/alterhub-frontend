@@ -1,0 +1,11 @@
+@if (deckList() && deckList()!.content) {
+<div class="row">
+  @for (deck of deckList()!.content; track $index) {
+  <div class="col-2">
+    <p>{{ deck.name }}</p>
+    <p>{{ deck.faction.name }}<img [src]="fixFactionIcon(deck.faction.name)" class="faction-img" /></p>
+    <p>{{ deck.hero.name }}</p>
+  </div>
+  }
+</div>
+}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReadDeck } from './read-deck';
+import { DeckDetail } from './deck-detail';
 
-describe('ReadDeck', () => {
-  let component: ReadDeck;
-  let fixture: ComponentFixture<ReadDeck>;
+describe('DeckDetail', () => {
+  let component: DeckDetail;
+  let fixture: ComponentFixture<DeckDetail>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReadDeck]
+      imports: [DeckDetail]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReadDeck);
+    fixture = TestBed.createComponent(DeckDetail);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

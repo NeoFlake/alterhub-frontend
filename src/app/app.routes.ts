@@ -14,11 +14,12 @@ import { UserPage } from './features/profile/pages/user-page/user-page';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 import { CreationDeck } from './features/creation-deck/pages/creation-deck/creation-deck';
-import { ReadDeck } from './features/read-deck/pages/read-deck/read-deck';
+import { DeckList } from './features/deck-list/pages/deck-list/deck-list';
+import { DeckDetail } from './features/deck-detail/pages/deck-detail/deck-detail';
 
 export const routes: Routes = [
   // Route lié à la vue administration
-  { path: ADMINPAGE_ROAD, component: AdminPage, canActivate:[authGuard, roleGuard] },
+  { path: ADMINPAGE_ROAD, component: AdminPage, canActivate: [authGuard, roleGuard] },
   // Routes liés à la vue d'authentification
   // Redirection vers la page de connexion si l'on entre uniquement la racine de la route
   {
@@ -38,9 +39,26 @@ export const routes: Routes = [
     ],
   },
   // Routes liés à la gestion des decks (création/consultation/modification)
-  { path: `${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.ALL}`, component: ReadDeck },
-  { path: `${DECK_ROAD.ROOT}/${DECK_ROAD.READ}/${DECK_ROAD.MINE}`, component: ReadDeck, canActivate: [authGuard] },
-  { path: `${DECK_ROAD.ROOT}/${DECK_ROAD.CREATE}`, component: CreationDeck , canActivate: [authGuard] },
+  {
+    path: DECK_ROAD.ROOT,
+    children: [
+      { path: DECK_ROAD.ALL, component: DeckList },
+      {
+        path: DECK_ROAD.MINE,
+        component: DeckList,
+        canActivate: [authGuard]
+      },
+      {
+        path: DECK_ROAD.CREATE,
+        component: CreationDeck,
+        canActivate: [authGuard],
+      },
+      {
+        path: `:id`,
+        component: DeckDetail,
+      },
+    ],
+  },
   // Route lié à la page d'accueil
   { path: HOMEPAGE_ROAD, component: HomePage },
   // Route lié à la page personnelle de l'utilisateur
