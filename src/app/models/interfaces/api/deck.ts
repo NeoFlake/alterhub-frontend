@@ -4,7 +4,8 @@ import { Hero } from "./hero";
 import { Identifiable } from "./identifiable";
 import { Tag } from "./tag";
 
-export interface Deck extends Identifiable {
+export interface Deck {
+    id?: string;
     cards: Array<Card>;
     dateOfCreation: string;
     faction: Faction;

@@ -8,10 +8,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AUTHENTIFICATION_STATUT } from '../../../../constants/authentification-page.constantes';
 import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
 import { Deck } from '../../../../models/interfaces/api/deck';
+import { CardListDeck } from '../../components/card-list-deck/card-list-deck';
+import { Card } from '../../../../models/interfaces/api/card';
+import { StateService } from '../../../../core/services/state/state-service';
+import { Player } from '../../../../models/interfaces/api/player';
 
 @Component({
   selector: 'creation-deck',
-  imports: [MainDeckInfoForm, FeedbackPanel],
+  imports: [MainDeckInfoForm, FeedbackPanel, CardListDeck],
   templateUrl: './creation-deck.html',
   styleUrl: './creation-deck.css',
 })
@@ -30,6 +34,9 @@ export class CreationDeck {
   public factions: Array<Faction> = [];
   public heroes: Array<Hero> = [];
 
+  public heroChoosen: Hero|null = null;
+  public factionChoosen: Faction|null = null;
+
   public deckCreationPart: 1 | 2 = 1;
 
   // On initialise notre partial pour conserver les donneés entre les voyages entre
@@ -42,11 +49,11 @@ export class CreationDeck {
     this.creationDeckService
       .initialiseInfos()
       .pipe(
-        tap((data: [heroes: Array<Hero>, factions: Array<Faction>]) => {
-          console.log(data[0]);
-          console.log(data[1]);
+        tap((data: [heroes: Array<Hero>, factions: Array<Faction>, player: Player]) => {
           this.heroes = data[0];
           this.factions = data[1];
+          this.deckToCreate.playerId = data[2].id;
+          this.deckToCreate.tags = [];
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           this.feedBackPanel.set({
@@ -78,8 +85,24 @@ export class CreationDeck {
   public onActivateSecondStep(firstPartOfInfo: Partial<{name: string, faction: Faction, hero: Hero}>) {
     this.deckToCreate.name = firstPartOfInfo.name;
     this.deckToCreate.faction = firstPartOfInfo.faction;
+    this.factionChoosen = firstPartOfInfo.faction!;
     this.deckToCreate.hero = firstPartOfInfo.hero;
+    this.heroChoosen = firstPartOfInfo.hero!;
     this.deckCreationPart = 2;
+  }
+
+  public onValidateCreationDeckList(deckList: Array<Card>): void {
+
+    const now: Date = new Date();
+
+    this.deckToCreate.cards = deckList;
+    this.deckToCreate.dateOfCreation = now.toISOString().slice(0, 10);
+    this.deckToCreate.lastModification = now;
+    this.creationDeckService.addDeck(this.deckToCreate)
+    .pipe(
+      tap((deck: Deck) => console.log("Ouiiii j'ai gagné, le voici : ", deck))
+    )
+    .subscribe();
   }
 
 }

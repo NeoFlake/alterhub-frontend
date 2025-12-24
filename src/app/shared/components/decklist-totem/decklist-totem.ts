@@ -1,31 +1,53 @@
 import {
   Component,
   computed,
-  effect,
   input,
   InputSignal,
   output,
   OutputEmitterRef,
   Signal,
-  signal,
-  untracked,
 } from '@angular/core';
 import { Card } from '../../../models/interfaces/api/card';
 import { DECKLIST_TOTEM_LIBELLES } from '../../../constants/decks-page.constantes';
+import { DecklistTotemElement } from '../decklist-totem-element/decklist-totem-element';
 
 @Component({
   selector: 'decklist-totem',
-  imports: [],
+  imports: [DecklistTotemElement],
   templateUrl: './decklist-totem.html',
   styleUrl: './decklist-totem.css',
 })
 export class DecklistTotem {
   // À cabler avec le héros que l'on recevra depuis le composant parent (donc un input InputSignal<Hero>)
-  public hero: string = 'Treyst & Rossum';
+  public heroName: InputSignal<string> = input.required<string>();
 
   public deckList: InputSignal<Array<Card>> = input.required<Array<Card>>();
 
   public validateCreationDeckList: OutputEmitterRef<void> = output<void>();
+
+  public characterCount: Signal<number> = computed(
+    () =>
+      this.deckList().filter(
+        (card: Card) => card.type.reference === this.libelles.CARD_TYPE.CHARACTER
+      ).length
+  );
+
+  public spellCount: Signal<number> = computed(
+    () =>
+      this.deckList().filter((card: Card) => card.type.reference === this.libelles.CARD_TYPE.SPELL)
+        .length
+  );
+
+  public permanentCount: Signal<number> = computed(
+    () =>
+      this.deckList().filter(
+        (card: Card) =>
+          !(
+            card.type.reference === this.libelles.CARD_TYPE.CHARACTER ||
+            card.type.reference === this.libelles.CARD_TYPE.SPELL
+          )
+      ).length
+  );
 
   public characterList: Signal<Array<{ card: Card; quantity: number }>> = computed(() =>
     this.formatDeckList(
@@ -85,18 +107,27 @@ export class DecklistTotem {
         };
       })
       .sort((a: { card: Card; quantity: number }, b: { card: Card; quantity: number }) => {
-        if (this.truncateSharpElement(a.card.element.mainCost) === this.truncateSharpElement(b.card.element.mainCost) && a.card.name === b.card.name) {
+        if (
+          this.truncateSharpElement(a.card.element.mainCost) ===
+            this.truncateSharpElement(b.card.element.mainCost) &&
+          a.card.name === b.card.name
+        ) {
           return a.card.rarity.reference > b.card.rarity.reference ? 1 : -1;
         }
-        if (this.truncateSharpElement(a.card.element.mainCost) === this.truncateSharpElement(b.card.element.mainCost)) {
+        if (
+          this.truncateSharpElement(a.card.element.mainCost) ===
+          this.truncateSharpElement(b.card.element.mainCost)
+        ) {
           return a.card.name > b.card.name ? 1 : -1;
         }
-        return this.truncateSharpElement(a.card.element.mainCost) > this.truncateSharpElement(b.card.element.mainCost) ? 1 : -1;
+        return this.truncateSharpElement(a.card.element.mainCost) >
+          this.truncateSharpElement(b.card.element.mainCost)
+          ? 1
+          : -1;
       });
   }
 
   public onValidateCreationDeckList(): void {
     this.validateCreationDeckList.emit();
   }
-
 }

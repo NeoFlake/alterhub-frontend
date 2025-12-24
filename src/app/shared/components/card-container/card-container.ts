@@ -9,22 +9,20 @@ import { Card } from '../../../models/interfaces/api/card';
   styleUrl: './card-container.css',
 })
 export class CardContainer {
-  public count: InputSignal<number> = input.required<number>();
+
+  public count: InputSignal<number> = input<number>(0);
 
   public card: InputSignal<Card> = input.required<Card>();
 
   public add: OutputEmitterRef<Card> = output<Card>();
   public remove: OutputEmitterRef<Card> = output<Card>();
 
-  // Cet input est facultatif car si l'on ne souhaite pas afficher
+  // Ces input sont facultatif car si l'on ne souhaite pas afficher
   // les fonctionnalités lié à l'ajout dans le deck (ce qui est plus probable)
-  // autant ne pas obliger à effectuer l'input
+  // autant ne pas obliger à effectuer les inputs
   public withCounterFunction: InputSignal<boolean> = input<boolean>(false);
-
   public raresSizeLimitReach: InputSignal<boolean> = input<boolean>(false);
-
   public deckSizeLimitReach: InputSignal<boolean>= input<boolean>(false);
-
   public exampleCount: InputSignal<boolean> = input<boolean>(false);
 
   public getCardImageUrl(imagePath: string): string {

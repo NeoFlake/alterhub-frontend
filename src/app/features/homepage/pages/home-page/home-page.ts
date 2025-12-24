@@ -10,8 +10,41 @@ import { DecklistTotem } from '../../../../shared/components/decklist-totem/deck
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [Pagination, CardContainer],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {}
+export class HomePage {
+
+  private homepageFacade: HomepageFacade = inject(HomepageFacade);
+
+  public pageCards: WritableSignal<Page<Array<Card>>> = signal({
+    content: [],
+    totalElements: 0,
+    totalPages: 0,
+    number: 0,
+    size: 0,
+    first: false,
+    last: false,
+  });
+
+  ngOnInit() {
+    this.loadCardPage(0, false);
+  }
+
+  public loadCardPage(pageNumber: number, anchorToTopPage: boolean): void {
+    this.homepageFacade
+      .getCardsByFactionId('7a0c3410-b39f-449b-90d0-ea7f99d71899', pageNumber)
+      .pipe(
+        tap((cardPage: Page<Array<Card>>) => {
+          this.pageCards.set(cardPage);
+          anchorToTopPage ? window.scrollTo({ top: 0, behavior: 'instant' }) : null;
+        })
+      )
+      .subscribe();
+  }
+
+  public onPageSelect(pageSelected: number): void {
+    this.loadCardPage(pageSelected, true);
+  }
+}

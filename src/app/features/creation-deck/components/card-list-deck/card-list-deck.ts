@@ -1,4 +1,13 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { CardContainer } from '../../../../shared/components/card-container/card-container';
 import { DecklistTotem } from '../../../../shared/components/decklist-totem/decklist-totem';
 import { Pagination } from '../../../../shared/components/pagination/pagination';
@@ -6,16 +15,23 @@ import { tap } from 'rxjs';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
 import { Card } from '../../../../models/interfaces/api/card';
 import { Page } from '../../../../models/interfaces/api/page';
-import { HomepageFacade } from '../../../homepage/services/homepage-facade';
+import { Faction } from '../../../../models/interfaces/api/faction';
+import { Hero } from '../../../../models/interfaces/api/hero';
+import { CreationDeckService } from '../../services/creation-deck-service';
 
 @Component({
-  selector: 'app-card-list-deck',
+  selector: 'card-list-deck',
   imports: [Pagination, CardContainer, DecklistTotem],
   templateUrl: './card-list-deck.html',
   styleUrl: './card-list-deck.css',
 })
 export class CardListDeck {
-  private homepageFacade: HomepageFacade = inject(HomepageFacade);
+  private creationDeckService: CreationDeckService = inject(CreationDeckService);
+
+  public faction: InputSignal<Faction> = input.required<Faction>();
+  public hero: InputSignal<Hero> = input.required<Hero>();
+
+  public validateCreationDeckList: OutputEmitterRef<Array<Card>> = output<Array<Card>>();
 
   public pageCards: WritableSignal<Page<Array<Card>>> = signal({
     content: [],
@@ -27,8 +43,13 @@ export class CardListDeck {
     last: false,
   });
 
+  public deckList: WritableSignal<Array<Card>> = signal<Array<Card>>([]);
+
+  public scrollbarColor: WritableSignal<string> = signal<string>('#777777ff');
+
   ngOnInit() {
     this.loadCardPage(0, false);
+    this.scrollbarColor.set(this.faction().color);
   }
 
   public getCardImageUrl(imagePath: string): string {
@@ -37,8 +58,8 @@ export class CardListDeck {
   }
 
   public loadCardPage(pageNumber: number, anchorToTopPage: boolean): void {
-    this.homepageFacade
-      .getCardsByFactionId('7a0c3410-b39f-449b-90d0-ea7f99d71899', pageNumber)
+    this.creationDeckService
+      .getCardsByFactionId(this.faction().id, pageNumber)
       .pipe(
         tap((cardPage: Page<Array<Card>>) => {
           this.pageCards.set(cardPage);
@@ -90,5 +111,7 @@ export class CardListDeck {
     });
   }
 
-  public deckList: WritableSignal<Array<Card>> = signal<Array<Card>>([]);
+  public onValidateCreationDeckList(): void {
+    this.validateCreationDeckList.emit(this.deckList());
+  }
 }

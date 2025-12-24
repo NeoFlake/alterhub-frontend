@@ -1,9 +1,8 @@
 <div class="row">
-  <div class="col-9 row m-0 p-1 overflow-auto box-height" style="height: 85vh">
+  <div class="col-9 row m-0 p-1 overflow-auto box-height fixed-height custom-scrollbar" [style.--scrollbar-color]="scrollbarColor()">
     @for (card of pageCards().content; track $index) {
     <card-container
       [card]="card"
-      class="col-3 m-0 p-0"
       [withCounterFunction]="true"
       [count]="getCardCount(card.id)"
       [exampleCount]="getExampleCount(card.name)"
@@ -11,6 +10,7 @@
       [deckSizeLimitReach]="getDeckSizeLimitReach()"
       (add)="addCardToDeck($event)"
       (remove)="removeCardFromDeck($event)"
+      class="col-3 m-0 p-0"
     >
     </card-container>
     }
@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="col-3 row p-0 m-0">
-    <decklist-totem [deckList]="deckList()"></decklist-totem>
+    <decklist-totem [deckList]="deckList()" [heroName]="hero().name" (validateCreationDeckList)="onValidateCreationDeckList()"></decklist-totem>
   </div>
 </div>

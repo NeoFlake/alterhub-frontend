@@ -10,7 +10,8 @@
         {{ truncateSharpElement(element().card.element.mainCost) }}
       </div>
       <div
-        class="rounded-circle bg-secondary text-white fw-bold d-flex align-items-center justify-content-center border border-dark position-absolute bottom-0 end-0 z-1 bubble-size"
+        class="rounded-circle text-white fw-bold d-flex align-items-center justify-content-center border border-dark position-absolute bottom-0 end-0 z-1 bubble-size"
+        [style.background-color]="element().card.faction.color"
       >
         {{ truncateSharpElement(element().card.element.recallCost) }}
       </div>

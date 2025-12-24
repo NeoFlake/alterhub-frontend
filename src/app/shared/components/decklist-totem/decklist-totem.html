@@ -1,7 +1,7 @@
 <div>
   <div class="row m-0 mt-3 info-zone">
     <div class="col-12 p-0 mt-3 ms-3 auto-max-height">
-      <p class="h5">{{ `${libelles.HERO_TITLE}${hero}` }}</p>
+      <p class="h5">{{ `${libelles.HERO_TITLE}${heroName()}` }}</p>
     </div>
     <div class="col-12 row align-items-center py-2">
       <div class="col-4 d-flex align-items-center gap-2">
@@ -33,11 +33,13 @@
     >
       <span><i class="bi bi-person-fill me-2"></i>{{ libelles.VIEW_LIBELLE.CHARACTER }}</span>
       <span class="badge border border-black text-black border-opacity-25">{{
-        characterList().length
+        characterCount()
       }}</span>
     </div>
     <div class="list-group gap-2 d-flex justify-content-center px-1">
-      @for (character of characterList(); track character.card.id) { }
+      @for (character of characterList(); track character.card.id) { 
+        <decklist-totem-element [element]="character"></decklist-totem-element>
+      }
     </div>
 
     <div
@@ -45,11 +47,13 @@
     >
       <span><i class="bi bi-lightning-charge-fill me-2"></i>{{ libelles.VIEW_LIBELLE.SPELL }}</span>
       <span class="badge border border-black text-black border-opacity-25">{{
-        spellList().length
+        spellCount()
       }}</span>
     </div>
     <div class="list-group list-group-flush gap-2">
-      @for (spell of spellList(); track spell.card.id) { }
+      @for (spell of spellList(); track spell.card.id) {
+        <decklist-totem-element [element]="spell"></decklist-totem-element>
+       }
     </div>
 
     <div
@@ -57,11 +61,13 @@
     >
       <span><i class="bi bi-bank2 me-2"></i>{{ libelles.VIEW_LIBELLE.PERMANENT }}</span>
       <span class="badge border border-black text-black border-opacity-25">{{
-        permanentList().length
+        permanentCount()
       }}</span>
     </div>
     <div class="list-group list-group-flush gap-2">
-      @for (permanent of permanentList(); track permanent.card.id) { }
+      @for (permanent of permanentList(); track permanent.card.id) {
+        <decklist-totem-element [element]="permanent"></decklist-totem-element>
+       }
     </div>
   </div>
 
