@@ -1,11 +1,82 @@
-@if (deckList() && deckList()!.content) {
-<div class="row">
-  @for (deck of deckList()!.content; track $index) {
-  <div class="col-2">
-    <p>{{ deck.name }}</p>
-    <p>{{ deck.faction.name }}<img [src]="fixFactionIcon(deck.faction.name)" class="faction-img" /></p>
-    <p>{{ deck.hero.name }}</p>
+<div class="py-5 mb-5 animate-fade-in">
+  @if(deckList(); as deckList){ @if (deckList.content; as contenu) {
+  <div class="row g-4">
+    @for (deck of contenu; track deck.id) {
+
+    <div class="col-12 col-md-6 col-xl-4">
+      <a
+        [routerLink]="['/', deckDetailRoad, deck.id]"
+        class="card deck-card h-100 bg-dark text-white border-0 shadow-lg text-decoration-none overflow-hidden position-relative ratio ratio-16x9"
+      >
+        <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
+          <img
+            src="{{`${backApiRoads.ROOT_URL}/images/cards/${deck.hero.image}.jpg`}}"
+            class="w-100 h-100 object-fit-cover deck-bg-img"
+            style="object-position: center 28%;" 
+            alt="Deck Art"
+          />
+
+          <div class="deck-overlay"></div>
+        </div>
+
+        <div class="card-img-overlay d-flex flex-column justify-content-between p-4 z-2">
+          <div class="d-flex justify-content-between align-items-start">
+            <div
+              class="badge bg-dark bg-opacity-75 backdrop-blur border border-secondary d-flex align-items-center py-2 px-3 shadow-sm"
+            >
+              <div
+                class="me-2 flex-shrink-0 bg-secondary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center overflow-hidden"
+                style="width: 32px; height: 32px"
+              >
+                <img
+                  [src]="fixFactionIcon(deck.faction.name)"
+                  class="d-block w-75 h-75"
+                  style="object-fit: contain"
+                  alt="Faction"
+                />
+              </div>
+
+              <span
+                class="text-uppercase fw-bold text-white small ls-1 text-truncate"
+                style="max-width: 150px"
+              >
+                {{ deck.hero.name }}
+              </span>
+            </div>
+          </div>
+          <div class="mt-auto position-relative">
+            <div class="accent-line bg-primary"></div>
+
+            <h3 class="card-title fw-black mb-2 text-white text-shadow text-truncate pe-2">
+              {{ deck.name || 'Sans Nom' }}
+            </h3>
+
+            <div
+              class="d-flex align-items-center justify-content-between border-top border-secondary pt-3 mt-3"
+            >
+              <div class="d-flex align-items-center gap-2 text-white-50">
+                <div
+                  class="avatar-sm bg-secondary text-white fw-bold d-flex align-items-center justify-content-center rounded border border-dark small text-uppercase"
+                >
+                  {{ deck.playerName.charAt(0) }}
+                </div>
+                <span class="small fw-medium text-truncate" style="max-width: 100px">
+                  {{ deck.playerName }}
+                </span>
+              </div>
+
+              <div
+                class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25 fw-bold font-monospace"
+              >
+                {{ deck.cards.length }} CARTES
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    }
   </div>
-  }
+  } }
 </div>
-}

@@ -1,3 +1,80 @@
-.faction-img {
-    max-width: 60%;
+/* Animations */
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.deck-bg-img {
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.deck-card:hover .deck-bg-img {
+    transform: scale(1.1);
+}
+
+.deck-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(13, 18, 29, 0.5) 50%, transparent 100%);
+    transition: opacity 0.3s;
+}
+
+.accent-line {
+    position: absolute;
+    left: -24px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.deck-card:hover .accent-line {
+    opacity: 1;
+}
+
+.fw-black {
+    font-weight: 900;
+}
+
+.ls-1 {
+    letter-spacing: 1px;
+}
+
+.backdrop-blur {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.avatar-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+}
+
+.deck-card {
+    transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.deck-card:hover {
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+    border-color: rgba(13, 110, 253, 0.5);
+    transform: translateY(-5px);
 }

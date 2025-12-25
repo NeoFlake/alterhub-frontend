@@ -12,6 +12,6 @@ export interface Deck {
     hero: Hero;
     lastModification: Date;
     name: string;
-    playerId: string;
+    playerName: string;
     tags: Array<Tag>;
 }

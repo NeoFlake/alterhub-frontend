@@ -35,7 +35,7 @@ export class CreationDeckService {
   public addDeck(deck: Partial<Deck>): Observable<Deck> {
     const deckToSave: Deck = {
       name: deck.name!,
-      playerId: deck.playerId!,
+      playerName: deck.playerName!,
       faction: deck.faction!,
       hero: deck.hero!,
       cards: deck.cards!,

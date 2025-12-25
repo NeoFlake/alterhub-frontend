@@ -52,7 +52,7 @@ export class CreationDeck {
         tap((data: [heroes: Array<Hero>, factions: Array<Faction>, player: Player]) => {
           this.heroes = data[0];
           this.factions = data[1];
-          this.deckToCreate.playerId = data[2].id;
+          this.deckToCreate.playerName = data[2].name;
           this.deckToCreate.tags = [];
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {

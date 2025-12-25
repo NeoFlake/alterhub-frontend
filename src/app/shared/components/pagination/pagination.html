@@ -1,7 +1,7 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item" [style.display]="page().first ? 'none' : 'block'">
-      <a class="page-link" (click)="onPageSelect(page().number - 2)">< précédent</a>
+      <a class="page-link" (click)="onPageSelect(page().number - 1)">< précédent</a>
     </li>
     <li class="page-item" [class.active]="page().number === 0" (click)="onPageSelect(0)">
       <a class="page-link">1</a>
@@ -21,7 +21,7 @@
     } @else if (page().number <= page().totalPages - 5) {
     <li class="page-item disabled"><a class="page-link">...</a></li>
     <li class="page-item">
-      <a class="page-link" (click)="onPageSelect(page().number - 2)">{{
+      <a class="page-link" (click)="onPageSelect(page().number - 1)">{{
         page().number
       }}</a>
     </li>
