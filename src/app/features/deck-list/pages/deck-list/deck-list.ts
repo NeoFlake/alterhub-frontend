@@ -5,6 +5,8 @@ import { DECK_ROAD } from '../../../../constants/routes';
 import { DeckListService } from '../../services/deck-list-service';
 import { ActivatedRoute, RouterLink, UrlSegment } from '@angular/router';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
+import { Page } from '../../../../models/interfaces/api/page';
+import { Deck } from '../../../../models/interfaces/api/deck';
 
 @Component({
   selector: 'deck-list',
@@ -13,6 +15,7 @@ import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
   styleUrl: './deck-list.css',
 })
 export class DeckList {
+  
   private deckListService: DeckListService = inject(DeckListService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
@@ -27,7 +30,7 @@ export class DeckList {
     { initialValue: DECK_ROAD.ALL }
   );
 
-  public deckList = toSignal(
+  public deckList: Signal<Page<Array<Deck>> | null> = toSignal(
     this.activatedRoute.url.pipe(
       map((segments: UrlSegment[]) => segments[segments.length - 1].path),
       switchMap((mode: string) => {
