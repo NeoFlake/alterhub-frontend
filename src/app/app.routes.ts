@@ -54,7 +54,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
       },
       {
-        path: `:id`,
+        path: ":deckId",
         component: DeckDetail,
       },
     ],

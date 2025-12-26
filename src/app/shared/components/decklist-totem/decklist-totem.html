@@ -27,53 +27,23 @@
       </div>
     </div>
   </div>
-  <div class="row m-0 info-zone">
-    <div
-      class="d-flex justify-content-between small fw-bold mt-4 mb-2 pb-1 px-2 border-bottom border-secondary border-opacity-25"
-    >
-      <span><i class="bi bi-person-fill me-2"></i>{{ libelles.VIEW_LIBELLE.CHARACTER }}</span>
-      <span class="badge border border-black text-black border-opacity-25">{{
-        characterCount()
-      }}</span>
-    </div>
-    <div class="list-group gap-2 d-flex justify-content-center px-1">
-      @for (character of characterList(); track character.card.id) { 
-        <decklist-totem-element [element]="character"></decklist-totem-element>
-      }
-    </div>
+  <div class="row m-0 info-zone pb-2">
 
-    <div
-      class="d-flex justify-content-between small fw-bold mt-4 mb-2 pb-1 px-2 border-bottom border-secondary border-opacity-25"
-    >
-      <span><i class="bi bi-lightning-charge-fill me-2"></i>{{ libelles.VIEW_LIBELLE.SPELL }}</span>
-      <span class="badge border border-black text-black border-opacity-25">{{
-        spellCount()
-      }}</span>
-    </div>
-    <div class="list-group list-group-flush gap-2">
-      @for (spell of spellList(); track spell.card.id) {
-        <decklist-totem-element [element]="spell"></decklist-totem-element>
-       }
-    </div>
+    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.CHARACTER" [count]="characterCount()" [list]="characterList()"></decklist-totem-type-section>
+    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.SPELL" [count]="spellCount()" [list]="spellList()"></decklist-totem-type-section>
+    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.PERMANENT" [count]="permanentCount()" [list]="permanentList()"></decklist-totem-type-section>
 
-    <div
-      class="d-flex justify-content-between small fw-bold mt-4 mb-2 pb-1 px-2 border-bottom border-secondary border-opacity-25"
-    >
-      <span><i class="bi bi-bank2 me-2"></i>{{ libelles.VIEW_LIBELLE.PERMANENT }}</span>
-      <span class="badge border border-black text-black border-opacity-25">{{
-        permanentCount()
-      }}</span>
-    </div>
-    <div class="list-group list-group-flush gap-2">
-      @for (permanent of permanentList(); track permanent.card.id) {
-        <decklist-totem-element [element]="permanent"></decklist-totem-element>
-       }
-    </div>
   </div>
-
+  @if(activateSavingOption()){
   <div class="row m-0 info-zone">
-    <button type="button" class="btn btn-primary" [disabled]="deckList().length < 39" (click)="onValidateCreationDeckList()">
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="deckList().length < 39"
+      (click)="onValidateCreationDeckList()"
+    >
       <i class="bi bi-save2 me-2"></i>{{ libelles.ACTION_BUTTON }}
     </button>
   </div>
+  }
 </div>

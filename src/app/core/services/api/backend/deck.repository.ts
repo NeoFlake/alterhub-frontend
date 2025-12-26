@@ -15,6 +15,10 @@ export class DeckRepository {
     return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.ROOT}?page=${page}&size=${size}`);
   }
 
+  public getDeckById(deckId: string): Observable<Deck> {
+    return this.http.get<Deck>(`${BACKEND_API_DECKS.ROOT}/${deckId}`);
+  }
+
   public getDecksByPlayerId(playerId: string, page: number, size: number): Observable<Page<Array<Deck>>> {
     return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.ROOT}${BACKEND_API_ROADS.PLAYERS}/${playerId}?page=${page}&size=${size}`);
   }

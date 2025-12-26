@@ -9,11 +9,11 @@ import {
 } from '@angular/core';
 import { Card } from '../../../models/interfaces/api/card';
 import { DECKLIST_TOTEM_LIBELLES } from '../../../constants/decks-page.constantes';
-import { DecklistTotemElement } from '../decklist-totem-element/decklist-totem-element';
+import { DecklistTotemTypeSection } from '../decklist-totem-type-section/decklist-totem-type-section';
 
 @Component({
   selector: 'decklist-totem',
-  imports: [DecklistTotemElement],
+  imports: [DecklistTotemTypeSection],
   templateUrl: './decklist-totem.html',
   styleUrl: './decklist-totem.css',
 })
@@ -24,6 +24,8 @@ export class DecklistTotem {
   public deckList: InputSignal<Array<Card>> = input.required<Array<Card>>();
 
   public validateCreationDeckList: OutputEmitterRef<void> = output<void>();
+
+  public activateSavingOption: InputSignal<boolean> = input<boolean>(false);
 
   public characterCount: Signal<number> = computed(
     () =>

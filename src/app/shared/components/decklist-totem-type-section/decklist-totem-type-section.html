@@ -1,0 +1,11 @@
+<div
+  class="d-flex justify-content-between small fw-bold mt-4 mb-2 pb-1 px-2 border-bottom border-secondary border-opacity-25"
+>
+  <span><i class="bi bi-person-fill me-2"></i>{{ titleLibelle() }}</span>
+  <span class="badge border border-black text-black border-opacity-25">{{ count() }}</span>
+</div>
+<div class="list-group gap-2 d-flex justify-content-center">
+  @for (listElement of list(); track listElement.card.id) {
+  <decklist-totem-element [element]="listElement"></decklist-totem-element>
+  }
+</div>
