@@ -11,6 +11,7 @@ import { Card } from '../../../models/interfaces/api/card';
 export class DecklistTotemTypeSection {
   public titleLibelle: InputSignal<string> = input.required<string>();
   public count: InputSignal<number> = input.required<number>();
+  public logo: InputSignal<string> = input.required<string>();
   public list: InputSignal<
     Array<
       {

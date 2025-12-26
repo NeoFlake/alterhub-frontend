@@ -83,16 +83,19 @@ export class DecklistTotem {
       libelle: this.libelles.VIEW_LIBELLE.CHARACTER,
       count: this.characterCount(),
       list: this.characterList(),
+      logo: "bi-person-fill"
     },
     {
       libelle: this.libelles.VIEW_LIBELLE.SPELL,
       count: this.spellCount(),
       list: this.spellList(),
+      logo: "bi-lightning-charge-fill"
     },
     {
       libelle: this.libelles.VIEW_LIBELLE.PERMANENT,
       count: this.permanentCount(),
       list: this.permanentList(),
+      logo: "bi-bank2"
     },
   ]);
 
