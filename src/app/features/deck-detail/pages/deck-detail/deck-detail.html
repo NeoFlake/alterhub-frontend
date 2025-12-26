@@ -1,14 +1,26 @@
+@if(deck()){
 <div class="row">
-  <div class="col-9 row m-0 p-1 overflow-auto box-height fixed-height custom-scrollbar" [style.--scrollbar-color]="scrollbarColor()">
-    @for (card of pageCards().content; track $index) {
+  <div
+    class="col-9 row m-0 p-1 overflow-auto box-height fixed-height custom-scrollbar"
+    [style.--scrollbar-color]="deck()!.faction.color"
+  >
+    @for (card of cardList(); track card.id) {
     <card-container
       [card]="card"
+      [cardDetailFormat]="true"
+      [factionColor]="deck()!.faction.color"
+      [cardQuantity]="determineCardQuantity(card.id)"
       class="col-3 m-0 p-0"
     >
     </card-container>
     }
   </div>
   <div class="col-3 row p-0 m-0">
-    <decklist-totem [deckList]="deck()!.cards" [heroName]="deck()!.hero.name" [activateSavingOption]="false"></decklist-totem>
+    <decklist-totem
+      [deckList]="deck()!.cards"
+      [heroName]="deck()!.hero.name"
+      [activateSavingOption]="false"
+    ></decklist-totem>
   </div>
 </div>
+}

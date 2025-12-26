@@ -12,6 +12,12 @@ export class CardContainer {
 
   public count: InputSignal<number> = input<number>(0);
 
+  public cardDetailFormat: InputSignal<boolean> = input<boolean>(false);
+
+  public factionColor: InputSignal<string> = input<string>("");
+
+  public cardQuantity: InputSignal<number> = input<number>(0);
+
   public card: InputSignal<Card> = input.required<Card>();
 
   public add: OutputEmitterRef<Card> = output<Card>();
