@@ -78,6 +78,24 @@ export class DecklistTotem {
 
   public libelles: typeof DECKLIST_TOTEM_LIBELLES = DECKLIST_TOTEM_LIBELLES;
 
+  public totemSections = computed(() => [
+    {
+      libelle: this.libelles.VIEW_LIBELLE.CHARACTER,
+      count: this.characterCount(),
+      list: this.characterList(),
+    },
+    {
+      libelle: this.libelles.VIEW_LIBELLE.SPELL,
+      count: this.spellCount(),
+      list: this.spellList(),
+    },
+    {
+      libelle: this.libelles.VIEW_LIBELLE.PERMANENT,
+      count: this.permanentCount(),
+      list: this.permanentList(),
+    },
+  ]);
+
   public displayCommonNumber(): number {
     return this.deckList().filter(
       (card: Card) => card.rarity.reference === this.libelles.CARD_RARITY.COMMON

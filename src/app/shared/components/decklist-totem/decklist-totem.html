@@ -28,11 +28,13 @@
     </div>
   </div>
   <div class="row m-0 info-zone pb-2">
-
-    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.CHARACTER" [count]="characterCount()" [list]="characterList()"></decklist-totem-type-section>
-    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.SPELL" [count]="spellCount()" [list]="spellList()"></decklist-totem-type-section>
-    <decklist-totem-type-section [titleLibelle]="libelles.VIEW_LIBELLE.PERMANENT" [count]="permanentCount()" [list]="permanentList()"></decklist-totem-type-section>
-
+    @for (section of totemSections(); track $index) {
+    <decklist-totem-type-section
+      [titleLibelle]="section.libelle"
+      [count]="section.count"
+      [list]="section.list"
+    ></decklist-totem-type-section>
+    }
   </div>
   @if(activateSavingOption()){
   <div class="row m-0 info-zone">
