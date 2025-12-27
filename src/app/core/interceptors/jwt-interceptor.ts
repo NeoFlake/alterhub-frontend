@@ -17,7 +17,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   ) {
     return next(req);
   }
-  if (req.headers.get('x-skip-interceptor')) return next(req);
+  if (req.headers.get('x-skip-interceptor') || !accessToken) return next(req);
 
   if (!stateService.verifyExistenceOfUserStated()) {
     return from(stateService.refreshUserLogged()).pipe(

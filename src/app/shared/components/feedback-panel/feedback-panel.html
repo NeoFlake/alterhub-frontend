@@ -1,7 +1,17 @@
-@if(data().statut !== ""){
-<div class="mt-3 alert" style="position: fixed; bottom: 10px; display: flex; justify-content: center;"
-[class.alert-info]="data().statut === authentificationStatut.SUCCESS"
-[class.alert-danger]="data().statut === authentificationStatut.ERROR" role="alert">
-  {{ message }}
-</div>
+@if(safeData().statut) {
+  <div
+    class="mt-3 alert fade show"
+    style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; min-width: 300px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+    [class.alert-success]="safeData().statut === authentificationStatut.SUCCESS"
+    [class.alert-danger]="safeData().statut === authentificationStatut.ERROR"
+    role="alert"
+  >
+    @if(safeData().statut === authentificationStatut.SUCCESS) {
+      <i class="bi bi-check-circle-fill me-2"></i>
+    } @else {
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    }
+    
+    {{ message() }}
+  </div>
 }

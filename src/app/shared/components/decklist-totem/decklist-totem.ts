@@ -18,7 +18,7 @@ import { DecklistTotemTypeSection } from '../decklist-totem-type-section/decklis
   styleUrl: './decklist-totem.css',
 })
 export class DecklistTotem {
-  // À cabler avec le héros que l'on recevra depuis le composant parent (donc un input InputSignal<Hero>)
+  
   public heroName: InputSignal<string> = input.required<string>();
 
   public deckList: InputSignal<Array<Card>> = input.required<Array<Card>>();
@@ -83,19 +83,19 @@ export class DecklistTotem {
       libelle: this.libelles.VIEW_LIBELLE.CHARACTER,
       count: this.characterCount(),
       list: this.characterList(),
-      logo: "bi-person-fill"
+      logo: this.libelles.ICON_SECTION.CHARACTER
     },
     {
       libelle: this.libelles.VIEW_LIBELLE.SPELL,
       count: this.spellCount(),
       list: this.spellList(),
-      logo: "bi-lightning-charge-fill"
+      logo: this.libelles.ICON_SECTION.SPELL
     },
     {
       libelle: this.libelles.VIEW_LIBELLE.PERMANENT,
       count: this.permanentCount(),
       list: this.permanentList(),
-      logo: "bi-bank2"
+      logo: this.libelles.ICON_SECTION.PERMANENT
     },
   ]);
 

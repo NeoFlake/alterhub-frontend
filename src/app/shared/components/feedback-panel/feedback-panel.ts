@@ -1,5 +1,8 @@
-import { Component, effect, input, InputSignal, OnInit } from '@angular/core';
-import { AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../constants/authentification-page.constantes';
+import { Component, computed, input, InputSignal } from '@angular/core';
+import {
+  AUTHENTIFICATION_STATUT,
+  FEEDBACK_PANEL_MESSAGES,
+} from '../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'feedback-panel',
@@ -8,30 +11,33 @@ import { AUTHENTIFICATION_STATUT, FEEDBACK_PANEL_MESSAGES } from '../../../const
   styleUrl: './feedback-panel.css',
 })
 export class FeedbackPanel {
-
   public data: InputSignal<{
     statut: string;
     codeRetour: number;
-    message: string
+    message: string;
   }> = input.required<{ statut: string; codeRetour: number; message: string }>();
 
   public authentificationStatut = AUTHENTIFICATION_STATUT;
 
-  public message: string = "";
+  // Ce computed m'assure que quand l'input data est modifié
+  // s'il est illisible alors on fournira un élément neutre pour
+  // éviter les crashs intempestifs
+  public safeData = computed(() => {
+    return this.data() || { statut: '', codeRetour: 0, message: '' };
+  });
 
-  constructor() {
-    effect(() => {
-      const value = this.data();
-      this.message = this.determineMessage(value.codeRetour, value.message);
-    });
-  }
+  public message = computed(() => {
 
-  private determineMessage(codeRetour: number, message: string): string {
+    const value = this.safeData();
 
-    let displayedMessage: string = message;
+    let displayedMessage: string = "";
 
-    if (codeRetour > 299) {
-      switch (codeRetour) {
+    if (value.message && value.message.trim().length > 0) {
+      return value.message;
+    }
+
+    if (value.codeRetour > 299) {
+      switch (value.codeRetour) {
         case 400:
           displayedMessage = FEEDBACK_PANEL_MESSAGES.USER_REQUEST_ERROR;
           break;
@@ -48,6 +54,5 @@ export class FeedbackPanel {
     }
 
     return displayedMessage;
-  };
-
+  });
 }

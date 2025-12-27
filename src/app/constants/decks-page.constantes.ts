@@ -15,12 +15,18 @@ export const DECKLIST_TOTEM_LIBELLES = {
     },
     CARD_TYPE: {
         CHARACTER: "CHARACTER",
-        SPELL: "SPELL"
+        SPELL: "SPELL",
+        PERMANENT: "PERMANENT"
     },
     VIEW_LIBELLE: {
         CHARACTER: "Personnages",
         SPELL: "Sorts",
         PERMANENT: "Permanents"
+    },
+    ICON_SECTION: {
+        CHARACTER: "bi-person-fill",
+        SPELL: "bi-lightning-charge-fill",
+        PERMANENT: "bi-bank2"
     },
     ACTION_BUTTON: "Sauvegarder",
     HERO_TITLE: "Héro : "

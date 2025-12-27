@@ -78,3 +78,45 @@
     border-color: rgba(13, 110, 253, 0.5);
     transform: translateY(-5px);
 }
+
+.btn-action-glass {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #adb5bd;
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.deck-card:hover .btn-action-glass {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.deck-card:hover .btn-action-glass:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.btn-action-glass:hover {
+    background: rgb(76, 175, 80, 0.9);
+    border-color: #4CAF50;
+    color: white;
+    transform: scale(1.1) translateX(0);
+}
+
+.btn-action-glass.delete:hover {
+    background: rgba(244, 67, 54, 0.9);
+    border-color: #F44336;
+}
+
+.custom-size {
+    font-size: 0.8rem
+}
