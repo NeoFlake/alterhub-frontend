@@ -2,7 +2,7 @@ import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@a
 import { catchError, finalize, firstValueFrom, map, of } from 'rxjs';
 import { UserRepository } from '../api/backend/user.repository';
 import { AuthResponse } from '../../../models/interfaces/authentication/authResponse';
-import { KEY_ACCESS } from '../../../constants/authentification-page.constantes';
+import { IS_LOGGED, KEY_ACCESS } from '../../../constants/authentification-page.constantes';
 import { JwtPayload } from '../../../models/interfaces/authentication/jwt-payload';
 import { Jwt } from '../../../models/interfaces/authentication/jwt';
 
@@ -56,6 +56,7 @@ export class AuthService {
   public login(authResponse: AuthResponse): void {
     this.accessToken.set(authResponse.accessToken);
     localStorage.setItem(KEY_ACCESS, authResponse.accessToken);
+    localStorage.setItem(IS_LOGGED, "true");
   }
 
   public logout(): void {
@@ -74,6 +75,7 @@ export class AuthService {
   private clearAccessToken() {
     this.accessToken.set(null);
     localStorage.removeItem(KEY_ACCESS);
+    localStorage.removeItem(IS_LOGGED);
   }
 
   private readAccessTokenFromStorage(): string | null {

@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { catchError, from, of, switchMap } from 'rxjs';
 import { BACKEND_API_USERS } from '../../constants/backend-api-road';
 import { StateService } from '../services/state/state-service';
+import { IS_LOGGED } from '../../constants/authentification-page.constantes';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
@@ -17,7 +18,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   ) {
     return next(req);
   }
-  if (req.headers.get('x-skip-interceptor') || !accessToken) return next(req);
+  if (req.headers.get('x-skip-interceptor') || !localStorage.getItem(IS_LOGGED)) return next(req);
 
   if (!stateService.verifyExistenceOfUserStated()) {
     return from(stateService.refreshUserLogged()).pipe(
