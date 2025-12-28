@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   input,
   InputSignal,
@@ -34,6 +35,8 @@ export class MainDeckInfoForm {
 
   public heroes: InputSignal<Array<Hero>> = input.required<Array<Hero>>();
   public factions: InputSignal<Array<Faction>> = input.required<Array<Faction>>();
+
+  public existingData: InputSignal<{name: string, factionId: string, heroId: string}> = input.required<{name: string, factionId: string, heroId: string}>();
 
   public activateSecondStep: OutputEmitterRef<
     Partial<{
@@ -113,6 +116,24 @@ export class MainDeckInfoForm {
       faction: this.faction,
       hero: this.hero,
     });
+
+    effect(() => {
+      const existingDeck: {name: string, factionId: string, heroId: string} = this.existingData();
+
+      if(existingDeck.name !== "" && existingDeck.factionId !== "" && existingDeck.heroId !== ""){
+        this.name.setValue(existingDeck.name);
+        this.faction.setValue(existingDeck.factionId);
+        this.selectedFactionId.set(existingDeck.factionId);
+        this.hero.setValue(existingDeck.heroId);
+      }
+    });
+
+  }
+
+  ngOnInit() {
+    this.name.setValue(this.existingData().name !== "" ? this.existingData().name : "");
+    this.faction.setValue(this.existingData().factionId !== "" ? this.existingData().factionId : "");
+    this.hero.setValue(this.existingData().heroId !== "" ? this.existingData().heroId : "");
   }
 
   public onSelectFaction(factionId: string): void {
@@ -122,14 +143,18 @@ export class MainDeckInfoForm {
 
   /**
    * On récupère les informations récoltées lors de la première phase de création du deck
-   * pour les transfèrer au parent qui va les garder bien précieusement 
+   * pour les transfèrer au parent qui va les garder bien précieusement
    * et déclencher la phase 2 du processus de création
    */
   public validateMainDeckInfos(): void {
     const mainDeckInfo: Partial<{ name: string; faction: Faction; hero: Hero }> = {
-      name: this.mainDeckInfosForm.get("name")!.value,
-      faction: this.factions().find((faction: Faction) => faction.id === this.mainDeckInfosForm.get("faction")!.value),
-      hero: this.heroes().find((hero: Hero) => hero.id === this.mainDeckInfosForm.get("hero")!.value),
+      name: this.mainDeckInfosForm.get('name')!.value,
+      faction: this.factions().find(
+        (faction: Faction) => faction.id === this.mainDeckInfosForm.get('faction')!.value
+      ),
+      hero: this.heroes().find(
+        (hero: Hero) => hero.id === this.mainDeckInfosForm.get('hero')!.value
+      ),
     };
     this.activateSecondStep.emit(mainDeckInfo);
   }

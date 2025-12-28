@@ -1,8 +1,6 @@
 import {
   Component,
   inject,
-  output,
-  OutputEmitterRef,
   signal,
   Signal,
   WritableSignal,
@@ -11,7 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, finalize, map, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { DECK_ROAD } from '../../../../constants/routes';
 import { DeckListService } from '../../services/deck-list-service';
-import { ActivatedRoute, RouterLink, UrlSegment } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, UrlSegment } from '@angular/router';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
 import { ConfirmDeletionModal } from '../../../../shared/components/confirm-deletion-modal/confirm-deletion-modal';
 import { Deck } from '../../../../models/interfaces/api/deck';
@@ -22,6 +20,7 @@ import {
   AUTHENTIFICATION_STATUT,
   FEEDBACK_PANEL_MESSAGES,
 } from '../../../../constants/authentification-page.constantes';
+import { Page } from '../../../../models/interfaces/api/page';
 
 @Component({
   selector: 'deck-list',
@@ -32,6 +31,7 @@ import {
 export class DeckList {
   private deckListService: DeckListService = inject(DeckListService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
 
   public deckToDelete: WritableSignal<string | null> = signal<string | null>(null);
 
@@ -63,19 +63,25 @@ export class DeckList {
     { initialValue: DECK_ROAD.ALL }
   );
 
-  public deckList = toSignal(
-    this.activatedRoute.url.pipe(
-      map((segments: UrlSegment[]) => segments[segments.length - 1].path),
-      switchMap((mode: string) => {
-        if (mode === DECK_ROAD.MINE) {
-          return this.deckListService.getAllUserDecks();
-        } else {
-          return this.deckListService.getAllDecks();
-        }
-      })
-    ),
-    { initialValue: null }
+  public deckList: WritableSignal<Page<Array<Deck>> | null> = signal<Page<Array<Deck>> | null>(
+    null
   );
+
+  ngOnInit() {
+    this.activatedRoute.url
+      .pipe(
+        map((segments: UrlSegment[]) => segments[segments.length - 1].path),
+        switchMap((mode: string) => {
+          if (mode === DECK_ROAD.MINE) {
+            return this.deckListService.getAllUserDecks();
+          } else {
+            return this.deckListService.getAllDecks();
+          }
+        }),
+        tap((pageDeck: Page<Array<Deck>>) => this.deckList.set(pageDeck))
+      )
+      .subscribe();
+  }
 
   ngOnDestroy() {
     this.unsubscriber$.next();
@@ -95,7 +101,9 @@ export class DeckList {
     this.openDeletionModale(deck);
   }
 
-  public updateDeck(deck: Deck): void {}
+  public updateDeck(deck: Deck): void {
+    this.router.navigate([DECK_ROAD.ROOT, DECK_ROAD.CREATE, deck.id!]);
+  }
 
   public openDeletionModale(deck: Deck): void {
     this.deleteModalData.title = `${DELETE_MODAL_DATA.TITLE}${deck.hero.name}`;
@@ -109,12 +117,20 @@ export class DeckList {
         .deleteDeckById(this.deckToDelete()!)
         .pipe(
           tap(() => {
-            this.deckToDelete.set(null);
             this.feedBackData.set({
               statut: AUTHENTIFICATION_STATUT.SUCCESS,
               codeRetour: 200,
               message: FEEDBACK_PANEL_MESSAGES.DELETE_DECK_SUCCESS,
             });
+            this.deckList.update((deckList: Page<Array<Deck>> | null) => {
+              if (!deckList) return null;
+              return {
+                ...deckList,
+                content: deckList.content.filter((deck: Deck) => deck.id !== this.deckToDelete()),
+                totalElements: deckList.totalElements - 1
+              };
+            });
+            this.deckToDelete.set(null);
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {
             this.feedBackData.set({

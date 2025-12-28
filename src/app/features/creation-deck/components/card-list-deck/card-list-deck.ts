@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   inject,
   input,
   InputSignal,
@@ -31,6 +32,8 @@ export class CardListDeck {
   public faction: InputSignal<Faction> = input.required<Faction>();
   public hero: InputSignal<Hero> = input.required<Hero>();
 
+  public existingDeckList: InputSignal<Array<Card>> = input.required();
+
   public validateCreationDeckList: OutputEmitterRef<Array<Card>> = output<Array<Card>>();
 
   public pageCards: WritableSignal<Page<Array<Card>>> = signal({
@@ -46,6 +49,13 @@ export class CardListDeck {
   public deckList: WritableSignal<Array<Card>> = signal<Array<Card>>([]);
 
   public scrollbarColor: WritableSignal<string> = signal<string>('#777777ff');
+
+  constructor(){
+    effect(() => {
+      const existingDeckList: Array<Card> = this.existingDeckList();
+      this.deckList.update(() => [...existingDeckList]);
+    });
+  }
 
   ngOnInit() {
     this.loadCardPage(0, false);

@@ -23,6 +23,10 @@ export class DeckRepository {
     return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.ROOT}${BACKEND_API_ROADS.PLAYERS}/${playerId}?page=${page}&size=${size}`);
   }
 
+  public existDeckByName(deckName: string): Observable<boolean> {
+    return this.http.get<boolean>(`${BACKEND_API_DECKS.EXIST_BY_NAME}/${deckName}`);
+  }
+
   public addDeck(deck: Deck): Observable<Deck> {
     return this.http.post<Deck>(`${BACKEND_API_DECKS.ROOT}`, deck);
   }
@@ -30,4 +34,9 @@ export class DeckRepository {
   public deleteDeckById(deckId: string): Observable<void> {
     return this.http.delete<void>(`${BACKEND_API_DECKS.ROOT}/${deckId}`);
   }
+
+  public updateDeckById(deck: Deck, deckId: string): Observable<Deck> {
+    return this.http.put<Deck>(`${BACKEND_API_DECKS.ROOT}/${deckId}`, deck);
+  }
+
 }

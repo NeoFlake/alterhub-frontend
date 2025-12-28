@@ -46,15 +46,18 @@ export const routes: Routes = [
       {
         path: DECK_ROAD.MINE,
         component: DeckList,
-        canActivate: [authGuard]
-      },
-      {
-        path: DECK_ROAD.CREATE,
-        component: CreationDeck,
         canActivate: [authGuard],
       },
+      { // Cette route permet de créer ET de modifier son deck (seul la présence de l'id permet de changer des choses)
+        path: DECK_ROAD.CREATE,
+        canActivate: [authGuard],
+        children: [
+          { path: ":id", component: CreationDeck },
+          { path: "", component: CreationDeck },
+        ],
+      },
       {
-        path: ":deckId",
+        path: ':deckId',
         component: DeckDetail,
       },
     ],

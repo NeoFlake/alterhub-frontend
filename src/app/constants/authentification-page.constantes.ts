@@ -45,7 +45,8 @@ export const FEEDBACK_PANEL_MESSAGES = {
     DELETE_HERO_SUCCESS: "Héros supprimé avec succès",
     DELETE_DECK_SUCCESS: "Deck supprimé avec succès",
     CANCEL_DELETE_DECK: "Annulation destruction du deck effectué",
-    ADD_DECK_SUCCESS: "Deck créé avec succès"
+    ADD_DECK_SUCCESS: "Deck créé avec succès",
+    UPDATE_DECK_SUCCESS: "Deck mis à jour avec succès"
 };
 
 export const KEY_ACCESS = 'app_access_token';

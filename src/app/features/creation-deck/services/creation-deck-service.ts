@@ -32,6 +32,14 @@ export class CreationDeckService {
     return this.cardsRepository.getCardsByFactionId(factionId, pageNumber, 16);
   }
 
+  public getDeckById(deckId: string): Observable<Deck> {
+    return this.deckRepository.getDeckById(deckId);
+  }
+
+  public existDeckByName(name: string): Observable<boolean> {
+    return this.deckRepository.existDeckByName(name);
+  }
+
   public addDeck(deck: Partial<Deck>): Observable<Deck> {
     const deckToSave: Deck = {
       name: deck.name!,
@@ -44,6 +52,21 @@ export class CreationDeckService {
       tags: deck.tags!
     }
     return this.deckRepository.addDeck(deckToSave);
+  }
+
+  public updateDeckById(deck: Partial<Deck>, deckId: string): Observable<Deck> {
+    const deckToUpdate: Deck = {
+      id: deck.id!,
+      name: deck.name!,
+      playerName: deck.playerName!,
+      faction: deck.faction!,
+      hero: deck.hero!,
+      cards: deck.cards!,
+      dateOfCreation: deck.dateOfCreation!,
+      lastModification: deck.lastModification!,
+      tags: deck.tags!
+    }
+    return this.deckRepository.updateDeckById(deckToUpdate, deckId);
   }
 
 }
