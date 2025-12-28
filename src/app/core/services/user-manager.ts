@@ -59,7 +59,7 @@ export class UserManager {
     this.userRepository.logout().pipe(
       tap(() =>{
         this.authService.logout();
-        this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`])
+        this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
       }),
       catchError(() => {
         this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);

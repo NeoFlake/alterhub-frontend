@@ -21,11 +21,13 @@ export class DecklistTotem {
   
   public heroName: InputSignal<string> = input.required<string>();
 
+  public factionColor: InputSignal<string> = input<string>("");
+
   public deckList: InputSignal<Array<Card>> = input.required<Array<Card>>();
 
   public validateCreationDeckList: OutputEmitterRef<void> = output<void>();
 
-  public activateSavingOption: InputSignal<boolean> = input<boolean>(false);
+  public activateSavingOption: InputSignal<boolean> = input<boolean>(true);
 
   public characterCount: Signal<number> = computed(
     () =>

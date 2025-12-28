@@ -1,17 +1,22 @@
-import { Component, inject, model, output, OutputEmitterRef } from '@angular/core';
+import { Component, inject, model, output, OutputEmitterRef, signal } from '@angular/core';
 import { MainDeckInfoForm } from '../../components/main-deck-info-form/main-deck-info-form';
 import { Faction } from '../../../../models/interfaces/api/faction';
 import { Hero } from '../../../../models/interfaces/api/hero';
 import { CreationDeckService } from '../../services/creation-deck-service';
-import { catchError, finalize, Subject, takeUntil, tap } from 'rxjs';
+import { catchError, finalize, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AUTHENTIFICATION_STATUT } from '../../../../constants/authentification-page.constantes';
+import {
+  AUTHENTIFICATION_STATUT,
+  FEEDBACK_PANEL_MESSAGES,
+} from '../../../../constants/authentification-page.constantes';
 import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
 import { Deck } from '../../../../models/interfaces/api/deck';
 import { CardListDeck } from '../../components/card-list-deck/card-list-deck';
 import { Card } from '../../../../models/interfaces/api/card';
 import { StateService } from '../../../../core/services/state/state-service';
 import { Player } from '../../../../models/interfaces/api/player';
+import { Router } from '@angular/router';
+import { DECK_ROAD } from '../../../../constants/routes';
 
 @Component({
   selector: 'creation-deck',
@@ -20,29 +25,29 @@ import { Player } from '../../../../models/interfaces/api/player';
   styleUrl: './creation-deck.css',
 })
 export class CreationDeck {
-
   private creationDeckService: CreationDeckService = inject(CreationDeckService);
+  private router: Router = inject(Router);
 
   private unsubscriber$ = new Subject<void>();
 
-  public feedBackPanel= model<{ statut: string; codeRetour: number; message: string }>({
-    statut: "",
+  public feedBackPanel = signal<{ statut: string; codeRetour: number; message: string }>({
+    statut: '',
     codeRetour: 0,
-    message: ""
+    message: '',
   });
 
   public factions: Array<Faction> = [];
   public heroes: Array<Hero> = [];
 
-  public heroChoosen: Hero|null = null;
-  public factionChoosen: Faction|null = null;
+  public heroChoosen: Hero | null = null;
+  public factionChoosen: Faction | null = null;
 
   public deckCreationPart: 1 | 2 = 1;
 
   // On initialise notre partial pour conserver les donneés entre les voyages entre
   // les vues de création du deck :)
   private deckToCreate: Partial<Deck> = {
-    name: ""
+    name: '',
   };
 
   ngOnInit() {
@@ -66,10 +71,10 @@ export class CreationDeck {
         finalize(() =>
           setTimeout(() => {
             this.feedBackPanel.set({
-            statut: "",
-            codeRetour: 0,
-            message: "",
-          });
+              statut: '',
+              codeRetour: 0,
+              message: '',
+            });
           }, 1500)
         ),
         takeUntil(this.unsubscriber$)
@@ -82,7 +87,9 @@ export class CreationDeck {
     this.unsubscriber$.complete();
   }
 
-  public onActivateSecondStep(firstPartOfInfo: Partial<{name: string, faction: Faction, hero: Hero}>) {
+  public onActivateSecondStep(
+    firstPartOfInfo: Partial<{ name: string; faction: Faction; hero: Hero }>
+  ) {
     this.deckToCreate.name = firstPartOfInfo.name;
     this.deckToCreate.faction = firstPartOfInfo.faction;
     this.factionChoosen = firstPartOfInfo.faction!;
@@ -92,17 +99,42 @@ export class CreationDeck {
   }
 
   public onValidateCreationDeckList(deckList: Array<Card>): void {
-
     const now: Date = new Date();
 
     this.deckToCreate.cards = deckList;
     this.deckToCreate.dateOfCreation = now.toISOString().slice(0, 10);
     this.deckToCreate.lastModification = now;
-    this.creationDeckService.addDeck(this.deckToCreate)
-    .pipe(
-      tap((deck: Deck) => console.log("Ouiiii j'ai gagné, le voici : ", deck))
-    )
-    .subscribe();
+    this.creationDeckService
+      .addDeck(this.deckToCreate)
+      .pipe(
+        tap((deck: Deck) =>
+          this.feedBackPanel.set({
+            statut: AUTHENTIFICATION_STATUT.SUCCESS,
+            codeRetour: 200,
+            message: FEEDBACK_PANEL_MESSAGES.ADD_DECK_SUCCESS,
+          })
+        ),
+        switchMap(() => timer(2000)),
+        tap(() => {
+          this.router.navigate([DECK_ROAD.ROOT, DECK_ROAD.MINE]);
+        }),
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          this.feedBackPanel.set({
+            statut: AUTHENTIFICATION_STATUT.ERROR,
+            codeRetour: httpErrorResponse.error.status,
+            message: httpErrorResponse.error.message,
+          });
+          return of(null);
+        }),
+        finalize(() =>
+          this.feedBackPanel.set({
+            statut: '',
+            codeRetour: 0,
+            message: '',
+          })
+        ),
+        takeUntil(this.unsubscriber$)
+      )
+      .subscribe();
   }
-
 }

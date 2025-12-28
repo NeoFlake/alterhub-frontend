@@ -21,6 +21,6 @@
     </div>
   </div>
   <div class="col-3 row p-0 m-0">
-    <decklist-totem [deckList]="deckList()" [heroName]="hero().name" (validateCreationDeckList)="onValidateCreationDeckList()"></decklist-totem>
+    <decklist-totem [deckList]="deckList()" [heroName]="hero().name" [factionColor]="faction().color" (validateCreationDeckList)="onValidateCreationDeckList()"></decklist-totem>
   </div>
 </div>

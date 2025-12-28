@@ -1,4 +1,4 @@
-import { Component, inject, model, signal, WritableSignal } from '@angular/core';
+import { Component, inject, model, ModelSignal, signal, WritableSignal } from '@angular/core';
 import { HeroForm } from '../../components/hero-form/hero-form';
 import { AlteredApiSynchronisation } from '../../components/altered-api-synchronisation/altered-api-synchronisation';
 import { Hero } from '../../../../models/interfaces/api/hero';
@@ -22,10 +22,14 @@ export class AdminPage {
 
   public disableIcon: WritableSignal<boolean> = signal<boolean>(false);
 
-  public feedBackData = model<{ statut: string; codeRetour: number; message: string }>({
-    statut: "",
+  public feedBackData: ModelSignal<{
+    statut: string;
+    codeRetour: number;
+    message: string;
+  }> = model<{ statut: string; codeRetour: number; message: string }>({
+    statut: '',
     codeRetour: 0,
-    message: ""
+    message: '',
   });
 
   ngOnInit() {
@@ -54,8 +58,7 @@ export class AdminPage {
     this.disableIcon.set(false);
   }
 
-   public handleFeedBackForm(feedBackData: { statut: string; codeRetour: number; message: string }){
+  public handleFeedBackForm(feedBackData: { statut: string; codeRetour: number; message: string }) {
     this.feedBackData.set(feedBackData);
   }
-
 }

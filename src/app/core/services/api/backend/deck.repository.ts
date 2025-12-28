@@ -26,4 +26,8 @@ export class DeckRepository {
   public addDeck(deck: Deck): Observable<Deck> {
     return this.http.post<Deck>(`${BACKEND_API_DECKS.ROOT}`, deck);
   }
+
+  public deleteDeckById(deckId: string): Observable<void> {
+    return this.http.delete<void>(`${BACKEND_API_DECKS.ROOT}/${deckId}`);
+  }
 }

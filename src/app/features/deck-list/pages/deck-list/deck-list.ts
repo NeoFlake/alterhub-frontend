@@ -1,14 +1,31 @@
-import { Component, inject, Signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  output,
+  OutputEmitterRef,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
+import { catchError, finalize, map, of, Subject, switchMap, takeUntil, tap, timer } from 'rxjs';
 import { DECK_ROAD } from '../../../../constants/routes';
 import { DeckListService } from '../../services/deck-list-service';
 import { ActivatedRoute, RouterLink, UrlSegment } from '@angular/router';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
+import { ConfirmDeletionModal } from '../../../../shared/components/confirm-deletion-modal/confirm-deletion-modal';
+import { Deck } from '../../../../models/interfaces/api/deck';
+import { DELETE_MODAL_DATA } from '../../../../constants/deck-list.constants';
+import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
+import { HttpErrorResponse } from '@angular/common/http';
+import {
+  AUTHENTIFICATION_STATUT,
+  FEEDBACK_PANEL_MESSAGES,
+} from '../../../../constants/authentification-page.constantes';
 
 @Component({
   selector: 'deck-list',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmDeletionModal, FeedbackPanel],
   templateUrl: './deck-list.html',
   styleUrl: './deck-list.css',
 })
@@ -16,9 +33,28 @@ export class DeckList {
   private deckListService: DeckListService = inject(DeckListService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
+  public deckToDelete: WritableSignal<string | null> = signal<string | null>(null);
+
+  public feedBackData: WritableSignal<{
+    statut: string;
+    codeRetour: number;
+    message: string;
+  }> = signal<{ statut: string; codeRetour: number; message: string }>({
+    statut: '',
+    codeRetour: 0,
+    message: '',
+  });
+
+  private unsubscriber$ = new Subject<void>();
+
   public backApiRoads: typeof BACKEND_API_ROADS = BACKEND_API_ROADS;
 
   public deckDetailRoad: typeof DECK_ROAD = DECK_ROAD;
+
+  public deleteModalData: { title: string; body: string } = {
+    title: '',
+    body: '',
+  };
 
   public viewMode: Signal<string> = toSignal(
     this.activatedRoute.url.pipe(
@@ -41,6 +77,11 @@ export class DeckList {
     { initialValue: null }
   );
 
+  ngOnDestroy() {
+    this.unsubscriber$.next();
+    this.unsubscriber$.complete();
+  }
+
   public fixFactionIcon(nameFaction: string): string {
     return `images/icones faction/${nameFaction}.png`;
   }
@@ -50,12 +91,64 @@ export class DeckList {
     return `${BACKEND_API_ROADS.ROOT_URL}/${imagePath.split('ic/')[1]}`;
   }
 
-  public deleteDeck(deckId: string): void {
-    console.log("Et ça fonctionne correctement : ", deckId);
+  public deleteDeck(deck: Deck): void {
+    this.openDeletionModale(deck);
   }
 
-  public updateDeck(deckId: string): void {
-    console.log("Et ça fonctionne correctement : ", deckId);
+  public updateDeck(deck: Deck): void {}
+
+  public openDeletionModale(deck: Deck): void {
+    this.deleteModalData.title = `${DELETE_MODAL_DATA.TITLE}${deck.hero.name}`;
+    this.deleteModalData.body = `${DELETE_MODAL_DATA.BODY}${deck.name}`;
+    this.deckToDelete.set(deck.id!);
   }
 
+  public onConfirmDeletionModalClose(isConfirmed: boolean): void {
+    if (isConfirmed) {
+      this.deckListService
+        .deleteDeckById(this.deckToDelete()!)
+        .pipe(
+          tap(() => {
+            this.deckToDelete.set(null);
+            this.feedBackData.set({
+              statut: AUTHENTIFICATION_STATUT.SUCCESS,
+              codeRetour: 200,
+              message: FEEDBACK_PANEL_MESSAGES.DELETE_DECK_SUCCESS,
+            });
+          }),
+          catchError((httpErrorResponse: HttpErrorResponse) => {
+            this.feedBackData.set({
+              statut: AUTHENTIFICATION_STATUT.ERROR,
+              codeRetour: httpErrorResponse.error.status,
+              message: httpErrorResponse.error.message,
+            });
+            return of(null);
+          }),
+          switchMap(() => timer(2000)),
+          finalize(() =>
+            this.feedBackData.set({
+              statut: '',
+              codeRetour: 0,
+              message: '',
+            })
+          ),
+          takeUntil(this.unsubscriber$)
+        )
+        .subscribe();
+    } else {
+      this.deckToDelete.set(null);
+      this.feedBackData.set({
+        statut: AUTHENTIFICATION_STATUT.SUCCESS,
+        codeRetour: 200,
+        message: FEEDBACK_PANEL_MESSAGES.CANCEL_DELETE_DECK,
+      });
+      setTimeout(() => {
+        this.feedBackData.set({
+          statut: '',
+          codeRetour: 0,
+          message: '',
+        });
+      }, 2000);
+    }
+  }
 }

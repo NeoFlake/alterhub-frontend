@@ -28,5 +28,9 @@ export class DeckListService {
       })
     )
   }
+
+  public deleteDeckById(deckId: string): Observable<void> {
+    return this.deckRepository.deleteDeckById(deckId);
+  }
   
 }

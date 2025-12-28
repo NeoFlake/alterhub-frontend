@@ -41,7 +41,8 @@
   <div class="row m-0 info-zone">
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-secondary"
+      [style.background-color]="factionColor() !== '' ? factionColor() : ''"
       [disabled]="deckList().length < 39"
       (click)="onValidateCreationDeckList()"
     >

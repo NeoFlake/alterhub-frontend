@@ -42,7 +42,10 @@ export const FEEDBACK_PANEL_MESSAGES = {
     EXCEPTION_ERROR: "Un problème imprévu c'est produit lors de la procédure, veuillez recommencer",
     ADD_HERO_SUCCESS: "Héros ajouté avec succès",
     UPDATE_HERO_SUCCESS: "Héros mis à jour avec succès",
-    DELETE_HERO_SUCCESS: "Héros supprimé avec succès"
+    DELETE_HERO_SUCCESS: "Héros supprimé avec succès",
+    DELETE_DECK_SUCCESS: "Deck supprimé avec succès",
+    CANCEL_DELETE_DECK: "Annulation destruction du deck effectué",
+    ADD_DECK_SUCCESS: "Deck créé avec succès"
 };
 
 export const KEY_ACCESS = 'app_access_token';
