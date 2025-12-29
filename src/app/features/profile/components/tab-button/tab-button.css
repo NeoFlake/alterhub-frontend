@@ -1,0 +1,32 @@
+.nav-item {
+    margin-right: 6px;
+}
+
+.nav-link {
+    background-color: rgba(104, 183, 218, 0.45); 
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-weight: 500;
+    border-bottom: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+    padding: 0.8rem 1.5rem;
+    transition: all 0.2s ease-out;
+    position: relative;
+    top: 2px;
+}
+
+.nav-link:hover:not(.active) {
+    background-color: rgba(38, 126, 163, 0.45);
+    color: rgba(0, 0, 0, 0.75);
+    top: 0px;
+}
+
+.nav-link.active {
+    background-color: rgba(38, 126, 163, 0.45);
+    border-color: rgba(255, 255, 255, 0.15);
+    border-bottom: 1px solid rgba(38, 126, 163, 0.45);
+    top: 1px;
+    z-index: 20;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+    border-top: 2px solid #1e293b ;
+}

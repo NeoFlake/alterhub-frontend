@@ -1,22 +1,74 @@
 @if (playerData){
-<div class="container">
-  <p>{{ playerData.name }}</p>
-  <h2>Vos decks</h2>
+<div class="container py-3">
+  <div class="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom border-secondary">
+    <div class="ms-3">
+      <h1 class="display-5 fw-bold mb-0">{{ playerData.name }}</h1>
+      <div class="text-secondary d-flex align-items-center gap-3">
+        <span><i class="bi bi-collection me-1"></i> {{ playerData.decks.length }} Decks</span>
+      </div>
+    </div>
+  </div>
   @if (playerData.decks.length) {
-  <!-- Créer la zone d'apparition des decks ici -->
+  <div class="card bg-opacity-25 border-secondary overflow-hidden main-table-container" style="background-color: #1e293b">
+    <div class="table-responsive" style="background-color: #1e293b">
+      <table class="table table-hover mb-0 align-middle" style="background-color: #1e293b">
+        <thead
+          class="bg-opacity-25 border-bottom border-secondary text-uppercase small text-secondary"
+        >
+          <tr>
+            <th class="ps-4 py-3">{{ profileLibelle.PLAYER_PROFILE.COLUMN.APERCU }}</th>
+            <th class="py-3 text-center">{{ profileLibelle.PLAYER_PROFILE.COLUMN.NAME }}</th>
+            <th class="py-3">{{ profileLibelle.PLAYER_PROFILE.COLUMN.HERO }}</th>
+            <th class="py-3 text-center">{{ profileLibelle.PLAYER_PROFILE.COLUMN.SIZE }}</th>
+            <th class="py-3 text-end pe-4">{{ profileLibelle.PLAYER_PROFILE.COLUMN.ACTIONS }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (deck of playerData.decks; track deck.id) {
+          <tr class="cursor-pointer">
+            <!-- (click)="viewDeck(deck.id)" -->
+            <td class="ps-4" style="width: 80px">
+              <div
+                class="ratio ratio-1x1 rounded overflow-hidden border border-secondary picture-size"
+              >
+                <div
+                  class="picture-area"
+                  [style.backgroundImage]="
+                    'url(' + backApiRoads.ROOT_URL + '/images/cards/' + deck.hero.image + '.jpg)'
+                  "
+                ></div>
+              </div>
+            </td>
+            <td>
+              <span class="text-white fw-bold hover-primary">{{ deck.name }}</span>
+            </td>
+            <td>
+              <span class="badge bg-opacity-25 border border-secondary" [style.background-color]="deck.faction.color">
+                {{ deck.hero.name }}
+              </span>
+            </td>
+            <td class="text-center text-success font-monospace">{{ deck.cards.length }}</td>
+            <td class="text-end pe-4">
+              <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-outline-info btn-sm btn-action-glass text-info border-info">
+                  <i class="bi bi-pen"></i>
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-sm btn-action-glass delete text-danger border-danger"
+                >
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
   } @else {
   <!-- Ajouter un bouton pour partir sur la vue de création des decks -->
   <p>Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un</p>
-  }
-
-  <h2>Vos performances mémorable durant des tournois</h2>
-  @if (playerData.participants.length){
-  <!-- Créer la zone d'apparition des participations à un tournois ici -->
-  } @else {
-  <p>
-    Vous n'avez aucune performances mémorable actuellement, cliquez ici (bouton dirigeant sur BGA)
-    pour démarrer votre légende
-  </p>
   }
 </div>
 }
