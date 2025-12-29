@@ -51,8 +51,6 @@ export const FEEDBACK_PANEL_MESSAGES = {
 
 export const KEY_ACCESS = 'app_access_token';
 
-export const IS_LOGGED = "is_logged";
-
 export const VALIDATOR_EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const VALIDATOR_PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{12,}$/;

@@ -39,7 +39,7 @@ export class StateService {
 
   public async refreshUserLogged(): Promise<void> {
     const userId: string = await this.authService.getJwtUserId();
-      return new Promise<void>((resolve: (value: void | PromiseLike<void>) => void) => this.userRepository.getUserById(userId)
+      return new Promise<void>((resolve: (value: void | PromiseLike<void>) => void) => this.userRepository.getUserByIdForHydration(userId)
       .pipe(
         map((user: User) => {
         this.updateUser(user);

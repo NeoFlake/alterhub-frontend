@@ -14,8 +14,11 @@ export class UserRepository {
 
   private http: HttpClient = inject(HttpClient);
 
-  public getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${BACKEND_API_USERS.ROOT}/${id}`, { headers: { 'x-skip-interceptor': 'true' } });
+  // Effectue l'appel à userById pour mettre à jour le stateService
+  // Je le décorèle d'un appel simple si celui-ci existe à l'avenir
+  // pour ne pas lui donner le même role - objectif
+  public getUserByIdForHydration(id: string): Observable<User> {
+    return this.http.get<User>(`${BACKEND_API_USERS.ROOT}/${id}`, { headers: { 'x-hydration-request': 'true' } });
   }
 
   public createAccount(newUser: UserRequest): Observable<User> {
@@ -23,11 +26,11 @@ export class UserRepository {
   }
 
   public login(credentials: UserAuthentification): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(BACKEND_API_USERS.LOGIN, credentials, { withCredentials: true });
+    return this.http.post<AuthResponse>(BACKEND_API_USERS.LOGIN, credentials);
   }
 
   public logout(): Observable<void> {
-    return this.http.post<void>(BACKEND_API_USERS.LOGOUT, {}, {withCredentials: true});
+    return this.http.post<void>(BACKEND_API_USERS.LOGOUT, {});
   }
 
   public accessGranted(user: User): Observable<boolean> {
@@ -39,11 +42,11 @@ export class UserRepository {
   }
 
   public deleteUserById(id: string): Observable<void> {
-    return this.http.delete<void> (`${BACKEND_API_USERS.ROOT}/${id}`, {withCredentials: true});
+    return this.http.delete<void> (`${BACKEND_API_USERS.ROOT}/${id}`);
   }
 
   public refreshToken(): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(BACKEND_API_USERS.REFRESH_TOKEN, null, { withCredentials: true, headers: { 'x-skip-interceptor': 'true' } });
+    return this.http.post<AuthResponse>(BACKEND_API_USERS.REFRESH_TOKEN, null);
   }
   
 }

@@ -4,21 +4,36 @@ import { AuthService } from '../services/auth/auth.service';
 import { catchError, from, of, switchMap } from 'rxjs';
 import { BACKEND_API_USERS } from '../../constants/backend-api-road';
 import { StateService } from '../services/state/state-service';
-import { IS_LOGGED } from '../../constants/authentification-page.constantes';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authService: AuthService = inject(AuthService);
   const stateService: StateService = inject(StateService);
-  const accessToken: string|null = authService.getAccessToken();
+  const accessToken: string | null = authService.getAccessToken();
 
-  if (
-    req.url.includes(BACKEND_API_USERS.REGISTER) ||
-    req.url.includes(BACKEND_API_USERS.LOGIN) ||
-    req.url.includes(BACKEND_API_USERS.REFRESH_TOKEN)
-  ) {
+  // Seule méthode qui nécessite que l'on shunt réellement tout le reste
+  // Tout en envoyant jamais le cookie au backend
+  if (req.url.includes(BACKEND_API_USERS.REGISTER)) {
     return next(req);
   }
-  if (req.headers.get('x-skip-interceptor') || !localStorage.getItem(IS_LOGGED)) return next(req);
+
+  // Modifie la requête d'hydratation tout en l'empêchant de boucler avec
+  // ce qu'il y a au dessous
+  if (req.headers.has('x-hydration-request')) {
+    const cleanReq = req.clone({
+      headers: req.headers.delete('x-hydration-request'),
+      setHeaders: { Authorization: `Bearer ${accessToken}` }});
+    return next(cleanReq);
+  }
+
+  // Ajoute l'envoi du cookie de manière dynamique aux requêtes qui le nécessitent
+  if (
+    req.url.includes(BACKEND_API_USERS.LOGIN) ||
+    req.url.includes(BACKEND_API_USERS.LOGOUT) ||
+    req.url.includes(BACKEND_API_USERS.REFRESH_TOKEN) ||
+    (req.method === 'DELETE' && req.url.includes(BACKEND_API_USERS.ROOT))
+  ) {
+    return next(req.clone({ withCredentials: true }));
+  }
 
   if (!stateService.verifyExistenceOfUserStated()) {
     return from(stateService.refreshUserLogged()).pipe(
@@ -33,7 +48,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
 
         const token = authService.getAccessToken()!;
         const cloned = req.clone({
-          setHeaders: { Authorization: `Bearer ${token}`, "x-skip-interceptor": 'true' },
+          setHeaders: { Authorization: `Bearer ${token}` },
         });
         return next(cloned);
       }),
@@ -44,8 +59,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     );
   } else {
     if (authService.isTokenExpiringSoon()) {
-      return from(authService.refreshToken())
-      .pipe(
+      return from(authService.refreshToken()).pipe(
         switchMap((success: boolean) => {
           if (!success) {
             authService.logout();
@@ -54,7 +68,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
 
           const token = authService.getAccessToken()!;
           const cloned = req.clone({
-            setHeaders: { Authorization: `Bearer ${token}`, "x-skip-interceptor": 'true' },
+            setHeaders: { Authorization: `Bearer ${token}` },
           });
           return next(cloned);
         }),
@@ -67,7 +81,7 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const cloned = req.clone({
-    setHeaders: { Authorization: `Bearer ${accessToken}`, "x-skip-interceptor": 'true' },
+    setHeaders: { Authorization: `Bearer ${accessToken}`, 'x-skip-interceptor': 'true' },
     withCredentials: true,
   });
   return next(cloned);
