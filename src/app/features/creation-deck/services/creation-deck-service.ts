@@ -49,7 +49,8 @@ export class CreationDeckService {
       cards: deck.cards!,
       dateOfCreation: deck.dateOfCreation!,
       lastModification: deck.lastModification!,
-      tags: deck.tags!
+      tags: deck.tags!,
+      isParticipant: false
     }
     return this.deckRepository.addDeck(deckToSave);
   }
@@ -64,7 +65,8 @@ export class CreationDeckService {
       cards: deck.cards!,
       dateOfCreation: deck.dateOfCreation!,
       lastModification: deck.lastModification!,
-      tags: deck.tags!
+      tags: deck.tags!,
+      isParticipant: false
     }
     return this.deckRepository.updateDeckById(deckToUpdate, deckId);
   }

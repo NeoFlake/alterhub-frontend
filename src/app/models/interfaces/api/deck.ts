@@ -14,4 +14,5 @@ export interface Deck {
     name: string;
     playerName: string;
     tags: Array<Tag>;
+    isParticipant: boolean;
 }
