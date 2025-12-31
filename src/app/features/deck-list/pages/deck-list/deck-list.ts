@@ -11,7 +11,6 @@ import { DECK_ROAD } from '../../../../constants/routes';
 import { DeckListService } from '../../services/deck-list-service';
 import { ActivatedRoute, Router, RouterLink, UrlSegment } from '@angular/router';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
-import { ConfirmDeletionModal } from '../../../../shared/components/confirm-deletion-modal/confirm-deletion-modal';
 import { Deck } from '../../../../models/interfaces/api/deck';
 import { DELETE_MODAL_DATA } from '../../../../constants/deck-list.constants';
 import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
@@ -21,6 +20,7 @@ import {
   FEEDBACK_PANEL_MESSAGES,
 } from '../../../../constants/authentification-page.constantes';
 import { Page } from '../../../../models/interfaces/api/page';
+import { ConfirmDeletionModal } from '../../../../shared/components/confirm-deletion-modal/confirm-deletion-modal';
 
 @Component({
   selector: 'deck-list',

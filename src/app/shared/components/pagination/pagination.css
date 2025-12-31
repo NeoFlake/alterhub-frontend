@@ -5,3 +5,23 @@ a {
 li.active a {
     cursor: default;
 }
+
+/* Classe css permettant de personnaliser la barre de pagination
+   selon la faction que l'utilisateur regarde/créer/modifie*/
+.custom-color .page-link {
+    color: var(--page-color);
+    border-color: color-mix(in srgb, var(--page-color), transparent 70%);
+}
+
+.custom-color .page-link:hover {
+    background-color: color-mix(in srgb, var(--page-color), transparent 85%);
+    color: var(--page-color);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--page-color), transparent 80%);
+}
+
+.custom-color .page-item.active .page-link {
+    background-color: var(--page-color);
+    color: white;
+    border-color: var(--pag-ecolor);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--page-color), transparent 50%);
+}

@@ -16,7 +16,7 @@
     }
     <div class="row d-flex justify-content-center">
       <div class="col-7 d-flex justify-content-center">
-        <pagination [page]="pageCards()" (pageSelect)="onPageSelect($event)"></pagination>
+        <pagination [page]="pageCards()" [paginationColor]="faction().color" (pageSelect)="onPageSelect($event)"></pagination>
       </div>
     </div>
   </div>

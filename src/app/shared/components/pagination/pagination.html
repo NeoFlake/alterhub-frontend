@@ -1,4 +1,6 @@
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation example"
+    [class.custom-color]="paginationColor()"
+    [style.--page-color]="paginationColor()">
   <ul class="pagination">
     <li class="page-item" [style.display]="page().first ? 'none' : 'block'">
       <a class="page-link" (click)="onPageSelect(page().number - 1)">< précédent</a>
