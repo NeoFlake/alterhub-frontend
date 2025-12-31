@@ -1,6 +1,10 @@
 export const PROFILE_LIBELLE = {
   USER_MANAGER: {
     DELETE_ACCOUNT_BUTTON: 'Détruire le compte',
+    DELETION_MODAL_DATA: {
+      TITLE: "Destruction de compte souhaité pour - ",
+      BODY: "Souhaitez vous réellement supprimer votre compte; cette action est totalement irréversible; vous perdrez toutes vos données"
+    }
   },
 
   PLAYER_PROFILE: {

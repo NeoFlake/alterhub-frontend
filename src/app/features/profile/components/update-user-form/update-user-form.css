@@ -10,3 +10,13 @@ img {
 .btn-outline-secondary {
     border-color: #DEE2E6;
 }
+
+.update-button {
+    background-color: rgb(76, 175, 80, 0.9);
+    border-color: #4CAF50;
+}
+
+.update-button:hover {
+    background-color: rgba(76, 175, 80);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}

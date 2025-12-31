@@ -5,9 +5,17 @@
       <feedback-panel [data]="feedBackData()"></feedback-panel>
     </div>
     <div class="col-6 mt-3">
-      <button type="button" class="btn btn-danger px-4" (click)="deleteUser()">
+      <button type="button" class="btn text-light border-secondary delete-button px-4" (click)="onClickDeleteAccount()">
         {{ userManagerLibelle.DELETE_ACCOUNT_BUTTON }}
       </button>
     </div>
   </div>
 </div>
+
+@if (deletionAsked()) {
+<confirm-deletion-modal
+  [deleteModalData]="deleteModalData"
+  (closeModal)="onConfirmDeletionModalClose($event)"
+>
+</confirm-deletion-modal>
+}

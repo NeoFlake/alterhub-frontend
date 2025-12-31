@@ -2,3 +2,12 @@
     background-color: rgba(38, 126, 163, 0.45);
     border-radius: 0px 10px 10px 10px;
 }
+
+.delete-button {
+    background-color: rgba(244, 67, 54, 0.7);
+}
+
+.delete-button:hover {
+    background-color: rgba(244, 67, 54, 0.9);
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+}
