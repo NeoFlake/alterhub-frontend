@@ -3,22 +3,18 @@
     border-radius: 0px 10px 10px 10px;
 }
 
-.table {
-    background-color: #1e293b
-}
-
-.initiale-container {
-    width: 70px;
-    height: 70px;
-    font-size: 2rem;
-    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
-    box-shadow: 0 0 20px rgba(13, 110, 253, 0.3);
+.table-custom thead th {
+    background-color: rgba(15, 23, 42, 0.5);
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #334155;
 }
 
 .picture-area {
     width: 100%;
     height: 100%;
-
     background-repeat: no-repeat;
     background-size: 160%;
     background-position: center 30%;
@@ -26,4 +22,118 @@
 
 .picture-size {
     width: 48px;
+}
+
+.custom-dark-table-container {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #334155;
+    position: relative;
+    z-index: 0;
+    background-color: #1e293b;
+}
+
+.table-custom-color {
+    table-layout: fixed;
+    background-color: #1e293b;
+    margin-bottom: 0;
+}
+
+.table-custom-color tbody td {
+    background-color: transparent;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.table-custom-color thead th {
+    background-color: rgba(15, 23, 42, 0.95);
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border-bottom: 2px solid #334155;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.table-responsive-fix {
+    overflow-x: hidden;
+    padding-right: 0;
+}
+
+.glass-row {
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Courbe douce */
+    position: relative;
+    max-width: 100%;
+}
+
+.glass-row:hover {
+    filter: brightness(1.2);
+    z-index: 1;
+    transform: translateX(6px);
+}
+
+.btn-action-glass {
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+}
+
+.btn-action-glass:hover {
+    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Permet de tronquer le texte pour ne pas qu'il retourne à la ligne
+   (évite des zone de titre bien trop longue) */
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.w-7 {
+    width: 7%;
+}
+
+.w-auto {
+    width: auto;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+.update-button {
+    color: rgb(76, 175, 80);
+    border-color: #4CAF50;
+}
+
+.update-button:hover {
+    background-color: rgba(76, 175, 80, 0.2);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+    border-color: #4CAF50;
+}
+
+.delete-button {
+    color: rgba(244, 67, 54, 0.9);
+    border-color: #F44336;
+}
+
+.delete-button:hover {
+    background-color: rgba(244, 67, 54, 0.2);
+    box-shadow: 0 0 15px rgba(244, 67, 54, 0.4);
+    border-color: #F44336;
 }
