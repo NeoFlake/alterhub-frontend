@@ -27,6 +27,10 @@ export class DecklistTotem {
 
   public validateCreationDeckList: OutputEmitterRef<void> = output<void>();
 
+  public cancelButtonLibelle: InputSignal<string> = input.required<string>();
+
+  public cancelClick: OutputEmitterRef<void> = output<void>();
+
   public activateSavingOption: InputSignal<boolean> = input<boolean>(true);
 
   public characterCount: Signal<number> = computed(
@@ -155,4 +159,9 @@ export class DecklistTotem {
   public onValidateCreationDeckList(): void {
     this.validateCreationDeckList.emit();
   }
+
+  public onCancelClick(): void {
+    this.cancelClick.emit();
+  }
+
 }

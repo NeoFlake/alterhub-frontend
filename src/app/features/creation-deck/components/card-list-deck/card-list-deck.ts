@@ -36,6 +36,8 @@ export class CardListDeck {
 
   public validateCreationDeckList: OutputEmitterRef<Array<Card>> = output<Array<Card>>();
 
+  public cancelClick: OutputEmitterRef<void> = output<void>();
+
   public pageCards: WritableSignal<Page<Array<Card>>> = signal({
     content: [],
     totalElements: 0,
@@ -49,6 +51,8 @@ export class CardListDeck {
   public deckList: WritableSignal<Array<Card>> = signal<Array<Card>>([]);
 
   public scrollbarColor: WritableSignal<string> = signal<string>('#777777ff');
+
+  public cancelButtonLibelle: string = "Annuler";
 
   constructor(){
     effect(() => {
@@ -124,4 +128,9 @@ export class CardListDeck {
   public onValidateCreationDeckList(): void {
     this.validateCreationDeckList.emit(this.deckList());
   }
+
+  public onCancelClick(): void {
+    this.cancelClick.emit();
+  }
+
 }

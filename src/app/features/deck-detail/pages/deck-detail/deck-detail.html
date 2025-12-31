@@ -20,6 +20,8 @@
       [deckList]="deck()!.cards"
       [heroName]="deck()!.hero.name"
       [activateSavingOption]="false"
+      [cancelButtonLibelle]="cancelButtonLibelle"
+      (cancelClick)="onCancelClick()"
     ></decklist-totem>
   </div>
 </div>

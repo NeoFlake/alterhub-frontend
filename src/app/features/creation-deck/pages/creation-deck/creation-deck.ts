@@ -271,4 +271,9 @@ export class CreationDeck {
           .subscribe();
     }
   }
+
+  public onCancelClick(): void {
+    this.deckCreationPart = 1;
+  }
+
 }

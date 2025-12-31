@@ -28,3 +28,15 @@
 .auto-max-height {
     max-height: auto;
 }
+
+.arrow-icon-placement {
+    margin-top: 2px;
+}
+
+.text-custom {
+    color: black;
+}
+
+.text-custom:hover {
+    color: white;
+}

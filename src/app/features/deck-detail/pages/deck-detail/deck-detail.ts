@@ -12,14 +12,14 @@ import {
 } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { Card } from '../../../../models/interfaces/api/card';
-import { Faction } from '../../../../models/interfaces/api/faction';
-import { Hero } from '../../../../models/interfaces/api/hero';
 import { Page } from '../../../../models/interfaces/api/page';
 import { CardContainer } from '../../../../shared/components/card-container/card-container';
 import { DecklistTotem } from '../../../../shared/components/decklist-totem/decklist-totem';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Deck } from '../../../../models/interfaces/api/deck';
 import { DeckDetailService } from '../../services/deck-detail-service';
+import { DECKLIST_LIBELLE } from '../../../../constants/deck-list.constants';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'deck-detail',
@@ -29,6 +29,7 @@ import { DeckDetailService } from '../../services/deck-detail-service';
 })
 export class DeckDetail {
   private deckDetailService: DeckDetailService = inject(DeckDetailService);
+  private location: Location = inject(Location);
 
   public validateCreationDeckList: OutputEmitterRef<Array<Card>> = output<Array<Card>>();
 
@@ -45,6 +46,8 @@ export class DeckDetail {
   public scrollbarColor: WritableSignal<string> = signal<string>('#777777ff');
 
   public deckId: InputSignal<string> = input.required<string>();
+
+  public cancelButtonLibelle: string = DECKLIST_LIBELLE.CANCEL_BUTTON_LIBELLE;
 
   public deck: Signal<Deck | undefined> = toSignal(
     toObservable(this.deckId).pipe(
@@ -91,5 +94,9 @@ export class DeckDetail {
 
   public determineCardQuantity(cardId: string): number {
     return this.deck()!.cards.filter((card: Card) => card.id === cardId).length;
+  }
+
+  public onCancelClick(): void {
+    this.location.back();
   }
 }
