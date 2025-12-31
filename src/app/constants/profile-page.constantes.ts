@@ -19,4 +19,18 @@ export const PROFILE_LIBELLE = {
     DELETE_BUTTON_TITLE: 'Supprimer ce deck',
     NO_DECK_RESULT_PLACEHOLDER: "Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un"
   },
+
+  USER_PROFILE: {
+    CARD_TITLE: {
+      FIRSTNAME: "Prénom",
+      LASTNAME: "Nom",
+      DATE_OF_CREATION: "Inscrit depuis le",
+      LAST_MODIFICATION: "Dernière mise à jour"
+    },
+    ICONE_CLASS: {
+      PERSON: "bi-person-badge",
+      CALENDAR: "bi-calendar4-event",
+      CLOCK_HISTORY: "bi-clock-history"
+    }
+  }
 };

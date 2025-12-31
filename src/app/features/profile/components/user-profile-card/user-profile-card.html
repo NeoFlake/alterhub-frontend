@@ -1,0 +1,13 @@
+<div class="info-card d-flex align-items-center gap-3 h-100">
+  <div class="rounded p-2 text-secondary">
+    <i class="bi bi-person fs-5" [classList]="cardData().iconClass"></i>
+  </div>
+  <div>
+    <div
+      class="text-uppercase small fw-bold text-secondary custom-font-formating"
+    >
+    {{ cardData().cardTitle }}
+    </div>
+    <div class="text-white fw-medium">{{ cardData().isDate ? (cardData().cardBody | readableDate) : cardData().cardBody }}</div>
+  </div>
+</div>

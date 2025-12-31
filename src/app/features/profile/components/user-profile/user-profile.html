@@ -1,17 +1,20 @@
 <div class="container">
-    <div>
-        Nom: {{ userData().lastName }}
+  @if (userData()) {
+  <div class="d-flex align-items-center gap-4 mb-3 pb-3 border-bottom border-secondary">
+    <div class="ms-3 mt-3">
+      <h1 class="display-5 fw-bold mb-0">{{ userData().firstName }} {{ userData().lastName }}</h1>
+      <div class="text-dark d-flex align-items-center ms-2 mt-2">
+        <span class="text-dark">{{ userData().email }}</span>
+      </div>
     </div>
-    <div>
-        Prénom: {{ userData().firstName }}
+  </div>
+
+  <div class="row g-4 justify-content-center">
+    <div class="col-12 row g-3 mb-3">
+      @for (cardData of cardsData; track $index) {
+      <user-profile-card class="col-6" [cardData]="cardData"></user-profile-card>
+      }
     </div>
-    <div>
-        Mail : {{ userData().email }}
-    </div>
-    <div>
-        Inscrit depuis le {{ userData().dateOfCreation | readableDate }}
-    </div>
-    <div>
-        Dernière mise à jour du profil le {{ userData().lastModification| readableDate }}
-    </div>
+  </div>
+  }
 </div>

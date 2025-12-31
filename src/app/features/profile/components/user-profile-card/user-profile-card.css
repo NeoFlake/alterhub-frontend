@@ -1,0 +1,11 @@
+.info-card {
+    background-color: #1e293b;
+    border: 1px solid #597096;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.custom-font-formating {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px
+}
