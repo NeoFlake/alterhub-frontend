@@ -20,7 +20,7 @@
       <div class="btn-group" role="group">
         <button
           type="button"
-          class="btn btn-primary d-flex align-items-center justify-content-center px-3 text-white border-secondary"
+          class="btn btn-secondary d-flex align-items-center justify-content-center px-3 text-white border-secondary"
           [disabled]="count() === 0"
           (click)="removeCard(card())"
         >
@@ -37,6 +37,7 @@
           type="button"
           class="btn btn-success d-flex align-items-center justify-content-center px-3 text-white border-secondary"
           [disabled]="needToBeDisabled(card().rarity.reference)"
+          [style.background-color]="factionColor()"
           (click)="addCard(card())"
         >
           +

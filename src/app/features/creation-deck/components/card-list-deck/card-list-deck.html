@@ -8,6 +8,7 @@
       [exampleCount]="getExampleCount(card.name)"
       [raresSizeLimitReach]="getRaresSizeLimitReach()"
       [deckSizeLimitReach]="getDeckSizeLimitReach()"
+      [factionColor]="faction().color"
       (add)="addCardToDeck($event)"
       (remove)="removeCardFromDeck($event)"
       class="col-3 m-0 p-0"

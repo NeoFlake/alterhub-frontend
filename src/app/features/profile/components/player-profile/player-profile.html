@@ -1,33 +1,39 @@
-@if (playerData){
+@if (playerData()){
 <div class="container py-3">
   <div class="d-flex align-items-center gap-4 mb-4 pb-3 border-bottom border-secondary">
     <div class="ms-3">
-      <h1 class="display-5 fw-bold mb-0">{{ playerData.name }}</h1>
+      <h1 class="display-5 fw-bold mb-0">{{ playerData()!.name }}</h1>
       <div class="text-dark d-flex align-items-center gap-3 ms-2 mt-2">
-        <span><i class="bi bi-collection me-1"></i> {{ playerData.decks.length }} Decks</span>
+        <span><i class="bi bi-collection me-1"></i> {{ playerData()!.decks.length }} Decks</span>
       </div>
     </div>
   </div>
-  @if (playerData.decks.length) {
-  <div
-    class="custom-dark-table-container"
-  >
+  @if (playerData()!.decks.length) {
+  <div class="custom-dark-table-container">
     <div class="table-responsive table-responsive-fix">
       <table class="table table-custom-color table-hover mb-0 align-middle w-100">
         <thead
           class="bg-opacity-25 border-bottom border-secondary text-uppercase small text-secondary"
         >
           <tr>
-            <th class="ps-4 py-3 text-center w-7">{{ profileLibelle.PLAYER_PROFILE.COLUMN.APERCU }}</th>
+            <th class="ps-4 py-3 text-center w-7">
+              {{ profileLibelle.PLAYER_PROFILE.COLUMN.APERCU }}
+            </th>
             <th class="py-3 text-center w-auto">{{ profileLibelle.PLAYER_PROFILE.COLUMN.NAME }}</th>
             <th class="py-3 text-center w-15">{{ profileLibelle.PLAYER_PROFILE.COLUMN.HERO }}</th>
             <th class="py-3 text-center w-15">{{ profileLibelle.PLAYER_PROFILE.COLUMN.SIZE }}</th>
-            <th class="py-3 text-end pe-4 text-center w-10">{{ profileLibelle.PLAYER_PROFILE.COLUMN.ACTIONS }}</th>
+            <th class="py-3 text-end pe-4 text-center w-10">
+              {{ profileLibelle.PLAYER_PROFILE.COLUMN.ACTIONS }}
+            </th>
           </tr>
         </thead>
         <tbody>
-          @for (deck of playerData.decks; track deck.id) {
-          <tr class="cursor-pointer glass-row" (click)="viewDeckDetail(deck.id!)" [style]="getFactionColorRowStyle(deck.faction.color)">
+          @for (deck of playerData()!.decks; track deck.id) {
+          <tr
+            class="cursor-pointer glass-row"
+            (click)="viewDeckDetail(deck.id!)"
+            [style]="getFactionColorRowStyle(deck.faction.color)"
+          >
             <td class="ps-4">
               <div
                 class="ratio ratio-1x1 rounded overflow-hidden border border-secondary picture-size"
@@ -41,7 +47,9 @@
               </div>
             </td>
             <td class="text-center">
-              <span class="text-white fw-bold hover-primary truncate-text" [title]="deck.name">{{ deck.name }}</span>
+              <span class="text-white fw-bold hover-primary truncate-text" [title]="deck.name">{{
+                deck.name
+              }}</span>
             </td>
             <td class="text-center">
               <span
@@ -54,11 +62,17 @@
             <td class="text-center text-success font-monospace">{{ deck.cards.length }}</td>
             <td class="text-end pe-4">
               <div class="d-flex justify-content-end gap-2">
-                <button class="btn btn-sm btn-action-glass update-button" (click)="updateDeck(deck.id!); $event.stopPropagation()">
+                <button
+                  class="btn btn-sm btn-action-glass update-button"
+                  title="{{ profileLibelle.PLAYER_PROFILE.UPDATE_BUTTON_TITLE }}"
+                  (click)="updateDeck(deck.id!); $event.stopPropagation()"
+                >
                   <i class="bi bi-pen"></i>
                 </button>
                 <button
                   class="btn btn-sm btn-action-glass delete-button"
+                  title="{{ profileLibelle.PLAYER_PROFILE.DELETE_BUTTON_TITLE }}"
+                  (click)="deleteDeck(deck); $event.stopPropagation()"
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
@@ -71,8 +85,17 @@
     </div>
   </div>
   } @else {
-  <!-- Ajouter un bouton pour partir sur la vue de création des decks -->
-  <p>Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un</p>
+  <p>{{ profileLibelle.PLAYER_PROFILE.NO_DECK_RESULT_PLACEHOLDER }}</p>
   }
 </div>
+}
+
+<feedback-panel [data]="feedBackData()"></feedback-panel>
+
+@if (deckToDelete()) {
+<confirm-deletion-modal
+  [deleteModalData]="deleteModalData"
+  (closeModal)="onConfirmDeletionModalClose($event)"
+>
+</confirm-deletion-modal>
 }

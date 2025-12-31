@@ -51,6 +51,7 @@ export class DeckList {
 
   public deckDetailRoad: typeof DECK_ROAD = DECK_ROAD;
 
+  // Data à importer dans la modale pour la customiser à ses besoins
   public deleteModalData: { title: string; body: string } = {
     title: '',
     body: '',
