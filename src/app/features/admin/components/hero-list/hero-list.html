@@ -49,7 +49,7 @@
           [attr.title]="
             isDisabled() ? heroListLibelle.TOOLTIP.FORBIDDEN_ACTION : heroListLibelle.TOOLTIP.DELETE
           "
-          (click)="isDisabled() ? null : handleDeleteAction(hero.id!)"
+          (click)="isDisabled() ? null : onDeleteAction(hero)"
         ></i>
       </td>
       <td
@@ -92,4 +92,12 @@
     [hero]="detailedHero()" 
     (closeModal)="onModalClose()">
   </hero-detail-modal>
+}
+
+@if (heroToDelete()) {
+<confirm-deletion-modal
+  [deleteModalData]="deleteModalData"
+  (closeModal)="onConfirmDeletionModalClose($event)"
+>
+</confirm-deletion-modal>
 }

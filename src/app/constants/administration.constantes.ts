@@ -43,6 +43,10 @@ export const HERO_LIST_LIBELLE = {
         RESERVE_SLOT: "Emplacements réserve",
         LANDMARK_SLOT: "Emplacements repère",
     },
+    DELETE_MODAL_DATA: {
+        TITLE: "Suppresion demandé pour le héro - ",
+        BODY: "Êtes-vous sûr de vouloir supprimer le héro - "
+    },
     DETAILS_BUTTON: "Détails",
     PLACEHOLDER_WHEN_NO_RESULT: "Aucun héro à afficher pour le moment..."
 };
