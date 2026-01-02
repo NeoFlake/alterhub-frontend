@@ -1,0 +1,67 @@
+<div class="d-flex align-items-center justify-content-between mb-2">
+  <h3 class="h5 text-info fw-bold mb-0">
+    <i class="bi bi-stars me-1"></i>
+    {{ getDeckZoneTitle() }}
+  </h3>
+  <div>
+    <button
+      class="btn btn-outline-secondary btn-sm text-muted cursor-pointer hover-text-white"
+      (click)="onClickSeeAllDecks()"
+    >
+      {{ displayingDeckZoneLibelle.SEE_ALL_BUTTON }}
+    </button>
+  </div>
+</div>
+
+<div class="d-flex justify-content-end">
+  <select
+    #lastDeckSelect
+    class="form-select form-select-sm ms-4 mb-2 select-option-style"
+    (change)="onSelectChange(lastDeckSelect.value)"
+  >
+    <option class="text-center" value="" disabled [selected]="!factionChoosen()">
+      {{ displayingDeckZoneLibelle.SELECT_BUTTON }}
+    </option>
+    <option value="">{{ displayingDeckZoneLibelle.ALL_CHOICE }}</option>
+    @for (faction of factions(); track $index) {
+    <option [value]="faction.id">{{ faction.name }}</option>
+    }
+  </select>
+</div>
+
+<div class="d-flex flex-column gap-3">
+  @if (decks().length > 0) { @for (deck of decks(); track deck.id) {
+  <div
+    class="dashboard-card p-3 d-flex align-items-center gap-3 cursor-pointer"
+    [style]="getFactionColorRowStyle(deck.faction.color)"
+    (click)="onClickDetailDeck(deck.id!)"
+  >
+    <div
+      class="flex-shrink-0 border border-secondary shadow-sm picture-area rounded"
+      [style.backgroundImage]="
+        'url(' + backApiRoads.ROOT_URL + '/images/cards/' + deck.hero.image + '.jpg)'
+      "
+    ></div>
+    <div class="row flex-grow-1 overflow-hidden">
+      <div class="d-flex align-items-center gap-2">
+        <span class="fw-bold text-white text-truncate name-size" [title]="deck.name">{{
+          deck.name
+        }}</span>
+        <div class="ms-3 d-flex justify-content-center faction-size">
+          <span
+            class="badge bg-opacity-25 text-white border border-secondary"
+            [style.background-color]="deck.faction.color"
+          >
+            {{ deck.hero.name }}
+          </span>
+        </div>
+      </div>
+      <div class="small text-truncate mt-1">
+        {{ deck.cards.length }} cartes &bull; Créé le {{ deck.dateOfCreation | readableDate }} par
+        {{ deck.playerName }}
+      </div>
+    </div>
+    <i class="bi bi-chevron-right"></i>
+  </div>
+  } }
+</div>

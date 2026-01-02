@@ -1,7 +1,6 @@
 import { Component, inject, WritableSignal } from '@angular/core';
 import { User } from '../../../../models/interfaces/users/user';
 import { StateService } from '../../../../core/services/state/state-service';
-import { ReadableDatePipe } from '../../../../shared/pipe/readable-date-pipe';
 import { UserProfileCard } from '../user-profile-card/user-profile-card';
 import { PROFILE_LIBELLE } from '../../../../constants/profile-page.constantes';
 

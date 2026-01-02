@@ -1,0 +1,4 @@
+.welcome-banner {
+    background: linear-gradient(90deg, rgba(74, 127, 211, 0.8), rgba(32, 66, 121, 0.5));
+    border: 1px solid #82a5dd;
+}

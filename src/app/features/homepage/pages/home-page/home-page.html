@@ -1,16 +1,39 @@
-<div class="row">
-  <div class="col-12 row m-0 p-1 overflow-auto box-height" style="height: 85vh">
-    @for (card of pageCards().content; track $index) {
-    <card-container
-      [card]="card"
-      class="col-3 m-0 p-0"
-    >
-    </card-container>
+<div
+  class="welcome-banner mt-2 mb-4 p-4 rounded-3 d-flex align-items-center justify-content-between"
+>
+  <div>
+    @if (stateService.verifyExistenceOfUserStated()) {
+    <h2 class="h3 fw-bold text-white mb-1">
+      {{ homepageLibelle.MAIN_PAGE.LOGGED_TITLE }}{{ stateService.userLogged().firstName }} !
+    </h2>
+    <p class="text-white text-opacity-75 mb-0">{{ homepageLibelle.MAIN_PAGE.LOGGED_SUB_TITLE }}</p>
+    } @else {
+    <h2 class="h3 fw-bold text-white mb-1">{{ homepageLibelle.MAIN_PAGE.UNLOGGED_TITLE }}</h2>
+    <p class="text-white text-opacity-75 mb-0">
+      {{ homepageLibelle.MAIN_PAGE.UNLOGGED_SUB_TITLE }}
+    </p>
     }
-    <div class="row d-flex justify-content-center">
-      <div class="col-8 d-flex justify-content-center">
-        <pagination [page]="pageCards()" (pageSelect)="onPageSelect($event)"></pagination>
-      </div>
-    </div>
   </div>
+  <div class="d-none d-md-block text-white opacity-50"></div>
 </div>
+
+<div class="row g-2">
+  <!-- Display 5 last deck created -->
+  <displaying-deck-zone
+    [decks]="recentDecks()"
+    [factions]="factions()"
+    displayingType="CREATED"
+    (selectChange)="onLastDeckSelectChange($event)"
+    class="col-6"
+  ></displaying-deck-zone>
+  <!-- Display 5 last deck modified -->
+  <displaying-deck-zone
+    [decks]="recentModifiedDecks()"
+    [factions]="factions()"
+    displayingType="MODIFIED"
+    (selectChange)="onLastDeckSelectChange($event)"
+    class="col-6"
+  ></displaying-deck-zone>
+</div>
+
+<feedback-panel [data]="feedBackData()"></feedback-panel>

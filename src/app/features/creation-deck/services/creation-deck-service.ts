@@ -24,7 +24,7 @@ export class CreationDeckService {
   private deckRepository: DeckRepository = inject(DeckRepository);
   private stateService: StateService = inject(StateService);
 
-  public initialiseInfos(): Observable<[heros: Array<Hero>, factions: Array<Faction>, player: Player]> {
+  public initialiseInfos(): Observable<[Array<Hero>, Array<Faction>, Player]> {
     return forkJoin([this.heroRepository.getAllHeroes(), this.factionRepository.getAllFactions(), this.playerRepository.getPlayerByUserId(this.stateService.userLogged().id)]);
   }
 

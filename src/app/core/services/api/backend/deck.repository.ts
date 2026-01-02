@@ -19,6 +19,22 @@ export class DeckRepository {
     return this.http.get<Deck>(`${BACKEND_API_DECKS.ROOT}/${deckId}`);
   }
 
+  public getFiveLastDeckCreated(page: number, size: number): Observable<Page<Array<Deck>>> {
+    return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.FIVE_LATEST}?page=${page}&size=${size}`);
+  }
+
+  public getFiveLastDeckCreatedByFactionId(factionId: string, page: number, size: number): Observable<Page<Array<Deck>>> {
+    return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.FIVE_LATEST_BY_FACTION}/${factionId}?page=${page}&size=${size}`);
+  }
+
+  public getFiveLastDeckModified(page: number, size: number): Observable<Page<Array<Deck>>> {
+    return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.FIVE_LATEST_MODIFIED}?page=${page}&size=${size}`);
+  }
+
+  public getFiveLastDeckModifiedByFactionId(factionId: string, page: number, size: number): Observable<Page<Array<Deck>>> {
+    return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.FIVE_LATEST_MODIFIED_BY_FACTION}/${factionId}?page=${page}&size=${size}`);
+  }
+
   public getDecksByPlayerId(playerId: string, page: number, size: number): Observable<Page<Array<Deck>>> {
     return this.http.get<Page<Array<Deck>>>(`${BACKEND_API_DECKS.ROOT}${BACKEND_API_ROADS.PLAYERS}/${playerId}?page=${page}&size=${size}`);
   }

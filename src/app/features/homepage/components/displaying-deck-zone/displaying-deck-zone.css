@@ -1,0 +1,55 @@
+.dashboard-card {
+    /* background-color: #4a7fd3;
+    border: 1px solid #82a5dd; */
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.dashboard-card:hover {
+    /* background-color: #3164b4;
+    border: 1px solid #82a5dd; */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.hover-text-white:hover {
+    color: white !important;
+}
+
+.picture-area {
+    width: 56px;
+    height: 56px;
+    background-repeat: no-repeat;
+    background-size: 160%;
+    background-position: center 30%;
+}
+
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.form-select {
+    width: 30%;
+}
+
+.select-option-style {
+    cursor: pointer;
+    background-color: #A7D8F5;
+    border: 1px solid #5a9cc2;
+    border-radius: 10px;
+}
+
+.name-size {
+   width: 60%;
+}
+
+.faction-size {
+    width: 30%;
+}

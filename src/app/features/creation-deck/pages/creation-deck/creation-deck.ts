@@ -78,7 +78,7 @@ export class CreationDeck {
     this.creationDeckService
       .initialiseInfos()
       .pipe(
-        tap((data: [heroes: Array<Hero>, factions: Array<Faction>, player: Player]) => {
+        tap((data: [Array<Hero>, Array<Faction>, Player]) => {
           this.heroes = data[0];
           this.factions = data[1];
           this.deckToCreate.playerName = data[2].name;
