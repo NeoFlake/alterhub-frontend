@@ -49,6 +49,7 @@ export class UserManager {
   public deleteUserById(id: string): void {
     this.userRepository.deleteUserById(id)
     .pipe(
+      switchMap(() => this.stateService.refreshCookieStatut()),
       tap(() => {
         this.authService.logout();
         this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
@@ -59,11 +60,9 @@ export class UserManager {
 
   public logout(): void {
     this.userRepository.logout().pipe(
-      switchMap(() =>{
-        this.authService.logout();
-        return this.stateService.cookieStatut();
-      }),
+      switchMap(() => this.stateService.refreshCookieStatut()),
       tap(() => {
+        this.authService.logout();
         this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
       }),
       catchError(() => {

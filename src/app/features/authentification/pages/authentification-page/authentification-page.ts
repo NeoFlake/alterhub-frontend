@@ -23,7 +23,7 @@ export class AuthentificationPage implements OnInit {
   public pageTitle: string = TITLE_PAGE.LOGIN;
   public authentificationMode: string = AUTHENTIFICATION_ROAD.LOGIN;
   public redirectionLibelle: string = AUTHENTIFICATION_LIBELLE.LOGIN;
-  public redirectLink: string = `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`;
+  public redirectLink: string = `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.CREATE_ACCOUNT}`;
 
   public feedBackData = model<{ statut: string; codeRetour: number; message: string }>({
     statut: "",
@@ -36,7 +36,7 @@ export class AuthentificationPage implements OnInit {
     if(this.authentificationMode === this.CREATE_ACCOUNT){
       this.pageTitle = TITLE_PAGE.CREATE_ACCOUNT;
       this.redirectionLibelle = AUTHENTIFICATION_LIBELLE.CREATE_ACCOUNT;
-      this.redirectLink = `${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`;
+      this.redirectLink = `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`;
     }
   }
 
