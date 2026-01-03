@@ -5,7 +5,7 @@ export const PAGE_LIBELLE = {
     CREATE: 'Créer',
     ALL: 'Tous',
     MINE: 'Mes decks',
-    READ_ALL_DECK_TITLE: "Consulter les decks",
+    READ_ALL_DECK_TITLE: "Consulter tous les decks",
     READ_ALL_MY_DECKS: "Consulter mes decks",
     CREATE_DECK: "Créer un deck"
   },

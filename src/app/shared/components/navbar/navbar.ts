@@ -33,6 +33,13 @@ export class Navbar {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
+        // if (
+        //   event.url.match(
+        //     `^/${DECK_ROAD.ROOT}/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$`
+        //   )
+        // ) {
+        //   this.pageTitle = 'Détail du Deck';
+        // }
         switch (event.url) {
           case `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`:
             this.pageTitle = this.libelles.AUTHENTICATION.LOGIN;
@@ -49,6 +56,9 @@ export class Navbar {
           case `/${DECK_ROAD.ROOT}/${DECK_ROAD.CREATE}`:
             this.pageTitle = this.libelles.DECK.CREATE_DECK;
             break;
+          case `/${DECK_ROAD.ROOT}/`:
+            this.pageTitle = this.libelles.DECK.READ_ALL_DECK_TITLE;
+            break;
           case `/${USER_ROAD}`:
             this.pageTitle = this.libelles.USER;
             break;
@@ -56,7 +66,10 @@ export class Navbar {
             this.pageTitle = this.libelles.ADMINPAGE;
             break;
           case `/${HOMEPAGE_ROAD}`:
+            this.pageTitle = 'AlterHub';
+            break;
           default:
+            this.pageTitle = 'Détail du Deck';
             break;
         }
       });
