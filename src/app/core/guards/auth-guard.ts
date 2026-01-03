@@ -8,7 +8,7 @@ export const authGuard: CanActivateFn = async () => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
   const stateService: StateService = inject(StateService);
-
+  
   if (authService.isAuthenticated()) {
     if(!stateService.verifyExistenceOfUserStated()){
       await stateService.refreshUserLogged();

@@ -21,7 +21,8 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.headers.has('x-hydration-request')) {
     const cleanReq = req.clone({
       headers: req.headers.delete('x-hydration-request'),
-      setHeaders: { Authorization: `Bearer ${accessToken}` }});
+      setHeaders: { Authorization: `Bearer ${accessToken}` },
+    });
     return next(cleanReq);
   }
 
@@ -30,36 +31,19 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     req.url.includes(BACKEND_API_USERS.LOGIN) ||
     req.url.includes(BACKEND_API_USERS.LOGOUT) ||
     req.url.includes(BACKEND_API_USERS.REFRESH_TOKEN) ||
-    (req.method === 'DELETE' && req.url.includes(BACKEND_API_USERS.ROOT))
+    req.url.includes(BACKEND_API_USERS.CHECK_COOKIE_STATUT) ||
+    (req.method === "DELETE" && req.url.includes(BACKEND_API_USERS.ROOT))
   ) {
     return next(req.clone({ withCredentials: true }));
   }
 
-  if (!stateService.verifyExistenceOfUserStated()) {
-    return from(stateService.refreshUserLogged()).pipe(
-      switchMap(() =>
-        authService.isTokenExpiringSoon() ? authService.refreshToken() : Promise.resolve(true)
-      ),
-      switchMap((success: boolean) => {
-        if (!success) {
-          authService.logout();
-          return of(null as any);
-        }
-
-        const token = authService.getAccessToken()!;
-        const cloned = req.clone({
-          setHeaders: { Authorization: `Bearer ${token}` },
-        });
-        return next(cloned);
-      }),
-      catchError(() => {
-        authService.logout();
-        return of(null as any);
-      })
-    );
-  } else {
-    if (authService.isTokenExpiringSoon()) {
-      return from(authService.refreshToken()).pipe(
+  // On vérifie en premier lieu que l'utilisateur n'est pas un visiteur classique sans droit 
+  if (stateService.cookieStatut() !== "guest") {
+    if (!stateService.verifyExistenceOfUserStated()) {
+      return from(stateService.refreshUserLogged()).pipe(
+        switchMap(() =>
+          authService.isTokenExpiringSoon() ? authService.refreshToken() : Promise.resolve(true)
+        ),
         switchMap((success: boolean) => {
           if (!success) {
             authService.logout();
@@ -77,12 +61,29 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
           return of(null as any);
         })
       );
+    } else {
+      if (authService.isTokenExpiringSoon()) {
+        return from(authService.refreshToken()).pipe(
+          switchMap((success: boolean) => {
+            if (!success) {
+              authService.logout();
+              return of(null as any);
+            }
+
+            const token = authService.getAccessToken()!;
+            const cloned = req.clone({
+              setHeaders: { Authorization: `Bearer ${token}` },
+            });
+            return next(cloned);
+          }),
+          catchError(() => {
+            authService.logout();
+            return of(null as any);
+          })
+        );
+      }
     }
   }
 
-  const cloned = req.clone({
-    setHeaders: { Authorization: `Bearer ${accessToken}`, 'x-skip-interceptor': 'true' },
-    withCredentials: true,
-  });
-  return next(cloned);
+  return next(req);
 };

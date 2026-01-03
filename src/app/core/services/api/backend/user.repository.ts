@@ -48,5 +48,9 @@ export class UserRepository {
   public refreshToken(): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(BACKEND_API_USERS.REFRESH_TOKEN, null);
   }
+
+  public getCookieStatut(): Observable<{cookieStatut: string}> {
+    return this.http.get<{cookieStatut: string}>(BACKEND_API_USERS.CHECK_COOKIE_STATUT);
+  }
   
 }
