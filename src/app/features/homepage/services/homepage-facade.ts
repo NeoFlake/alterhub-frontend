@@ -38,7 +38,7 @@ export class HomepageFacade {
   }
 
   public getFiveLastDeckModified(): Observable<Page<Array<Deck>>> {
-    return this.decksRepository.getFiveLastDeckCreated(0, 5);
+    return this.decksRepository.getFiveLastDeckModified(0, 5);
   }
 
   public getFiveLastDeckModifiedByFactionId(factionId: string): Observable<Page<Array<Deck>>> {

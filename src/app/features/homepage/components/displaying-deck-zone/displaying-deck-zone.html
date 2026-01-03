@@ -57,7 +57,14 @@
         </div>
       </div>
       <div class="small text-truncate mt-1">
-        {{ deck.cards.length }} cartes &bull; Créé le {{ deck.dateOfCreation | readableDate }} par
+        {{ deck.cards.length }} cartes &bull;
+        {{ displayingType() === 'CREATED' ? displayingDeckZoneLibelle.WHEN_CREATED : displayingDeckZoneLibelle.WHEN_MODIFIED }}
+        {{
+          displayingType() === 'CREATED'
+            ? (deck.dateOfCreation | readableDate)
+            : (deck.lastModification | readableDate)
+        }}
+        par
         {{ deck.playerName }}
       </div>
     </div>

@@ -11,6 +11,8 @@ export const HOMEPAGE_LIBELLE = {
         MODIFIED_FIRST_PART_TITLE: "Les 5 dernières modifications ",
         SEE_ALL_BUTTON: "Voir tout",
         SELECT_BUTTON: "Choisir par faction",
-        ALL_CHOICE: "Toutes"
+        ALL_CHOICE: "Toutes",
+        WHEN_CREATED: "Créé le",
+        WHEN_MODIFIED: "Modifié le"
     }
 };
