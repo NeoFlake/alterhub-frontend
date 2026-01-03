@@ -120,3 +120,28 @@
 .custom-size {
     font-size: 0.8rem
 }
+
+.picture-container-size {
+    width: 32px;
+    height: 32px;
+}
+
+.picture-object-fit {
+    object-fit: contain;
+}
+
+.name-container-size {
+    max-width: 150px
+}
+
+.button-zone-elevation {
+    z-index: 5;
+}
+
+.player-name-container-size {
+    max-width: 100px;
+}
+
+.center-picture-on-container {
+    object-position: center 28%;
+}

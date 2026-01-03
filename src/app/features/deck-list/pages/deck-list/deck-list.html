@@ -11,8 +11,7 @@
         <div class="position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
           <img
             src="{{`${backApiRoads.ROOT_URL}/images/cards/${deck.hero.image}.jpg`}}"
-            class="w-100 h-100 object-fit-cover deck-bg-img"
-            style="object-position: center 28%"
+            class="w-100 h-100 object-fit-cover deck-bg-img center-picture-on-container"
             alt="Deck Art"
           />
 
@@ -25,27 +24,24 @@
               class="badge bg-dark bg-opacity-75 backdrop-blur border border-secondary d-flex align-items-center py-2 px-3 shadow-sm"
             >
               <div
-                class="me-2 flex-shrink-0 bg-secondary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center overflow-hidden"
-                style="width: 32px; height: 32px"
+                class="me-2 flex-shrink-0 bg-secondary bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center overflow-hidden picture-container-size"
               >
                 <img
                   [src]="fixFactionIcon(deck.faction.name)"
-                  class="d-block w-75 h-75"
-                  style="object-fit: contain"
+                  class="d-block w-75 h-75 picture-object-fit"
                   alt="Faction"
                 />
               </div>
 
               <span
-                class="text-uppercase fw-bold text-white small ls-1 text-truncate"
-                style="max-width: 150px"
+                class="text-uppercase fw-bold text-white small ls-1 text-truncate name-container-size"
               >
                 {{ deck.hero.name }}
               </span>
             </div>
 
             @if(viewMode() === deckDetailRoad.MINE){
-            <div class="card-actions d-flex flex-column gap-2 ms-2 pe-auto" style="z-index: 5">
+            <div class="card-actions d-flex flex-column gap-2 ms-2 pe-auto button-zone-elevation">
               <button
                 type="button"
                 (click)="updateDeck(deck); $event.stopPropagation()"
@@ -79,7 +75,7 @@
                 >
                   {{ deck.playerName.charAt(0) }}
                 </div>
-                <span class="small fw-medium text-truncate" style="max-width: 100px">
+                <span class="small fw-medium text-truncate player-name-container-size">
                   {{ deck.playerName }}
                 </span>
               </div>

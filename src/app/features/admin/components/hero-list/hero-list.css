@@ -5,12 +5,12 @@
 }
 
 .delete-button:hover,
-.update-button:hover{
+.update-button:hover {
     font-size: 18px;
 }
 
 .delete-button:active,
-.update-button:active{
+.update-button:active {
     font-size: 16px;
 }
 
@@ -23,6 +23,13 @@
 .delete-button:hover.disabled,
 .update-button:hover.disabled,
 .delete-button:active.disabled,
-.update-button:active.disabled{
+.update-button:active.disabled {
     font-size: 20px;
+}
+
+.truncate-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
