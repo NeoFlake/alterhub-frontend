@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { UserRepository } from './api/backend/user.repository';
 import { User } from '../../models/interfaces/users/user';
-import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, finalize, map, Observable, of, switchMap, tap } from 'rxjs';
 import { UserRequest } from '../../models/interfaces/users/userRequest';
 import { AuthService } from './auth/auth.service';
 import { Router } from '@angular/router';
@@ -12,11 +12,20 @@ import { StateService } from './state/state-service';
   providedIn: 'root',
 })
 export class UserManager {
-
   private userRepository: UserRepository = inject(UserRepository);
   private stateService: StateService = inject(StateService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
+
+  private userLoggedRefreshed: User = {
+    id: '',
+    lastName: '',
+    firstName: '',
+    playerName: '',
+    email: '',
+    dateOfCreation: '',
+    lastModification: new Date(),
+  };
 
   public updateUserById(
     updatingFormData: Partial<{
@@ -28,7 +37,6 @@ export class UserManager {
     }>,
     userLogged: User
   ): Observable<User> {
-
     let now: Date = new Date();
 
     let newUser: UserRequest = {
@@ -38,7 +46,7 @@ export class UserManager {
       playerName: userLogged.playerName!,
       email: updatingFormData.email!,
       password: updatingFormData.password!,
-      newPassword: updatingFormData.newPassword != "" ? updatingFormData.newPassword : null,
+      newPassword: updatingFormData.newPassword != '' ? updatingFormData.newPassword : null,
       dateOfCreation: userLogged.dateOfCreation,
       lastModification: now,
     };
@@ -47,29 +55,33 @@ export class UserManager {
   }
 
   public deleteUserById(id: string): void {
-    this.userRepository.deleteUserById(id)
-    .pipe(
-      switchMap(() => this.stateService.refreshCookieStatut()),
-      tap(() => {
-        this.authService.logout();
-        this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
-      })
-    )
-    .subscribe();
+    this.userRepository
+      .deleteUserById(id)
+      .pipe(
+        switchMap(() => this.stateService.refreshCookieStatut()),
+        tap(() => {
+          this.authService.logout();
+          this.stateService.updateUser(this.userLoggedRefreshed);
+          this.router.navigate([`/${HOMEPAGE_ROAD}`]);
+        })
+      )
+      .subscribe();
   }
 
   public logout(): void {
-    this.userRepository.logout().pipe(
-      switchMap(() => this.stateService.refreshCookieStatut()),
-      tap(() => {
-        this.authService.logout();
-        this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
-      }),
-      catchError(() => {
-        this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
-        return of(null);
-      })
-    ).subscribe();
+    this.userRepository
+      .logout()
+      .pipe(
+        switchMap(() => this.stateService.refreshCookieStatut()),
+        tap(() => {
+          this.authService.logout();
+          this.stateService.updateUser(this.userLoggedRefreshed);
+        }),
+        catchError(() => {
+          return of(null);
+        }),
+        finalize(() => this.router.navigate([`/${HOMEPAGE_ROAD}`]))
+      )
+      .subscribe();
   }
-
 }
