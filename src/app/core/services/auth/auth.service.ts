@@ -1,11 +1,10 @@
 import { computed, inject, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { catchError, finalize, firstValueFrom, map, Observable, of, tap } from 'rxjs';
+import { catchError, finalize, firstValueFrom, map, of } from 'rxjs';
 import { UserRepository } from '../api/backend/user.repository';
 import { AuthResponse } from '../../../models/interfaces/authentication/authResponse';
 import { KEY_ACCESS } from '../../../constants/authentification-page.constantes';
 import { JwtPayload } from '../../../models/interfaces/authentication/jwt-payload';
 import { Jwt } from '../../../models/interfaces/authentication/jwt';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',

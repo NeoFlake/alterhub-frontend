@@ -84,12 +84,14 @@ export class LoginForm implements OnDestroy {
     this.formManager
       .login(credentials)
       .pipe(
-        tap((authResponse: AuthResponse) => {
+        switchMap((authResponse: AuthResponse) => {
           // On met à jour l'userLogged de l'application pour pouvoir l'utiliser dans le reste de celle-ci
           // Important car cela préserve des appels multiple à la table pour pas grand chose à y gagner
           this.stateService.updateUser(authResponse.user);
           // Puis on exécute notre mise à place de la validation du login à partir du service d'authentification
-          this.authService.login(authResponse)
+          this.authService.login(authResponse);
+          // Finalement on remet à jour notre statut de cookie car celui-ci a évolué vu que l'on est désormais connecté
+          return this.stateService.refreshCookieStatut();
         }),
         tap(() => this.feedbackPanelData.emit({
             statut: AUTHENTIFICATION_STATUT.SUCCESS,

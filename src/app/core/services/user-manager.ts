@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { UserRepository } from './api/backend/user.repository';
 import { User } from '../../models/interfaces/users/user';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { UserRequest } from '../../models/interfaces/users/userRequest';
 import { AuthService } from './auth/auth.service';
 import { Router } from '@angular/router';
 import { AUTHENTIFICATION_ROAD, HOMEPAGE_ROAD } from '../../constants/routes';
+import { StateService } from './state/state-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ import { AUTHENTIFICATION_ROAD, HOMEPAGE_ROAD } from '../../constants/routes';
 export class UserManager {
 
   private userRepository: UserRepository = inject(UserRepository);
+  private stateService: StateService = inject(StateService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
 
@@ -57,8 +59,11 @@ export class UserManager {
 
   public logout(): void {
     this.userRepository.logout().pipe(
-      tap(() =>{
+      switchMap(() =>{
         this.authService.logout();
+        return this.stateService.cookieStatut();
+      }),
+      tap(() => {
         this.router.navigate([`/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`]);
       }),
       catchError(() => {

@@ -1,7 +1,7 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { User } from '../../../models/interfaces/users/user';
 import { AuthService } from '../auth/auth.service';
-import { firstValueFrom, map, catchError, of, finalize, Observable, tap } from 'rxjs';
+import { map, catchError, of, finalize, Observable } from 'rxjs';
 import { UserRepository } from '../api/backend/user.repository';
 
 @Injectable({
@@ -64,6 +64,14 @@ export class StateService {
           finalize(() => resolve())
         )
         .subscribe()
+    );
+  }
+
+  public refreshCookieStatut(): Observable<void> {
+    return this.userRepository.getCookieStatut().pipe(
+      map((statut: { cookieStatut: string }) => {
+        this.updateCookieStatut(statut.cookieStatut);
+      })
     );
   }
 }
