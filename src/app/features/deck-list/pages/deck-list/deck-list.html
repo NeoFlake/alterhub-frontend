@@ -1,7 +1,7 @@
 <div class="py-5 mb-5 animate-fade-in">
-  @if(deckList(); as deckList){ @if (deckList.content; as contenu) {
+  @if(deckList(); as deckList){ @if (deckList.content.length > 0) {
   <div class="row g-4">
-    @for (deck of contenu; track deck.id) {
+    @for (deck of deckList.content; track deck.id) {
 
     <div class="col-12 col-md-6 col-xl-4">
       <div
@@ -91,9 +91,19 @@
       </div>
     </div>
 
-    }
+    } 
   </div>
-  } }
+  } @else {
+    <div class="mb-3 fw-medium">{{ viewMode() === deckDetailRoad.MINE ? deckListLibelle.NO_DECKLIST_FOR_ME_PLACEHOLDER : deckListLibelle.NO_DECKLIST_PLACEHOLDER }}
+    @if(viewMode() === deckDetailRoad.MINE){
+      <button class="btn btn-success" (click)="redirectionToCreateDeck()">
+        {{ deckListLibelle.REDIRECTION_BUTTON }}
+      </button>
+    }
+    </div>
+  }
+
+  } 
 </div>
 
 <feedback-panel [data]="feedBackData()"></feedback-panel>

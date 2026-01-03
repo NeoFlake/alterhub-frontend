@@ -182,4 +182,8 @@ export class PlayerProfile implements OnDestroy {
       }, 2000);
     }
   }
+
+  public redirectionToCreateDeck(): void {
+    this.router.navigate([DECK_ROAD.ROOT, DECK_ROAD.CREATE]);
+  }
 }

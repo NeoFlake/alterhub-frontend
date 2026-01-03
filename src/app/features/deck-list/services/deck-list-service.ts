@@ -17,14 +17,14 @@ export class DeckListService {
   private playerRepository: PlayerRepository = inject(PlayerRepository);
 
   public getAllDecks(): Observable<Page<Array<Deck>>> {
-    return this.deckRepository.getDecks(0, 16);
+    return this.deckRepository.getDecks(0, 200);
   }
 
   public getAllUserDecks(): Observable<Page<Array<Deck>>> {
     return this.playerRepository.getPlayerByUserId(this.stateService.userLogged().id)
     .pipe(
       switchMap((player: Player) => {
-        return this.deckRepository.getDecksByPlayerId(player.id, 0, 16);
+        return this.deckRepository.getDecksByPlayerId(player.id, 0, 200);
       })
     )
   }

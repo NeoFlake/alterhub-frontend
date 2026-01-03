@@ -85,7 +85,12 @@
     </div>
   </div>
   } @else {
-  <p>{{ profileLibelle.PLAYER_PROFILE.NO_DECK_RESULT_PLACEHOLDER }}</p>
+  <p>
+    {{ profileLibelle.PLAYER_PROFILE.NO_DECK_RESULT_PLACEHOLDER }}
+    <button class="btn btn-success" (click)="redirectionToCreateDeck()">
+      {{ profileLibelle.PLAYER_PROFILE.NO_DECK_RESULT_PLACEHOLDER }}
+    </button>
+  </p>
   }
 </div>
 }

@@ -70,5 +70,7 @@
     </div>
     <i class="bi bi-chevron-right"></i>
   </div>
-  } }
+  } } @else {
+    <div class="mb-3 fw-medium">{{ displayingType() === 'CREATED' ? displayingDeckZoneLibelle.NO_DECK_CREATED_PLACEHOLDER : displayingDeckZoneLibelle.NO_DECK_MODIFIED_PLACEHOLDER }} </div>
+  }
 </div>

@@ -95,6 +95,8 @@
           {{ mainDeckInfosLibelle.ACTION_BUTTON }}
         </button>
       </div>
+      } @else if(selectedFactionId()) {
+        <div>{{ mainDeckInfosLibelle.NO_HERO_FOR_FACTION }}</div>
       }
     </form>
   </div>

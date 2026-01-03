@@ -13,6 +13,8 @@ export const HOMEPAGE_LIBELLE = {
         SELECT_BUTTON: "Choisir par faction",
         ALL_CHOICE: "Toutes",
         WHEN_CREATED: "Créé le",
-        WHEN_MODIFIED: "Modifié le"
+        WHEN_MODIFIED: "Modifié le",
+        NO_DECK_CREATED_PLACEHOLDER: "Aucun deck de créé pour le moment par nos AlterHuber",
+        NO_DECK_MODIFIED_PLACEHOLDER: "Aucun deck de modifié pour le moment par nos AlterHuber"
     }
 };

@@ -12,7 +12,7 @@ import { DeckListService } from '../../services/deck-list-service';
 import { ActivatedRoute, Router, RouterLink, UrlSegment } from '@angular/router';
 import { BACKEND_API_ROADS } from '../../../../constants/backend-api-road';
 import { Deck } from '../../../../models/interfaces/api/deck';
-import { DELETE_MODAL_DATA } from '../../../../constants/deck-list.constants';
+import { DECKLIST_LIBELLE, DELETE_MODAL_DATA } from '../../../../constants/deck-list.constants';
 import { FeedbackPanel } from '../../../../shared/components/feedback-panel/feedback-panel';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -50,6 +50,8 @@ export class DeckList {
   public backApiRoads: typeof BACKEND_API_ROADS = BACKEND_API_ROADS;
 
   public deckDetailRoad: typeof DECK_ROAD = DECK_ROAD;
+
+  public deckListLibelle: typeof DECKLIST_LIBELLE = DECKLIST_LIBELLE;
 
   // Data à importer dans la modale pour la customiser à ses besoins
   public deleteModalData: { title: string; body: string } = {
@@ -167,5 +169,9 @@ export class DeckList {
         });
       }, 2000);
     }
+  }
+
+  public redirectionToCreateDeck(): void {
+    this.router.navigate([DECK_ROAD.ROOT, DECK_ROAD.CREATE]);
   }
 }

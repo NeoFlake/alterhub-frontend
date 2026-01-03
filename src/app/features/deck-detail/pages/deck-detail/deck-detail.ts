@@ -49,6 +49,8 @@ export class DeckDetail {
 
   public cancelButtonLibelle: string = DECKLIST_LIBELLE.CANCEL_BUTTON_LIBELLE;
 
+  public noDeckDetailPlaceholder: string = DECKLIST_LIBELLE.NO_DECK_DETAIL_PLACEHOLDER;
+
   public deck: Signal<Deck | undefined> = toSignal(
     toObservable(this.deckId).pipe(
       switchMap((deckId: string) => this.deckDetailService.getDeckById(deckId))
