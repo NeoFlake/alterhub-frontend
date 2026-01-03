@@ -18,7 +18,8 @@ export const PROFILE_LIBELLE = {
     },
     UPDATE_BUTTON_TITLE: 'Modifier ce deck',
     DELETE_BUTTON_TITLE: 'Supprimer ce deck',
-    NO_DECK_RESULT_PLACEHOLDER: "Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un"
+    NO_DECK_RESULT_PLACEHOLDER: "Vous n'avez aucun deck à vous pour le moment; il est temps d'en créer un",
+    CREATE_DECK_BUTTON: "Créer deck"
   },
 
   USER_PROFILE: {
