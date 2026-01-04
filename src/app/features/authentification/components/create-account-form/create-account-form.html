@@ -3,7 +3,7 @@
   (ngSubmit)="createAccount()"
   class="row justify-content-center"
 >
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="firstName" class="form-label">{{ authentificationLibelle.INPUT.FIRSTNAME }}</label>
     <input
       type="text"
@@ -19,7 +19,7 @@
       [controlName]="'firstName'"
     ></invalid-feedback>
   </div>
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="lastName" class="form-label">{{ authentificationLibelle.INPUT.LASTNAME }}</label>
     <input
       type="text"
@@ -32,7 +32,7 @@
     />
     <invalid-feedback [formGroup]="createAccountForm" [controlName]="'lastName'"></invalid-feedback>
   </div>
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="playerName" class="form-label">{{
       authentificationLibelle.INPUT.PLAYERNAME
     }}</label>
@@ -50,7 +50,7 @@
       [controlName]="'playerName'"
     ></invalid-feedback>
   </div>
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="email" class="form-label">{{ authentificationLibelle.INPUT.EMAIL }}</label>
     <input
       type="email"
@@ -63,7 +63,7 @@
     />
     <invalid-feedback [formGroup]="createAccountForm" [controlName]="'email'"></invalid-feedback>
   </div>
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="password" class="form-label">{{ authentificationLibelle.INPUT.PASSWORD }}</label>
     <div class="input-group">
       <input
@@ -88,7 +88,7 @@
     </span>
     <invalid-feedback [formGroup]="createAccountForm" [controlName]="'password'"></invalid-feedback>
   </div>
-  <div class="col-6 ms-3 mt-3">
+  <div class="col-sm-6 ms-sm-3 mt-3">
     <label for="confirmPassword" class="form-label">{{
       authentificationLibelle.INPUT.CONFIRM_PASSWORD
     }}</label>
@@ -111,7 +111,7 @@
     }
   </div>
   <div class="row justify-content-center">
-    <div class="col-3 col-lg-4 mt-4 ms-4">
+    <div class="col-8 col-sm-3 col-lg-4 mt-5 mt-sm-4 ms-4">
       <button type="submit" class="btn btn-primary px-4" [disabled]="createAccountForm.invalid">
         {{ authentificationLibelle.INPUT.CREATE_ACCOUNT_BUTTON }}
       </button>
