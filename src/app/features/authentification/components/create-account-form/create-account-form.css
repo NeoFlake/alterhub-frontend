@@ -10,3 +10,39 @@ img {
 .btn-outline-secondary {
     border-color: #DEE2E6;
 }
+
+@media (max-width: 426px) {
+
+    .phone-size-container {
+        position: relative;
+    }
+    
+    .phone-size {
+        position: absolute;
+    }
+
+}
+
+@media (max-width: 321px) {
+
+    .phone-size {
+        left: 30px;
+    }
+
+}
+
+@media (min-width: 322px) and (max-width: 376px) {
+    
+    .phone-size {
+        left: 50px;
+    }
+
+}
+
+@media (min-width: 377px) and (max-width: 425px) {
+    
+    .phone-size {
+        left: 70px;
+    }
+
+}
