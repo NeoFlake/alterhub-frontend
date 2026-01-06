@@ -1,4 +1,6 @@
+<!---------------------------------->
 <!-- Navbar classique mode laptop -->
+<!---------------------------------->
 <nav class="navbar navbar-expand-lg bg-body-primary shadow-sm">
   <div class="container-fluid position-relative d-flex align-items-center">
     <a class="navbar-brand" routerLink="/homepage">
@@ -97,8 +99,10 @@
   </div>
 </nav>
 
+<!----------------------------------------------->
+<!-- Navbar pliable mode tablette + smartphone -->
+<!----------------------------------------------->
 <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="menuHamburger">
-
   <!-- Titre de la page -->
   <div class="offcanvas-header">
     <h5 class="offcanvas-title">{{ pageTitle }}</h5>
@@ -113,13 +117,30 @@
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
           {{ libelles.DECK.ROOT }}
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropend">
           <li>
-            <a class="dropdown-item" routerLink="/decks/explore">{{ libelles.DECK.ALL }}</a>
+            <a
+              class="dropdown-item dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              (click)="$event.stopPropagation()"
+            >
+              {{ libelles.DECK.READ }}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/decks/explore">{{ libelles.DECK.ALL }}</a>
+              </li>
+              @if(authService.isAuthenticated()){
+              <li>
+                <a class="dropdown-item" routerLink="/decks/collection">{{ libelles.DECK.MINE }}</a>
+              </li>
+              }
+            </ul>
           </li>
           @if(authService.isAuthenticated()){
           <li>
-            <a class="dropdown-item" routerLink="/decks/collection">{{ libelles.DECK.MINE }}</a>
+            <a class="dropdown-item" routerLink="/decks/create">{{ libelles.DECK.CREATE }}</a>
           </li>
           }
         </ul>
