@@ -1,104 +1,159 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+<!-- Navbar classique mode laptop -->
+<nav class="navbar navbar-expand-lg bg-body-primary shadow-sm">
+  <div class="container-fluid position-relative d-flex align-items-center">
     <a class="navbar-brand" routerLink="/homepage">
-      <img src="/images/alterhub_logo.png" height="100" width="85" />
+      <img src="/images/alterhub_logo.png" class="logo-size" />
     </a>
+    <!-- Menu principal -->
+    <ul class="navbar-nav d-none d-lg-flex me-auto mb-2 mb-lg-0">
+      <li class="nav-item dropdown">
+        <!-- Zone deck -->
+        <a
+          class="nav-link dropdown-toggle"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ libelles.DECK.ROOT }}
+        </a>
+        <ul class="dropdown-menu dropend">
+          <li>
+            <a
+              class="dropdown-item dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              (click)="$event.stopPropagation()"
+            >
+              {{ libelles.DECK.READ }}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" routerLink="/decks/explore">{{ libelles.DECK.ALL }}</a>
+              </li>
+              @if(authService.isAuthenticated()){
+              <li>
+                <a class="dropdown-item" routerLink="/decks/collection">{{ libelles.DECK.MINE }}</a>
+              </li>
+              }
+            </ul>
+          </li>
+          @if(authService.isAuthenticated()){
+          <li>
+            <a class="dropdown-item" routerLink="/decks/create">{{ libelles.DECK.CREATE }}</a>
+          </li>
+          }
+        </ul>
+      </li>
 
-    <button 
-      class="navbar-toggler" 
-      type="button" 
-      data-bs-toggle="collapse" 
-      data-bs-target="#navbarSupportedContent" 
-      aria-controls="navbarSupportedContent" 
-      aria-expanded="false" 
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <!-- Zone Admin -->
+      @if(authService.isAuthenticated() && authService.isAccessGrantedForUser()){
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin">{{ libelles.ADMIN }}</a>
+      </li>
+      }
+    </ul>
 
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {{ libelles.DECK.ROOT }}
-          </a>
-          <ul class="dropdown-menu dropend">
-            <li>
-              <a
-                class="dropdown-item nav-link dropdown-toggle"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                (click)="$event.stopPropagation()"
-                >{{ libelles.DECK.READ }}</a
-              >
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" routerLink="/decks/explore">{{
-                    libelles.DECK.ALL
-                  }}</a>
-                </li>
-                @if(authService.isAuthenticated()){
-                <li>
-                  <a class="dropdown-item" routerLink="/decks/collection">{{
-                    libelles.DECK.MINE
-                  }}</a>
-                </li>
-                }
-              </ul>
-            </li>
-            @if(authService.isAuthenticated()){
-            <li>
-              <a class="dropdown-item" routerLink="/decks/create">{{ libelles.DECK.CREATE }}</a>
-            </li>
-            }
-          </ul>
-        </li>
-        @if(authService.isAuthenticated() && authService.isAccessGrantedForUser()){
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/admin">{{ libelles.ADMIN }}</a>
-        </li>
-        }
-      </ul>
-
-      <span class="navbar-text fw-bold fs-5 d-none d-lg-block translation-centrage">
+    <!-- Titre de la page -->
+    <div class="navbar-title-container position-absolute top-50 start-50 translate-middle pe-none">
+      <span class="fw-bold text-nowrap text-truncate">
         {{ pageTitle }}
       </span>
+    </div>
 
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <div class="d-flex align-items-center ms-auto gap-2">
+      <!-- Zone perso -->
+      <div class="dropdown d-none d-lg-block">
         @if(authService.isAuthenticated()){
-        <li class="nav-item dropdown ms-auto">
-          <button
-            class="btn btn-outline-primary dropdown-toggle"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {{ stateService.userLogged().playerName }}
-          </button>
-          <ul class="dropdown-menu">
-            <li class="nav-item">
-              <a class="dropdown-item" routerLink="/profile">{{ libelles.PROFILE }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="dropdown-item cursor-pointer" (click)="logout()">{{
-                libelles.AUTHENTICATION.LOGOUT
-              }}</a>
-            </li>
-          </ul>
-        </li>
+        <button class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+          {{ stateService.userLogged().playerName }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" routerLink="/profile">{{ libelles.PROFILE }}</a>
+          </li>
+          <li>
+            <a class="dropdown-item cursor-pointer" (click)="logout()">{{
+              libelles.AUTHENTICATION.LOGOUT
+            }}</a>
+          </li>
+        </ul>
         } @else {
-        <li class="nav-item dropdown ms-auto">
-          <button type="button" class="btn btn-outline-primary" (click)="goToLogin()">
-            {{ libelles.AUTHENTICATION.LOGIN }}
-          </button>
-        </li>
+        <button class="btn btn-outline-primary btn-sm" (click)="goToLogin()">
+          {{ libelles.AUTHENTICATION.LOGIN }}
+        </button>
         }
-      </ul>
+      </div>
+
+      <!-- Bouton hamburger permettant d'ouvrir le menu sur taille small et medium -->
+      <button
+        class="navbar-toggler d-lg-none"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#menuHamburger"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
   </div>
 </nav>
+
+<div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="menuHamburger">
+
+  <!-- Titre de la page -->
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">{{ pageTitle }}</h5>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <!-- Menu principal -->
+  <div class="offcanvas-body d-flex flex-column">
+    <!-- Zone deck -->
+    <ul class="navbar-nav mb-3">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+          {{ libelles.DECK.ROOT }}
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" routerLink="/decks/explore">{{ libelles.DECK.ALL }}</a>
+          </li>
+          @if(authService.isAuthenticated()){
+          <li>
+            <a class="dropdown-item" routerLink="/decks/collection">{{ libelles.DECK.MINE }}</a>
+          </li>
+          }
+        </ul>
+      </li>
+      <!-- Zone admin -->
+      @if(authService.isAuthenticated() && authService.isAccessGrantedForUser()){
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/admin">{{ libelles.ADMIN }}</a>
+      </li>
+      }
+    </ul>
+
+    <hr />
+
+    <!-- Zone perso -->
+    <ul class="navbar-nav">
+      @if(authService.isAuthenticated()){
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/profile"
+          >{{ libelles.PROFILE_OFFCANVAS }}{{ stateService.userLogged().playerName }}</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link cursor-pointer" (click)="logout()">
+          {{ libelles.AUTHENTICATION.LOGOUT }}
+        </a>
+      </li>
+      } @else {
+      <li class="nav-item">
+        <button class="btn btn-outline-primary w-100" (click)="goToLogin()">
+          {{ libelles.AUTHENTICATION.LOGIN }}
+        </button>
+      </li>
+      }
+    </ul>
+  </div>
+</div>

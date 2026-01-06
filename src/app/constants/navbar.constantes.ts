@@ -11,6 +11,7 @@ export const PAGE_LIBELLE = {
   },
   ADMIN: 'Administration',
   PROFILE: 'Profil',
+  PROFILE_OFFCANVAS: "Profil de ",
   AUTHENTICATION: {
     CREATE_ACCOUNT: 'Créer un nouveau compte',
     LOGOUT: 'Déconnexion',

@@ -13,6 +13,9 @@ import { PAGE_LIBELLE } from '../../../constants/navbar.constantes';
 import { filter } from 'rxjs';
 import { UserManager } from '../../../core/services/user-manager';
 
+// Permet de récupérer l'API JS de Bootstrap (cette magouille ...)
+declare var bootstrap: any;
+
 @Component({
   selector: 'navbar',
   imports: [RouterLink],
@@ -33,13 +36,6 @@ export class Navbar {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        // if (
-        //   event.url.match(
-        //     `^/${DECK_ROAD.ROOT}/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$`
-        //   )
-        // ) {
-        //   this.pageTitle = 'Détail du Deck';
-        // }
         switch (event.url) {
           case `/${AUTHENTIFICATION_ROAD.ROOT}/${AUTHENTIFICATION_ROAD.LOGIN}`:
             this.pageTitle = this.libelles.AUTHENTICATION.LOGIN;
@@ -72,7 +68,18 @@ export class Navbar {
             this.pageTitle = 'Détail du Deck';
             break;
         }
-      });
+
+        // Partie permettant de refermer automatiquement le menu hamburger lors du changement de vue
+        const menuHamburger: HTMLElement | null = document.getElementById("menuHamburger");
+
+        if(menuHamburger) {
+          const getInstance = bootstrap.Offcanvas.getInstance(menuHamburger);
+          if(getInstance) {
+            getInstance.hide();
+          }
+        }
+      }
+    );
   }
 
   public goToLogin(): void {

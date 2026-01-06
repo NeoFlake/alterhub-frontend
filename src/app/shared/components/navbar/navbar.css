@@ -1,18 +1,26 @@
-.translation-centrage {
-    transform: translateX(-40px);
+.navbar {
+  border-radius: 10px;
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.navbar-title-container {
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 5;
 }
 
-.dropend {
-  position: relative;
+.logo-size {
+  height: 50px;
 }
 
-.dropdown-menu .dropend .dropdown-menu {
-  top: 0;
-  left: 100%;       
-  margin-top: -1px; 
-  margin-left: 0;
+#menuHamburger {
+  height: 50vh;
+  overflow-y: auto;
+}
+
+@media (min-width: 992px) {
+  .logo-size {
+    height: 80px;
+  }
 }
