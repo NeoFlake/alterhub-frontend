@@ -1,13 +1,9 @@
 .dashboard-card {
-    /* background-color: #4a7fd3;
-    border: 1px solid #82a5dd; */
     border-radius: 8px;
     transition: all 0.2s ease;
 }
 
 .dashboard-card:hover {
-    /* background-color: #3164b4;
-    border: 1px solid #82a5dd; */
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -46,10 +42,86 @@
     border-radius: 10px;
 }
 
-.name-size {
-   width: 60%;
+@media (min-width: 431px) {
+
+    .name-size {
+        width: 60%;
+    }
+
+    .faction-size {
+        width: 30%;
+    }
+
 }
 
-.faction-size {
-    width: 30%;
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    .see-all-button-container {
+        width: 20%;
+        display: flex;
+        justify-content: end;
+    }
+
+    .form-select {
+        width: 37%;
+    }
+
+}
+
+@media (min-width: 567px) and (max-width: 767px) {
+
+    .form-select {
+        width: 35%;
+    }
+
+}
+
+@media (max-width: 567px) {
+
+    .form-select {
+        width: 40%;
+    }
+
+}
+
+@media (max-width: 509px) {
+
+    .see-all-button-container {
+        width: 50%;
+        display: flex;
+        justify-content: end;
+    }
+
+    .form-select {
+        width: 40vw;
+    }
+
+}
+
+@media (max-width: 529px) {
+
+    .bi-chevron-right {
+        display: none;
+    }
+
+}
+
+@media (max-width: 430px) {
+    .name-size {
+        display: block;
+        width: 100%;
+    }
+
+    .faction-size .badge {
+        width: 0%;
+        display: none;
+    }
+}
+
+@media (max-width: 409px) {
+
+    .form-select {
+        width: 50vw;
+    }
+
 }

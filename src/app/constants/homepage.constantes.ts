@@ -12,8 +12,8 @@ export const HOMEPAGE_LIBELLE = {
         SEE_ALL_BUTTON: "Voir tout",
         SELECT_BUTTON: "Choisir par faction",
         ALL_CHOICE: "Toutes",
-        WHEN_CREATED: "Créé le",
-        WHEN_MODIFIED: "Modifié le",
+        WHEN_CREATED: "Créé par",
+        WHEN_MODIFIED: "Modifié par",
         NO_DECK_CREATED_PLACEHOLDER: "Aucun deck de créé pour le moment par nos AlterHuber",
         NO_DECK_MODIFIED_PLACEHOLDER: "Aucun deck de modifié pour le moment par nos AlterHuber"
     }
