@@ -9,6 +9,8 @@ Nous devrons installer et configurer pour se faire:
 ## 4/ Visual Studio Code
 ## 5/ Git
 ## 6/ Le projet frontend lui-même
+## 7/ Configuration de l'application
+## 8/ Déploiement de l'application
 
 Puis terminer en section 7/ par une configuration de notre application
 
@@ -59,3 +61,16 @@ Puis terminer en section 7/ par une configuration de notre application
  - Après avoir effectués toutes les actions précedente, il ne reste plus qu'à écrire une dernière instruction dans un terminal pour cette installation
  - Dans le terminal ouvert dans Visual Studio Code, effectueer la commande npm install, ce qui aura pour action de télécharger et d'installer l'ensemble des dépendances
  - nécessaire au bon fonctionnement de l'application frondend
+
+ # 8/ Déploiement de l'application
+
+Une fois l'application développée et testée en local, il est nécessaire de la déployer sur un serveur pour la rendre accessible en production.
+
+- Ouvrir un terminal dans le dossier du projet frontend
+- Exécuter la commande ng build --configuration production qui compile et optimise l'application
+- Les fichiers optimisés sont générés dans le dossier /dist du projet
+- Configurer le serveur web (Apache ou Nginx) pour rediriger toutes les requêtes vers index.html, permettant de gérer correctement le routing Angular
+- Se connecter au serveur via FTP, SFTP ou SSH
+- Copier le contenu du dossier /dist/frontend vers le dossier du serveur web (généralement /var/www/html/)
+- Configurer le certificat SSL (Let's Encrypt recommandé) et le nom de domaine
+- Vérifier que l'application est accessible via HTTPS et tester le bon fonctionnement de toutes les routes
