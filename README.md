@@ -62,7 +62,7 @@ Puis terminer en section 7/ par une configuration de notre application
  - Dans le terminal ouvert dans Visual Studio Code, effectueer la commande npm install, ce qui aura pour action de télécharger et d'installer l'ensemble des dépendances
  - nécessaire au bon fonctionnement de l'application frondend
 
- # 8/ Déploiement de l'application
+## 8/ Déploiement de l'application
 
 Une fois l'application développée et testée en local, il est nécessaire de la déployer sur un serveur pour la rendre accessible en production.
 
