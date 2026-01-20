@@ -12,8 +12,6 @@ Nous devrons installer et configurer pour se faire:
 ## 7/ Configuration de l'application
 ## 8/ Déploiement de l'application
 
-Puis terminer en section 7/ par une configuration de notre application
-
 ## 1/ NodeJs version 24
 
  - Aller sur le site https://nodejs.org/en/download
